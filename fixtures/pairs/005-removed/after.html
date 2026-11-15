@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Maple Market - Home</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; }
+  header { display: flex; align-items: center; gap: 16px; padding: 12px 24px; background: #2d5a27; color: #fff; }
+  header nav a { color: #fff; margin-right: 12px; }
+  .search { margin-left: auto; }
+  #gift-cards { background: #f5c518; border: 0; padding: 8px 14px; font-size: 14px; cursor: pointer; }
+  main { padding: 24px; }
+  .product { display: inline-block; width: 180px; margin: 8px; padding: 12px; border: 1px solid #ccc; }
+  .price { font-weight: bold; }
+  footer { padding: 16px 24px; background: #eee; font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">Maple Market</a>
+  <nav>
+    <a href="/deals">Deals</a>
+    <a href="/account">Your account</a>
+    <a href="/help">Help</a>
+  </nav>
+  <form class="search" action="/search">
+    <input type="search" name="q" aria-label="Search products">
+    <button id="search-btn" type="submit">Search</button>
+  </form>
+  <button id="gift-cards" type="button" onclick="location.href='/gift-cards'">Gift cards</button>
+</header>
+<main>
+  <h1>Welcome back</h1>
+  <section class="products">
+    <div class="product"><h2>Garden gloves</h2><p class="price">$12.99</p><button type="button">Add to cart</button></div>
+    <div class="product"><h2>Watering can</h2><p class="price">$24.50</p><button type="button">Add to cart</button></div>
+    <div class="product"><h2>Seed starter kit</h2><p class="price">$18.00</p><button type="button">Add to cart</button></div>
+  </section>
+</main>
+<footer>
+  <a href="/returns">Returns</a> · <a href="/privacy">Privacy</a> · &copy; 2026 Maple Market (fictional)
+</footer>
+</body>
+</html>

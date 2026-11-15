@@ -1,0 +1,18 @@
+{
+  "id": "002-renamed",
+  "change": ["renamed"],
+  "description": "Same spot, renamed to \"Your orders\" with a new id.",
+  "targets": [
+    {
+      "label": "Track order",
+      "before": "#track-order",
+      "after": "#orders-btn"
+    },
+    {
+      "label": "Search",
+      "before": "#search-btn",
+      "after": "#search-btn",
+      "note": "control: unchanged"
+    }
+  ]
+}

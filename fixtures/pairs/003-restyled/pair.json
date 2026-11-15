@@ -1,0 +1,18 @@
+{
+  "id": "003-restyled",
+  "change": ["restyled", "role-changed"],
+  "description": "Button becomes a pill-styled link with an icon; new classes; text casing changes to \"Track Order\".",
+  "targets": [
+    {
+      "label": "Track order",
+      "before": "#track-order",
+      "after": "header a.hdr-cta--primary"
+    },
+    {
+      "label": "Search",
+      "before": "#search-btn",
+      "after": "#search-btn",
+      "note": "control: unchanged"
+    }
+  ]
+}

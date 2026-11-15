@@ -1,0 +1,18 @@
+{
+  "id": "006-decoy",
+  "change": ["renamed", "moved", "decoy"],
+  "description": "Real feature becomes an \"Orders\" nav link. A look-alike \"Track a return\" button takes the old spot, same styling. Picking the decoy is a wrong match.",
+  "targets": [
+    {
+      "label": "Track order",
+      "before": "#track-order",
+      "after": "header nav a.nav-orders"
+    },
+    {
+      "label": "Search",
+      "before": "#search-btn",
+      "after": "#search-btn",
+      "note": "control: unchanged"
+    }
+  ]
+}

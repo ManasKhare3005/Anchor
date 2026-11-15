@@ -1,0 +1,20 @@
+{
+  "name": "@anchor/harness",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "harness": "node --experimental-strip-types src/cli.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "jsdom": "31.0.1",
+    "zod": "4.6.7",
+    "@anchor/matcher": "0.0.0"
+  },
+  "devDependencies": {
+    "@types/jsdom": "30.0.0",
+    "vitest": "5.1.0"
+  }
+}

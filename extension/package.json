@@ -1,0 +1,16 @@
+{
+  "name": "@anchor/extension",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "typecheck": "wxt prepare && tsc -p tsconfig.json",
+    "test:e2e": "wxt build && playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "wxt": "0.21.5"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "005-removed",
+  "change": ["removed"],
+  "description": "Feature is gone. An unrelated \"Gift cards\" button now sits in the old spot. Correct answer: no match.",
+  "targets": [
+    {
+      "label": "Track order",
+      "before": "#track-order",
+      "after": null
+    },
+    {
+      "label": "Search",
+      "before": "#search-btn",
+      "after": "#search-btn",
+      "note": "control: unchanged"
+    }
+  ]
+}

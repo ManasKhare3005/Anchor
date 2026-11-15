@@ -1,0 +1,8 @@
+node_modules
+dist
+.output
+.wxt
+fixtures/pairs/**/*.html
+package-lock.json
+test-results
+playwright-report

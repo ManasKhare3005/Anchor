@@ -1,0 +1,18 @@
+{
+  "id": "004-nested",
+  "change": ["nested", "renamed", "hidden-in-menu"],
+  "description": "Moved into a collapsed Account dropdown, wrapped in extra divs, reworded to \"Track my order\".",
+  "targets": [
+    {
+      "label": "Track order",
+      "before": "#track-order",
+      "after": "details.account-menu a.menu-link"
+    },
+    {
+      "label": "Search",
+      "before": "#search-btn",
+      "after": "#search-btn",
+      "note": "control: unchanged"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "001-moved",
+  "change": ["moved"],
+  "description": "Track order moves from the header into a new left sidebar. Same text and id.",
+  "targets": [
+    {
+      "label": "Track order",
+      "before": "#track-order",
+      "after": "aside #track-order"
+    },
+    {
+      "label": "Search",
+      "before": "#search-btn",
+      "after": "#search-btn",
+      "note": "control: unchanged"
+    }
+  ]
+}
