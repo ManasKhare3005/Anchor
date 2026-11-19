@@ -6,4 +6,4 @@ fixtures/pairs/**/*.html
 package-lock.json
 test-results
 playwright-report
-MYCLAUDE.md
+CLAUDE.md

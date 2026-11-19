@@ -1,11 +1,11 @@
 # Plan — M0: Scaffold (rework for v2)
 
-M0 was built against the v1 brief (now `docs/archive/brief-v1.md`). `MYCLAUDE.md` (v2) changes
+M0 was built against the v1 brief (now `docs/archive/brief-v1.md`). `CLAUDE.md` (v2) changes
 the layout, replaces the popup with a side panel, and adds Hard Rule checks. This plan brings the
 existing scaffold in line with v2. Nothing from M1 (matcher API, fixture sites, benchmark) is
 built here.
 
-## Done when (from MYCLAUDE.md)
+## Done when (from CLAUDE.md)
 
 - A fresh clone builds (`npm ci && npm run build`).
 - All tests pass (`npm run check` + `npm run test:e2e`).
@@ -20,7 +20,7 @@ built here.
    - v1 progress → `docs/archive/progress-v1.md`
    - decisions → `docs/decisions.md`, with entries superseded by v2 marked
    - new `docs/PROGRESS.md` (Done / In progress / Decisions made / Questions for Manas)
-   - short new `README.md` pointing to `MYCLAUDE.md`
+   - short new `README.md` pointing to `CLAUDE.md`
 2. **Repo layout.** `extension/` → `packages/extension/`. `tools/harness/` → `benchmark/` (it becomes
    the benchmark runner in M1). Workspaces, paths and the ESLint config are updated to match.
 3. **Side panel instead of popup.**
@@ -64,7 +64,7 @@ built here.
    - network blocked from extension page
 9. **Edge.** Try Playwright with `channel: "msedge"`. If branded Edge refuses `--load-extension` (as
    branded Chrome does), fall back to a manual "Load unpacked" check, documented in Commands.
-10. **Commands section** added to `MYCLAUDE.md`, as its how-to-work rule 10 asks.
+10. **Commands section** added to `CLAUDE.md`, as its how-to-work rule 10 asks.
 11. **Wrap-up.** Update `docs/PROGRESS.md` and commit locally. Ask before pushing.
 
 ## Carried over unchanged from v1 M0

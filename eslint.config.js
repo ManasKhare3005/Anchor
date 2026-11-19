@@ -4,7 +4,7 @@ import tseslint from "typescript-eslint";
 import prettier from "eslint-config-prettier";
 
 /**
- * Hard Rule checks (MYCLAUDE.md). They apply to every file that ships in the extension.
+ * Hard Rule checks (CLAUDE.md). They apply to every file that ships in the extension.
  * Each entry is covered by packages/extension/test/hard-rules-lint.test.ts, so a rule can't
  * silently stop firing. An exception needs an eslint-disable line with a written reason.
  */

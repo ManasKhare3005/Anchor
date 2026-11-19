@@ -2,7 +2,7 @@
 
 Each entry: the decision, why, and the alternatives considered. Newest last. Change a decision by
 
-> **2026-11-18:** `MYCLAUDE.md` (v2) is now the source of truth. Short decisions are logged in
+> **2026-11-18:** `CLAUDE.md` (v2) is now the source of truth. Short decisions are logged in
 > `docs/PROGRESS.md`; this file keeps the longer records. Entries marked _Superseded_ no longer apply.
 > adding a new entry that supersedes the old one; don't rewrite history.
 

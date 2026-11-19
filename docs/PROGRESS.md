@@ -1,90 +1,75 @@
 # Anchor — Progress
 
-Source of truth: `MYCLAUDE.md` (v2). The v1 brief and log are in `docs/archive/`. Long-form
+Source of truth: `CLAUDE.md` (v2). The v1 brief and log are in `docs/archive/`. Long-form
 decision records are in `docs/decisions.md`.
 
 ## Done
 
-- **v1 Phase 0 scaffold** (2026-11-14, commits `2b959de`, `455d7c7`): npm workspaces, strict TS,
-  ESLint + Prettier, matcher stub, WXT MV3 extension, Playwright e2e, fixture harness over 6 synthetic
-  pairs. All green. The v1 "Phase 1 Capture" plan is superseded by v2 (see below).
+- **v1 Phase 0 scaffold** (2026-11-14): npm workspaces, strict TS, ESLint + Prettier, matcher stub,
+  WXT MV3 extension, Playwright e2e, fixture harness over 6 synthetic pairs.
+- **M0: Scaffold (v2)** (2026-11-18, confirmed 2026-11-19). Plan: `docs/plan-M0.md`.
+  - v2 layout; the toolbar icon opens a hello side panel; the content script doesn't touch the page
+  - Hard Rule lint checks (Rules 1, 6, 7) with self-tests; bundle scan; `connect-src 'none'` CSP
+    proven in e2e
+  - results: 73 unit tests; e2e 7/7 in Chromium and 7/7 in Edge; fresh clone green
+  - known gaps: the toolbar click is only checked through `getPanelBehavior` (needs one manual
+    click); a dev-only npm audit advisory (D-004)
 
 ## In progress
 
-- **M0 rework for v2.** Plan: `docs/plan-M0.md`. All steps are done and waiting for Manas to
-  confirm the milestone.
-  - [x] Docs moved to the v2 layout
-  - [x] `extension/` → `packages/extension/`, `tools/harness/` → `benchmark/`
-  - [x] Paths, workspaces, lint config updated
-  - [x] Side panel replaces popup; toolbar icon opens it
-  - [x] Content script no longer touches the page; it answers `ping` instead
-  - [x] Hard Rule lint checks (Rules 1, 6, 7) + 29 self-tests
-  - [x] Bundle scan (Rules 1, 6) + self-test
-  - [x] Restrictive CSP. Chromium and Edge accept `connect-src 'none'`; e2e proves the violation.
-  - [x] E2E updated: 7 tests, passing in bundled Chromium **and** installed Edge
-  - [x] Commands section in `MYCLAUDE.md`
-  - [x] Fresh-clone check (see results)
-
-### M0 results (2026-11-18)
-
-- `npm run check`: green. 73 unit tests: extension 43 (lint self-tests, bundle scan), benchmark
-  28, matcher 2.
-- `npm run test:e2e`: 7/7 in Chromium. `npm run test:e2e:edge`: 7/7 in Edge.
-- Fresh clone (`git clone` → `npm ci` → `npm run check` → `npm run test:e2e`): all green, 73 + 7.
-
-### Known gaps (M0)
-
-- **Untested by machine:** actually clicking the toolbar icon. Playwright can't click browser
-  toolbars, so e2e checks `getPanelBehavior().openPanelOnActionClick === true` instead. Needs one
-  manual click in Chrome.
-- `benchmark/src/extract.ts` still reads `getAttribute("value")` for submit-button labels.
-  That's allowed because the benchmark isn't shipped, but it must not move into the matcher as-is
-  (Hard Rule 7). The M1 plan handles it.
-- `npm audit`: a moderate advisory inside typescript-eslint, dev-only (D-004).
+- **M1: Matcher and benchmark.** Plan: `docs/plan-M1.md`.
+  - [ ] 1.1 Types + candidates + capture
+  - [ ] 1.2 Signals + lexicon
+  - [ ] 1.3 `match()` + tiers
+  - [ ] 1.4 Fixture sites (bank, pharmacy, utility)
+  - [ ] 1.5 Site state + two-visit rule
+  - [ ] 1.6 Elsewhere search (`menuHint`)
+  - [ ] 1.7 Runner + report over fixtures
+  - [ ] 1.8 Real-site pipeline, shopping first. Pause for label confirmation.
+  - [ ] 1.9 Calibrate, then sensitive categories
+  - [ ] 1.10 Matcher runs in real Chromium
+  - [ ] 1.11 Wrap-up
 
 ## Decisions made
 
-- 2026-11-18: v2 (`MYCLAUDE.md`) replaces the v1 brief. Restore mode is dropped and everything goes
+- 2026-11-19: `MYCLAUDE.md` renamed to `CLAUDE.md`, so Claude Code loads it every session (Manas).
+- 2026-11-19: Push to `origin/main` after each finished task, without asking. Short summary at the
+  end of each milestone (Manas).
+- 2026-11-19: The real-site benchmark starts with generic shopping sites, then pharmacy, government
+  and bank public pages (Manas).
+- 2026-11-19: Keep the 6 Maple Market pairs as extra matcher fixtures (Manas).
+- 2026-11-19: Benchmark site HTML is cached git-ignored. Only `sites.json` + labels are committed
+  (avoids redistributing site HTML).
+- 2026-11-19: A hand-made concept lexicon handles renames without AI. It is frozen before real-site
+  labels are seen.
+- 2026-11-19: Below "fairly sure", `element` is `null`. Nav and menu hits go in a separate
+  `menuHint` (Hard Rule 5).
+- 2026-11-18: v2 (`CLAUDE.md`) replaces the v1 brief. Restore mode is dropped and everything goes
   through the side-panel shelf.
-- 2026-11-18: Matcher takes DOM in, not plain descriptors. This supersedes D-003, as v2 requires;
-  the API changes in M1.
-- 2026-11-18: Fingerprints use meaning and structure, not pixel positions. This supersedes the
-  position field and D-005's plan to score position.
-- 2026-11-18: Keep WXT 0.21.5. It is still maintained (release 2026-10-26) and its docs cover side
-  panels.
-- 2026-11-18: Popup removed. The toolbar icon opens the side panel via `setPanelBehavior`.
-- 2026-11-18: The content script never edits the page outside the `data-anchor` Shadow DOM host.
-  The v1 `<html data-anchor-loaded>` hook is removed (Hard Rule 4).
-- 2026-11-18: Vite's module-preload polyfill is off. It calls `fetch` and would fail the Rule 6
-  bundle scan.
-- 2026-11-18: Edge e2e is automated (`npm run test:e2e:edge`). Branded Edge still accepts unpacked
-  extensions.
-- 2026-11-18: `MYCLAUDE.md` is excluded from Prettier so it stays exactly as Manas wrote it (plus
-  the Commands section).
-- 2026-11-18: The bundle scan bans mouse and keyboard event construction, not all `dispatchEvent`.
-  WXT uses `CustomEvent` internally.
-- 2026-11-14 (v1, still valid): npm workspaces; ESLint + Prettier; TS 6.0 (typescript-eslint
-  supports < 6.1); zod; Playwright's bundled Chromium for e2e; ground truth only in fixture metadata
-  (leak guard); "fairly sure" counts as confident when scoring wrong matches; commits authored by
-  Manas only.
+- 2026-11-18: Matcher takes DOM in (D-015). No pixel positions (D-016).
+- 2026-11-18: Side panel replaces the popup; strict CSP; Hard Rule lint + bundle scan (D-017).
+  Edge e2e automated (D-018).
+- 2026-11-18: Keep WXT 0.21.5 (maintained; side panel docs verified). Vite's preload polyfill is
+  off because it contains `fetch`.
+- 2026-11-18: `CLAUDE.md` is excluded from Prettier so it stays as Manas wrote it.
+- 2026-11-14 (v1, still valid): npm workspaces; ESLint + Prettier; TS 6.0; zod; Playwright's
+  bundled Chromium; ground truth only in fixture metadata; "fairly sure" counts as confident when
+  scoring wrong matches; commits authored by Manas only.
 
-## Carried from the superseded v1 Phase 1 plan, for M1/M2
+## Carried from the superseded v1 Phase 1 plan, for M2
 
-- Privacy scrubbing of captured text (money, long digit runs, emails, names after greetings) still
-  applies to `neighborText`, even though nothing leaves the device.
-- Single writer for storage, through the service worker, to avoid lost writes between tabs.
-- Picking must swallow the whole pointer sequence (`pointerdown` / `mousedown` / `click`) so the
-  real element never fires.
-- Fixture with a `mousedown` handler to prove it.
+- Single writer for storage, through the service worker.
+- Picking swallows the whole pointer sequence (`pointerdown` / `mousedown` / `click`), with a
+  fixture that has a `mousedown` handler to prove it.
 
 ## Questions for Manas
 
-1. Rename `MYCLAUDE.md` → `CLAUDE.md`? Claude Code loads `CLAUDE.md` automatically every session, so
-   the rules would always be in context. Right now it's only read when asked.
-2. May I push M0 to `origin/main` when it's done? (v2 rule 5: ask before pushing.)
-3. Which real sites go into `benchmark/sites.json` first? (needed for M1)
-4. Are the wrong-match targets (1% sure, 5% fairly sure) right? (after the first M1 report)
-5. License and public name for the repository.
-6. Should the helper page sit behind a simple PIN?
-7. The 6 Maple Market store pairs: keep them as matcher unit fixtures alongside the new
-   bank/pharmacy/utility sites, or drop them? (decided in the M1 plan; my default is keep)
+1. **`<input type=submit value="Pay now">`:** the `value` attribute here is a label the site wrote,
+   not something the person typed. Hard Rule 7 says never read `.value`, so for now the matcher
+   doesn't read it at all (the cautious option). That costs a matching signal on older sites,
+   especially government ones. May the matcher read the `value` **attribute** only on
+   submit/button/reset inputs, through one audited helper, with a test proving text inputs are
+   never read?
+2. Are the wrong-match targets (1% sure, 5% fairly sure) right? (after the first M1 report)
+3. License and public name for the repository.
+4. Should the helper page sit behind a simple PIN? (M5)
