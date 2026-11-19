@@ -97,3 +97,17 @@ describe("site-state classification on fixture sites", () => {
     }
   });
 });
+
+describe("elsewhere search (menuHint) on fixture sites", () => {
+  const rows = runAllSites();
+
+  it("points to the nav link for every feature that moved to another page", () => {
+    const expected = rows.filter((r) => r.hintExpected);
+    expect(expected.length).toBe(2);
+    expect(expected.filter((r) => !r.hintHit).map((r) => `${r.site}/${r.feature}`)).toEqual([]);
+  });
+
+  it("never turns a hint into a pointed-at element", () => {
+    for (const r of rows.filter((x) => x.hintExpected)) expect(r.got).toBeNull();
+  });
+});

@@ -1,4 +1,5 @@
 import { collectCandidates, isHidden, signalsOf } from "./dom.ts";
+import { findMenuHint } from "./hint.ts";
 import {
   DEFAULT_WEIGHTS,
   combine,
@@ -124,6 +125,11 @@ export function match(
   const score = top?.score ?? 0;
   const gap = top ? score - (scored[1]?.score ?? 0) : 0;
   const tier = top ? tierFor(score, gap, t) : "unsure";
+  // Only look elsewhere when nothing here is a confident pick. The hint is a separate field and
+  // never becomes `element` (Hard Rule 5).
+  const hint = tier === "unsure" ? findMenuHint(page, fp) : null;
+  const reasons = explain(top, gap, tier, t);
+  if (hint) reasons.push("A menu or navigation link may lead to it on another page.");
 
   return {
     element: tier === "unsure" ? null : (top?.element ?? null),
@@ -131,8 +137,8 @@ export function match(
     tier,
     runnerUpGap: gap,
     hidden: tier !== "unsure" && (top?.hidden ?? false),
-    reasons: explain(top, gap, tier, t),
-    menuHint: null,
+    reasons,
+    menuHint: hint,
     ranked: scored.slice(0, opts.keep ?? 5),
   };
 }

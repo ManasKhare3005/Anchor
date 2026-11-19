@@ -23,7 +23,7 @@ decision records are in `docs/decisions.md`.
   - [x] 1.3 `match()` + tiers
   - [x] 1.4 Fixture sites (bank, pharmacy, utility)
   - [x] 1.5 Site state + two-visit rule
-  - [ ] 1.6 Elsewhere search (`menuHint`)
+  - [x] 1.6 Elsewhere search (`menuHint`)
   - [ ] 1.7 Runner + report over fixtures
   - [ ] 1.8 Real-site pipeline, shopping first. Pause for label confirmation.
   - [ ] 1.9 Calibrate, then sensitive categories
@@ -83,3 +83,6 @@ decision records are in `docs/decisions.md`.
 - Site state: all 18 non-redesign state pages classified exactly (logged-out ×3, normal ×15). The
   three v2 redesigns currently read "unknown" (fewer than half the features found before tuning).
   That's safe; the target after tuning is "redesign".
+- Elsewhere search: both "moved to another page" fixtures get the right nav-link hint
+  ("Deposit a check" → "Mobile deposit", "Report an outage" → "Outage center"); hints never become
+  the pointed-at element.

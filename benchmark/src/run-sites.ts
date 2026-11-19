@@ -27,6 +27,8 @@ export interface SiteRow {
   /** Whether a nav/menu hint was expected here, and whether the matcher's hint hit one. */
   hintExpected: boolean;
   hintHit: boolean;
+  /** Text of whatever hint the matcher gave (null if none). */
+  hint: string | null;
   reasons: string[];
 }
 
@@ -102,6 +104,7 @@ export function runSite(loaded: LoadedSite, opts: MatchOptions = {}): SiteRow[] 
         got: text(r.element),
         hintExpected: hints.length > 0,
         hintHit: r.menuHint !== null && hints.includes(r.menuHint),
+        hint: text(r.menuHint),
         reasons: r.reasons,
       });
     };
