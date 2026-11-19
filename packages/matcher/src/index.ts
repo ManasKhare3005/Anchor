@@ -20,3 +20,11 @@ export {
 export { DEFAULT_WEIGHTS, type SignalName, type Weights } from "./similarity.ts";
 export { scrub } from "./text.ts";
 export * from "./types.ts";
+export {
+  classifySite,
+  confirmRedesign,
+  type FeatureObservation,
+  type FeatureStatus,
+  type SiteObservation,
+  type SiteState,
+} from "./site.ts";

@@ -22,7 +22,7 @@ decision records are in `docs/decisions.md`.
   - [x] 1.2 Signals + lexicon
   - [x] 1.3 `match()` + tiers
   - [x] 1.4 Fixture sites (bank, pharmacy, utility)
-  - [ ] 1.5 Site state + two-visit rule
+  - [x] 1.5 Site state + two-visit rule
   - [ ] 1.6 Elsewhere search (`menuHint`)
   - [ ] 1.7 Runner + report over fixtures
   - [ ] 1.8 Real-site pipeline, shopping first. Pause for label confirmation.
@@ -80,3 +80,6 @@ decision records are in `docs/decisions.md`.
 - Fixture sites (135 feature × scenario runs): 105 correct, 21 correct-absent, 8 not-found,
   **1 wrong at "fairly"**: the planted decoy "Pay my bill by phone" beat the real "Make a payment"
   (brightline). All 6 non-redesign states match like v1. Tuning happens in task 1.9.
+- Site state: all 18 non-redesign state pages classified exactly (logged-out ×3, normal ×15). The
+  three v2 redesigns currently read "unknown" (fewer than half the features found before tuning).
+  That's safe; the target after tuning is "redesign".

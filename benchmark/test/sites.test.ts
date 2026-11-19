@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 // @ts-expect-error -- plain .mjs helper without type declarations
 import { renderStates, v1HomeOf } from "../../fixtures/sites/make-states.mjs";
 import { findLeaks } from "../src/pairs.ts";
+import { classifyAllSites } from "../src/classify-sites.ts";
 import { runAllSites, runSite } from "../src/run-sites.ts";
 import { listSiteDirs, loadSite } from "../src/sites.ts";
 import { readFileSync } from "node:fs";
@@ -78,5 +79,21 @@ describe("fixture sites with the current matcher", () => {
   it("records every wrong match (none allowed at 'sure')", () => {
     const wrongSure = rows.filter((r) => r.outcome === "wrong" && r.tier === "sure");
     expect(wrongSure.map((r) => `${r.site}/${r.feature}/${r.scenario} → ${r.got}`)).toEqual([]);
+  });
+});
+
+describe("site-state classification on fixture sites", () => {
+  const rows = classifyAllSites();
+
+  it("classifies every non-redesign state exactly (logged-out, banners, popups, A/B, timeout)", () => {
+    const states = rows.filter((r) => r.kind !== "v2");
+    expect(states.length).toBe(18);
+    expect(states.filter((r) => r.got !== r.expected)).toEqual([]);
+  });
+
+  it("never mistakes a redesign for normal or logged-out (tightened to 'redesign' after tuning)", () => {
+    for (const r of rows.filter((x) => x.kind === "v2")) {
+      expect(["redesign", "unknown"], r.site).toContain(r.got);
+    }
   });
 });
