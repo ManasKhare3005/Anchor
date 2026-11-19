@@ -27,7 +27,7 @@ decision records are in `docs/decisions.md`.
   - [x] 1.7 Runner + report over fixtures
   - [~] 1.8 Real-site pipeline, shopping first. **Waiting for Manas to confirm labels** (`docs/benchmark-labels-review.md`).
   - [ ] 1.9 Calibrate, then sensitive categories
-  - [ ] 1.10 Matcher runs in real Chromium
+  - [x] 1.10 Matcher runs in real Chromium
   - [ ] 1.11 Wrap-up
 
 ## Decisions made
@@ -97,3 +97,6 @@ decision records are in `docs/decisions.md`.
   Nearly all of those 9 are the same link shown twice (gap 0.00), which task 1.9 addresses.
 - A fetcher bug was found and fixed: block-page detection matched `CAPTCHA_ENABLED` inside script
   configs, which wrongly rejected real pages.
+- In real Chromium: capture → match works on fixture v1 → v2, the visual signal is present (real
+  layout), removed features return no element, the cookie-popup state is "normal", and the bundled
+  matcher passes the Rule 1/6 scan.
