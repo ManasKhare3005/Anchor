@@ -30,7 +30,7 @@ decision records are in `docs/decisions.md`.
 - `npm run check`: green. 73 unit tests: extension 43 (lint self-tests, bundle scan), benchmark
   28, matcher 2.
 - `npm run test:e2e`: 7/7 in Chromium. `npm run test:e2e:edge`: 7/7 in Edge.
-- Fresh clone (`git clone` → `npm ci` → `npm run check`): see the log entry.
+- Fresh clone (`git clone` → `npm ci` → `npm run check` → `npm run test:e2e`): all green, 73 + 7.
 
 ### Known gaps (M0)
 
