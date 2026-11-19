@@ -1,30 +1,38 @@
 import { JSDOM } from "jsdom";
-import { match, type Confidence, type ElementFingerprint } from "@anchor/matcher";
-import { describe, extractCandidates } from "./extract.ts";
+import { capture, indexPage, match, type MatchOptions, type Tier } from "@anchor/matcher";
 import { findLeaks, listPairDirs, loadPair, type LoadedPair } from "./pairs.ts";
 
 /**
- * - correct: confident (high/medium) and picked the expected element
- * - correct-abstain: feature removed, matcher said low / nothing
- * - abstain: feature exists but matcher said low (a miss, but safe: Anchor asks)
- * - wrong: confident and picked the wrong element, or confident when the feature was removed.
+ * Outcome of one remembered feature (CLAUDE.md § M1 report: correct / wrong / not found, per tier).
+ *
+ * - correct: matcher pointed at the right element ("sure" or "fairly")
+ * - correct-absent: feature was removed and the matcher said "unsure" (nothing pointed at)
+ * - not-found: feature exists, matcher said "unsure" (safe: Anchor asks)
+ * - wrong: matcher pointed at the wrong element, or at anything when the feature was removed.
  *   The worst outcome.
  */
-export type Outcome = "correct" | "correct-abstain" | "abstain" | "wrong";
+export type Outcome = "correct" | "correct-absent" | "not-found" | "wrong";
 
 export interface ResultRow {
   pair: string;
   target: string;
-  expectedRef: string | null;
-  gotRef: string | null;
-  confidence: Confidence;
+  expected: "present" | "removed";
+  tier: Tier;
+  score: number;
+  gap: number;
   outcome: Outcome;
+  /** Text of the element the matcher pointed at, for the report. */
+  got: string | null;
+  reasons: string[];
 }
 
 export class FixtureError extends Error {}
 
+const FIXTURE_URL = "http://localhost/";
+const NOW = "2026-01-01T00:00:00.000Z";
+
 function parse(html: string): Document {
-  return new JSDOM(html).window.document;
+  return new JSDOM(html, { url: FIXTURE_URL }).window.document;
 }
 
 function single(doc: Document, selector: string, where: string): Element {
@@ -37,36 +45,13 @@ function single(doc: Document, selector: string, where: string): Element {
   return found[0] as Element;
 }
 
-function fingerprintFrom(el: Element, id: string, label: string): ElementFingerprint {
-  const d = describe(el, id);
-  return {
-    id,
-    site: "http://localhost",
-    pageKind: "home",
-    label,
-    text: d.text,
-    role: d.role,
-    ...(d.ariaLabel ? { ariaLabel: d.ariaLabel } : {}),
-    attributes: d.attributes,
-    domPath: d.domPath,
-    neighbors: d.neighbors,
-    position: { x: 0, y: 0, w: 0, h: 0 },
-    lastSeen: "2026-01-01T00:00:00.000Z",
-  };
+export function classify(expected: Element | null, got: Element | null): Outcome {
+  if (expected === null) return got === null ? "correct-absent" : "wrong";
+  if (got === null) return "not-found";
+  return got === expected ? "correct" : "wrong";
 }
 
-export function classify(
-  expectedRef: string | null,
-  gotRef: string | null,
-  confidence: Confidence,
-): Outcome {
-  const confident = confidence !== "low" && gotRef !== null;
-  if (expectedRef === null) return confident ? "wrong" : "correct-abstain";
-  if (!confident) return "abstain";
-  return gotRef === expectedRef ? "correct" : "wrong";
-}
-
-export function runPair(loaded: LoadedPair): ResultRow[] {
+export function runPair(loaded: LoadedPair, opts: MatchOptions = {}): ResultRow[] {
   const { pair } = loaded;
   const pages: [string, string][] = [
     ["before.html", loaded.beforeHtml],
@@ -80,36 +65,29 @@ export function runPair(loaded: LoadedPair): ResultRow[] {
   }
   const before = parse(loaded.beforeHtml);
   const after = parse(loaded.afterHtml);
-  const { candidates, elements } = extractCandidates(after);
-  const refOf = new Map([...elements].map(([ref, el]) => [el, ref]));
+  const afterIndex = indexPage(after);
 
   return pair.targets.map((t, i) => {
     const beforeEl = single(before, t.before, `${pair.id}/before.html`);
-    let expectedRef: string | null = null;
-    if (t.after !== null) {
-      const afterEl = single(after, t.after, `${pair.id}/after.html`);
-      expectedRef = refOf.get(afterEl) ?? null;
-      if (expectedRef === null) {
-        throw new FixtureError(
-          `${pair.id}: expected element "${t.after}" is not an extracted candidate`,
-        );
-      }
-    }
-    const result = match(fingerprintFrom(beforeEl, `${pair.id}#${i}`, t.label), candidates);
-    const gotRef = result.candidates[0]?.ref ?? null;
+    const expected = t.after === null ? null : single(after, t.after, `${pair.id}/after.html`);
+    const fp = capture(beforeEl, { url: FIXTURE_URL, now: NOW, id: `${pair.id}#${i}` });
+    const result = match(afterIndex, fp, opts);
     return {
       pair: pair.id,
       target: t.label,
-      expectedRef,
-      gotRef,
-      confidence: result.confidence,
-      outcome: classify(expectedRef, gotRef, result.confidence),
+      expected: expected ? "present" : "removed",
+      tier: result.tier,
+      score: result.score,
+      gap: result.runnerUpGap,
+      outcome: classify(expected, result.element),
+      got: result.element ? (result.element.textContent ?? "").replace(/\s+/g, " ").trim() : null,
+      reasons: result.reasons,
     };
   });
 }
 
-export function runAll(dirs = listPairDirs()): ResultRow[] {
-  return dirs.flatMap((d) => runPair(loadPair(d)));
+export function runAll(dirs = listPairDirs(), opts: MatchOptions = {}): ResultRow[] {
+  return dirs.flatMap((d) => runPair(loadPair(d), opts));
 }
 
 export interface Summary {
@@ -120,8 +98,8 @@ export interface Summary {
 export function summarize(rows: readonly ResultRow[]): Summary {
   const counts: Record<Outcome, number> = {
     correct: 0,
-    "correct-abstain": 0,
-    abstain: 0,
+    "correct-absent": 0,
+    "not-found": 0,
     wrong: 0,
   };
   for (const r of rows) counts[r.outcome]++;

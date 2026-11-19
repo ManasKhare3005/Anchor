@@ -1,14 +1,16 @@
 import type { ResultRow, Summary } from "./run.ts";
 
 export function formatReport(rows: readonly ResultRow[], summary: Summary): string {
-  const header = ["pair", "target", "expected", "got", "confidence", "outcome"];
+  const header = ["pair", "target", "expected", "tier", "score", "gap", "outcome", "got"];
   const body = rows.map((r) => [
     r.pair,
     r.target,
-    r.expectedRef ?? "(removed)",
-    r.gotRef ?? "-",
-    r.confidence,
+    r.expected,
+    r.tier,
+    r.score.toFixed(2),
+    r.gap.toFixed(2),
     r.outcome === "wrong" ? "WRONG" : r.outcome,
+    r.got ?? "-",
   ]);
   const widths = header.map((h, i) =>
     Math.max(h.length, ...body.map((row) => (row[i] ?? "").length)),
@@ -20,6 +22,6 @@ export function formatReport(rows: readonly ResultRow[], summary: Summary): stri
     line(widths.map((w) => "-".repeat(w))),
     ...body.map(line),
     "",
-    `targets: ${total}  correct: ${counts.correct}  correct-abstain: ${counts["correct-abstain"]}  abstain: ${counts.abstain}  wrong: ${counts.wrong}`,
+    `targets: ${total}  correct: ${counts.correct}  correct-absent: ${counts["correct-absent"]}  not-found: ${counts["not-found"]}  wrong: ${counts.wrong}`,
   ].join("\n");
 }

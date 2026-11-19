@@ -1,7 +1,7 @@
 import { basename } from "node:path";
 import { JSDOM } from "jsdom";
+import { attributesOf, collectCandidates } from "@anchor/matcher";
 import { describe, expect, it } from "vitest";
-import { extractCandidates } from "../src/extract.ts";
 import { findLeaks, listPairDirs, loadPair } from "../src/pairs.ts";
 import { classify, runAll, runPair, summarize } from "../src/run.ts";
 
@@ -24,7 +24,7 @@ describe("fixture pairs", () => {
       expect(findLeaks(loaded.afterHtml)).toEqual([]);
     });
 
-    it("resolves every selector to exactly one extracted element", () => {
+    it("resolves every selector to exactly one element", () => {
       expect(() => runPair(loaded)).not.toThrow();
     });
   });
@@ -35,33 +35,39 @@ describe("leak guard", () => {
     expect(findLeaks('<button data-anchor-expected="1">x</button>')).toHaveLength(1);
   });
 
-  it("extractor drops data-anchor attributes even if present", () => {
-    const doc = new JSDOM('<button id="b" data-anchor-x="1" data-test="t">Go</button>').window
-      .document;
-    const [c] = extractCandidates(doc).candidates;
-    expect(c?.attributes).toEqual({ id: "b", "data-test": "t" });
+  it("matcher drops data-anchor attributes and skips Anchor's host", () => {
+    const doc = new JSDOM(
+      '<button id="b" data-anchor-x="1" data-test="t">Go</button><div data-anchor><button>UI</button></div>',
+    ).window.document;
+    const candidates = collectCandidates(doc);
+    expect(candidates).toHaveLength(1);
+    expect(attributesOf(candidates[0] as Element)).toEqual({ id: "b", "data-test": "t" });
   });
 });
 
 describe("outcome classification", () => {
-  it("treats a confident pick of the wrong element as wrong", () => {
-    expect(classify("c1", "c2", "medium")).toBe("wrong");
+  const doc = new JSDOM("<a></a><b></b>").window.document;
+  const a = doc.querySelector("a");
+  const b = doc.querySelector("b");
+
+  it("pointing at the wrong element is wrong", () => {
+    expect(classify(a, b)).toBe("wrong");
   });
-  it("treats a confident match on a removed feature as wrong", () => {
-    expect(classify(null, "c2", "high")).toBe("wrong");
+  it("pointing at anything when the feature was removed is wrong", () => {
+    expect(classify(null, b)).toBe("wrong");
   });
-  it("treats low confidence on a removed feature as correct-abstain", () => {
-    expect(classify(null, "c2", "low")).toBe("correct-abstain");
+  it("pointing at nothing when removed is correct-absent", () => {
+    expect(classify(null, null)).toBe("correct-absent");
   });
-  it("treats low confidence on an existing feature as abstain, not wrong", () => {
-    expect(classify("c1", "c1", "low")).toBe("abstain");
+  it("pointing at nothing when present is not-found (safe, not wrong)", () => {
+    expect(classify(a, null)).toBe("not-found");
   });
-  it("treats a confident correct pick as correct", () => {
-    expect(classify("c1", "c1", "high")).toBe("correct");
+  it("pointing at the expected element is correct", () => {
+    expect(classify(a, a)).toBe("correct");
   });
 });
 
-describe("harness run (stub matcher)", () => {
+describe("Maple Market pairs with the real matcher", () => {
   const rows = runAll();
   const summary = summarize(rows);
 
@@ -70,7 +76,16 @@ describe("harness run (stub matcher)", () => {
     expect(rows).toHaveLength(expected);
   });
 
-  it("never produces a wrong match", () => {
-    expect(summary.counts.wrong).toBe(0);
+  it("never points at the wrong element", () => {
+    expect(rows.filter((r) => r.outcome === "wrong")).toEqual([]);
+  });
+
+  it("keeps every unchanged control target sure", () => {
+    const controls = rows.filter((r) => r.target === "Search");
+    expect(controls.every((r) => r.tier === "sure" && r.outcome === "correct")).toBe(true);
+  });
+
+  it("finds most changed features (regression floor; raised as tuning improves)", () => {
+    expect(summary.counts.correct + summary.counts["correct-absent"]).toBeGreaterThanOrEqual(10);
   });
 });
