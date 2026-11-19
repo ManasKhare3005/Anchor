@@ -1,0 +1,112 @@
+{
+  "id": "brightline",
+  "name": "Brightline Utilities (fictional)",
+  "category": "utility",
+  "home": "v1/home.html",
+  "features": [
+    {
+      "id": "pay",
+      "label": "Pay my bill",
+      "v1": "#pay-btn",
+      "change": ["renamed", "restyled", "decoy"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": ["section[aria-label=\"Current balance\"] button"]
+      }
+    },
+    {
+      "id": "view-bill",
+      "label": "View bill",
+      "v1": "#view-bill",
+      "change": ["renamed", "into-menu"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": [".menu a[href=\"/billing/statements\"]"]
+      }
+    },
+    {
+      "id": "outage",
+      "label": "Report an outage",
+      "v1": "#outage-btn",
+      "change": ["other-page"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": [],
+        "elsewhere": {
+          "page": "v2/outage-center.html",
+          "selectors": ["main button.btn"]
+        },
+        "hint": ["nav a[href=\"/outage-center\"]"]
+      }
+    },
+    {
+      "id": "service",
+      "label": "Start, stop or move service",
+      "v1": "#service-link",
+      "change": ["tag-changed", "moved"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": ["button[data-action=\"service-change\"]"]
+      }
+    },
+    {
+      "id": "save",
+      "label": "Save energy",
+      "v1": "#save-energy",
+      "change": ["removed"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": []
+      }
+    },
+    {
+      "id": "usage",
+      "label": "Energy usage",
+      "v1": "aside a[href=\"/usage\"]",
+      "change": ["renamed", "moved"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": ["a[href=\"/usage\"]"]
+      }
+    }
+  ],
+  "states": [
+    {
+      "page": "states/logged-out.html",
+      "kind": "logged-out",
+      "expect": "logged-out",
+      "features": {
+        "save": ["nav a[href=\"/save\"]"]
+      }
+    },
+    {
+      "page": "states/sale-banner.html",
+      "kind": "sale-banner",
+      "expect": "normal"
+    },
+    {
+      "page": "states/cookie-popup.html",
+      "kind": "cookie-popup",
+      "expect": "normal"
+    },
+    {
+      "page": "states/survey-modal.html",
+      "kind": "survey-modal",
+      "expect": "normal"
+    },
+    {
+      "page": "states/ab-variant.html",
+      "kind": "ab-variant",
+      "expect": "normal"
+    },
+    {
+      "page": "states/session-timeout.html",
+      "kind": "session-timeout",
+      "expect": "normal"
+    }
+  ],
+  "facts": {
+    "v1/home.html": [".due", "strong", ".legal"],
+    "v2/home.html": [".amount", ".legal"]
+  }
+}

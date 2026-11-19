@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CareWell | Pharmacy &amp; Health</title>
+<style>
+  body { font-family: "Segoe UI", sans-serif; margin: 0; color: #1d1d1d; }
+  .cw-top { display: flex; align-items: center; gap: 24px; padding: 10px 32px; border-bottom: 1px solid #ddd; }
+  .cw-top details { position: relative; }
+  .cw-top .drop { position: absolute; background: #fff; border: 1px solid #ccc; padding: 10px; min-width: 200px; }
+  .cw-hero { display: flex; gap: 24px; padding: 28px 32px; background: #fdecee; }
+  .cw-cta { display: inline-block; padding: 12px 22px; border-radius: 24px; background: #c8102e; color: #fff; text-decoration: none; }
+  .cw-cta--secondary { background: #fff; color: #c8102e; border: 1px solid #c8102e; }
+  .cw-deals { padding: 24px 32px; }
+  .cw-foot { padding: 20px 32px; background: #f5f5f5; font-size: 12px; }
+</style>
+</head>
+<body>
+<header class="cw-top">
+  <a class="cw-logo" href="/">CareWell</a>
+  <nav aria-label="Main">
+    <details>
+      <summary>Pharmacy</summary>
+      <div class="drop">
+        <a href="/pharmacy/refill">Refill Rx</a><br>
+        <a class="cw-drop-link" href="/pharmacy/track">Track a prescription</a><br>
+        <a href="/pharmacy/transfer">Transfer a prescription</a>
+      </div>
+    </details>
+    <a href="/shop">Shop</a>
+    <a href="/health">Health</a>
+  </nav>
+  <a href="/account">Walter's account</a>
+</header>
+<main>
+  <section class="cw-hero" aria-label="Pharmacy shortcuts">
+    <div>
+      <h1>Pharmacy</h1>
+      <p>2 prescriptions are ready for refill.</p>
+      <a class="cw-cta" href="/pharmacy/refill">Refill Rx</a>
+      <button class="cw-cta cw-cta--secondary" type="button">Refill reminders</button>
+      <a class="cw-cta cw-cta--secondary" href="/pharmacy/vaccines">Book a vaccination</a>
+    </div>
+    <ul class="cw-rx">
+      <li>Lisinopril 10 mg · Last filled Oct 21, 2026 · Refills left: 3</li>
+      <li>Metformin 500 mg · Last filled Oct 30, 2026 · Refills left: 1</li>
+    </ul>
+  </section>
+  <section class="cw-deals">
+    <h2>Deals</h2>
+    <p>Vitamin D3 2000 IU, 90 ct — <span class="price">$8.99</span> (was $12.49)</p>
+    <p>Blood pressure monitor — <span class="price">$39.99</span></p>
+  </section>
+</main>
+<footer class="cw-foot">
+  <a href="/stores">Store locator</a> ·
+  <a href="/help">Customer service</a>
+  <p class="legal">CareWell is a fictional pharmacy used for testing. Notice of Privacy Practices: we protect your health information as required by law. Prices valid Nov 16–22, 2026.</p>
+</footer>
+</body>
+</html>

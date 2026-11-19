@@ -2,7 +2,7 @@ node_modules
 dist
 .output
 .wxt
-fixtures/pairs/**/*.html
+fixtures/**/*.html
 package-lock.json
 test-results
 playwright-report

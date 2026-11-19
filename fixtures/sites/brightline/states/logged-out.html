@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Brightline Utilities - Log in</title>
+<style>
+  body { font-family: Tahoma, sans-serif; margin: 0; color: #1a1a1a; }
+  .bl-top { background: #ffb81c; padding: 12px 30px; display: flex; gap: 22px; }
+  .bl-top nav a { margin-right: 16px; color: #1a1a1a; }
+  .login { max-width: 360px; margin: 36px auto; }
+  footer { padding: 16px 30px; background: #eee; font-size: 12px; }
+</style>
+</head>
+<body>
+<header class="bl-top">
+  <a class="logo" href="/">Brightline</a>
+  <nav aria-label="Main">
+    <a href="/outages">Outages</a>
+    <a href="/save">Save energy</a>
+    <a href="/contact">Contact us</a>
+  </nav>
+</header>
+<main>
+  <form class="login" action="/login" method="post">
+    <h1>Log in to your account</h1>
+    <label for="u">Email or username</label> <input id="u" autocomplete="username">
+    <label for="p">Password</label> <input id="p" type="password" autocomplete="current-password">
+    <button type="submit">Log in</button>
+    <p><a href="/guest-pay">Pay without logging in</a></p>
+  </form>
+</main>
+<footer>
+  <a href="/contact">Contact us</a> · <a href="/privacy">Privacy</a>
+  <p class="legal">Brightline Utilities is fictional and used for testing. Rates are set by the state utility commission.</p>
+</footer>
+</body>
+</html>

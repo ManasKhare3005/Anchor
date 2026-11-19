@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CareWell Pharmacy - Sign in</title>
+<style>
+  body { font-family: Verdana, sans-serif; margin: 0; color: #222; }
+  header { padding: 12px 28px; background: #c8102e; color: #fff; display: flex; gap: 20px; }
+  header a { color: #fff; }
+  .signin { max-width: 380px; margin: 32px auto; }
+  footer { padding: 16px 28px; background: #333; color: #ddd; font-size: 12px; }
+  footer a { color: #fff; }
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="/">CareWell</a>
+  <nav aria-label="Departments">
+    <a href="/pharmacy">Pharmacy</a>
+    <a href="/shop">Shop</a>
+    <a href="/health">Health &amp; wellness</a>
+  </nav>
+</header>
+<main>
+  <form class="signin" action="/signin" method="post">
+    <h1>Sign in to manage your prescriptions</h1>
+    <label for="email">Email</label> <input id="email" type="email" autocomplete="email">
+    <label for="pw">Password</label> <input id="pw" type="password" autocomplete="current-password">
+    <button type="submit">Sign in</button>
+    <p>New here? <a href="/register">Create an account</a></p>
+  </form>
+  <section class="promo">
+    <h2>This week's deals</h2>
+    <p>Vitamin D3 2000 IU, 90 ct — <span class="price">$8.99</span></p>
+  </section>
+</main>
+<footer>
+  <a href="/stores">Find a pharmacy</a> ·
+  <a href="/help">Customer service</a>
+  <p class="legal">CareWell is a fictional pharmacy used for testing. Notice of Privacy Practices: we protect your health information as required by law.</p>
+</footer>
+</body>
+</html>

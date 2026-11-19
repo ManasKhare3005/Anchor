@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Riverbank - Accounts overview</title>
+<style>
+  body { font-family: Georgia, serif; margin: 0; color: #1b2a3a; }
+  .topbar { display: flex; align-items: center; gap: 24px; padding: 14px 32px; background: #0f3d5e; color: #fff; }
+  .topbar a { color: #fff; }
+  .mainnav a { margin-right: 18px; }
+  #signout { margin-left: auto; background: none; border: 1px solid #fff; color: #fff; padding: 6px 12px; }
+  .wrap { display: flex; gap: 32px; padding: 24px 32px; }
+  .accounts { flex: 2; }
+  .accounts table { border-collapse: collapse; width: 100%; }
+  .accounts td, .accounts th { border-bottom: 1px solid #ccd; padding: 8px; text-align: left; }
+  .actions { flex: 1; background: #eef3f7; padding: 16px; }
+  .actions button, .actions a { display: block; margin: 8px 0; }
+  .btn-primary { background: #0f3d5e; color: #fff; border: 0; padding: 10px 16px; font-size: 16px; }
+  footer { padding: 16px 32px; font-size: 12px; background: #f2f2f2; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="logo" href="/">Riverbank</a>
+  <nav class="mainnav" aria-label="Main">
+    <a href="/accounts">Accounts</a>
+    <a href="/transfers">Transfers</a>
+    <a href="/billpay">Bill Pay</a>
+    <a href="/help">Help</a>
+  </nav>
+  <button id="signout" type="button">Sign out</button>
+</header>
+<div class="wrap">
+  <main class="accounts">
+    <p class="greeting">Hello, Margaret</p>
+    <h1>Your accounts</h1>
+    <p class="asof">Balances as of November 18, 2026, 9:42 AM</p>
+    <table>
+      <thead><tr><th>Account</th><th>Available balance</th></tr></thead>
+      <tbody>
+        <tr><td>Everyday Checking ••4821</td><td class="amount">$2,431.18</td></tr>
+        <tr><td>Savings ••7730</td><td class="amount">$10,200.00</td></tr>
+      </tbody>
+    </table>
+    <p><a id="statements-link" href="/statements">View statements</a></p>
+    <p><a id="order-checks" href="/services/order-checks">Order checks</a></p>
+  </main>
+  <aside class="actions" aria-label="Quick actions">
+    <h2>Quick actions</h2>
+    <button id="transfer-btn" class="btn-primary" type="button">Transfer money</button>
+    <button id="paybill-btn" class="btn-primary" type="button">Pay a bill</button>
+    <a id="deposit-link" href="/deposit">Deposit a check</a>
+  </aside>
+</div>
+<footer>
+  <a id="atm-link" href="/locations">Find an ATM or branch</a> ·
+  <a href="/privacy">Privacy</a>
+  <p class="legal">Riverbank is a fictional bank used for testing. Member FDIC-style notice: deposits are insured up to $250,000 per depositor. Equal Housing Lender.</p>
+</footer>
+</body>
+</html>

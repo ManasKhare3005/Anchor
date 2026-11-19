@@ -1,0 +1,107 @@
+{
+  "id": "carewell",
+  "name": "CareWell Pharmacy (fictional)",
+  "category": "pharmacy",
+  "home": "v1/home.html",
+  "features": [
+    {
+      "id": "refill",
+      "label": "Refill prescriptions",
+      "v1": "#refill-btn",
+      "change": ["renamed", "tag-changed", "restyled", "decoy", "duplicated"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": [".cw-hero a[href=\"/pharmacy/refill\"]", ".drop a[href=\"/pharmacy/refill\"]"]
+      }
+    },
+    {
+      "id": "rx-status",
+      "label": "Prescription status",
+      "v1": "#rx-status",
+      "change": ["renamed", "into-menu"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": ["a.cw-drop-link"]
+      }
+    },
+    {
+      "id": "vaccine",
+      "label": "Schedule a vaccine",
+      "v1": "#vaccine-link",
+      "change": ["renamed", "restyled"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": [".cw-hero a[href=\"/pharmacy/vaccines\"]"]
+      }
+    },
+    {
+      "id": "store",
+      "label": "Find a pharmacy",
+      "v1": "#store-link",
+      "change": ["renamed"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": ["footer a[href=\"/stores\"]"]
+      }
+    },
+    {
+      "id": "photo",
+      "label": "Photo prints",
+      "v1": "#photo-link",
+      "change": ["removed"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": []
+      }
+    },
+    {
+      "id": "account",
+      "label": "My account",
+      "v1": "header a.account",
+      "change": ["renamed", "restyled"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": ["header a[href=\"/account\"]"]
+      }
+    }
+  ],
+  "states": [
+    {
+      "page": "states/logged-out.html",
+      "kind": "logged-out",
+      "expect": "logged-out",
+      "features": {
+        "store": ["footer a[href=\"/stores\"]"]
+      }
+    },
+    {
+      "page": "states/sale-banner.html",
+      "kind": "sale-banner",
+      "expect": "normal"
+    },
+    {
+      "page": "states/cookie-popup.html",
+      "kind": "cookie-popup",
+      "expect": "normal"
+    },
+    {
+      "page": "states/survey-modal.html",
+      "kind": "survey-modal",
+      "expect": "normal"
+    },
+    {
+      "page": "states/ab-variant.html",
+      "kind": "ab-variant",
+      "expect": "normal"
+    },
+    {
+      "page": "states/session-timeout.html",
+      "kind": "session-timeout",
+      "expect": "normal"
+    }
+  ],
+  "facts": {
+    "v1/home.html": [".rx-list", ".price", ".legal"],
+    "v2/home.html": [".cw-rx", ".price", ".legal"]
+  }
+}

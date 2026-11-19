@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Riverbank - Sign in</title>
+<style>
+  body { font-family: Georgia, serif; margin: 0; color: #1b2a3a; }
+  .topbar { display: flex; align-items: center; gap: 24px; padding: 14px 32px; background: #0f3d5e; color: #fff; }
+  .topbar a { color: #fff; }
+  .login { max-width: 360px; margin: 40px auto; padding: 24px; border: 1px solid #ccd; }
+  .login label { display: block; margin-top: 12px; }
+  footer { padding: 16px 32px; font-size: 12px; background: #f2f2f2; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="logo" href="/">Riverbank</a>
+  <nav class="mainnav" aria-label="Main">
+    <a href="/personal">Personal</a>
+    <a href="/business">Business</a>
+    <a href="/help">Help</a>
+  </nav>
+</header>
+<main>
+  <form class="login" action="/login" method="post">
+    <h1>Sign in to online banking</h1>
+    <label for="user">Username</label>
+    <input id="user" name="user" autocomplete="username">
+    <label for="pass">Password</label>
+    <input id="pass" name="pass" type="password" autocomplete="current-password">
+    <p><button type="submit">Sign in</button></p>
+    <p><a href="/forgot">Forgot username or password?</a></p>
+  </form>
+</main>
+<footer>
+  <a href="/locations">Find an ATM or branch</a> ·
+  <a href="/privacy">Privacy</a>
+  <p class="legal">Riverbank is a fictional bank used for testing. Member FDIC-style notice: deposits are insured up to $250,000 per depositor. Equal Housing Lender.</p>
+</footer>
+</body>
+</html>

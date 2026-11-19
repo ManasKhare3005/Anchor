@@ -1,0 +1,122 @@
+{
+  "id": "riverbank",
+  "name": "Riverbank (fictional bank)",
+  "category": "bank",
+  "home": "v1/home.html",
+  "features": [
+    {
+      "id": "transfer",
+      "label": "Transfer money",
+      "v1": "#transfer-btn",
+      "change": ["renamed", "moved", "tag-changed", "decoy"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": [".tiles a[href=\"/payments/move\"]"]
+      }
+    },
+    {
+      "id": "paybill",
+      "label": "Pay a bill",
+      "v1": "#paybill-btn",
+      "change": ["renamed", "tag-changed", "restyled"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": ["a.tile--pay"]
+      }
+    },
+    {
+      "id": "statements",
+      "label": "View statements",
+      "v1": "#statements-link",
+      "change": ["renamed", "into-menu"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": ["details.rb-menu a[href=\"/documents/statements\"]"]
+      }
+    },
+    {
+      "id": "deposit",
+      "label": "Deposit a check",
+      "v1": "#deposit-link",
+      "change": ["other-page"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": [],
+        "elsewhere": {
+          "page": "v2/services.html",
+          "selectors": ["a.svc-cta"]
+        },
+        "hint": ["footer a[href=\"/services/mobile-deposit\"]"]
+      }
+    },
+    {
+      "id": "order-checks",
+      "label": "Order checks",
+      "v1": "#order-checks",
+      "change": ["removed"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": []
+      }
+    },
+    {
+      "id": "atm",
+      "label": "Find an ATM",
+      "v1": "#atm-link",
+      "change": ["restyled"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": ["footer a[href=\"/locations\"]"]
+      }
+    },
+    {
+      "id": "signout",
+      "label": "Sign out",
+      "v1": "#signout",
+      "change": ["restyled", "moved"],
+      "v2": {
+        "page": "v2/home.html",
+        "selectors": [".rb-user button"]
+      }
+    }
+  ],
+  "states": [
+    {
+      "page": "states/logged-out.html",
+      "kind": "logged-out",
+      "expect": "logged-out",
+      "features": {
+        "atm": ["footer a[href=\"/locations\"]"]
+      }
+    },
+    {
+      "page": "states/sale-banner.html",
+      "kind": "sale-banner",
+      "expect": "normal"
+    },
+    {
+      "page": "states/cookie-popup.html",
+      "kind": "cookie-popup",
+      "expect": "normal"
+    },
+    {
+      "page": "states/survey-modal.html",
+      "kind": "survey-modal",
+      "expect": "normal"
+    },
+    {
+      "page": "states/ab-variant.html",
+      "kind": "ab-variant",
+      "expect": "normal"
+    },
+    {
+      "page": "states/session-timeout.html",
+      "kind": "session-timeout",
+      "expect": "normal"
+    }
+  ],
+  "facts": {
+    "v1/home.html": [".asof", ".amount", ".legal"],
+    "v2/home.html": [".asof", ".amount", ".legal"]
+  }
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Riverbank | Home</title>
+<style>
+  body { font-family: "Helvetica Neue", Arial, sans-serif; margin: 0; color: #12202e; }
+  .rb-header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; padding: 12px 40px; border-bottom: 3px solid #1c7c8c; }
+  .rb-nav { display: flex; gap: 22px; }
+  .rb-nav details { position: relative; }
+  .rb-nav .panel { position: absolute; background: #fff; border: 1px solid #ccc; padding: 8px 12px; min-width: 220px; }
+  .rb-user { display: flex; gap: 12px; align-items: center; }
+  .rb-hero { padding: 24px 40px; background: #f4fafb; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 24px 40px; }
+  .tile { display: block; padding: 20px; border-radius: 12px; background: #1c7c8c; color: #fff; text-decoration: none; text-align: center; }
+  .tile--ghost { background: #fff; color: #1c7c8c; border: 1px solid #1c7c8c; }
+  .balances { padding: 0 40px; }
+  .balances dl { display: grid; grid-template-columns: 1fr auto; }
+  .rb-footer { padding: 20px 40px; font-size: 12px; background: #eef; }
+</style>
+</head>
+<body>
+<header class="rb-header">
+  <a class="rb-logo" href="/">Riverbank</a>
+  <nav class="rb-nav" aria-label="Primary">
+    <details class="rb-menu">
+      <summary>Accounts</summary>
+      <div class="panel">
+        <a class="rb-menu__item" href="/accounts">Account summary</a><br>
+        <a class="rb-menu__item" href="/documents/statements">Statements &amp; documents</a><br>
+        <a class="rb-menu__item" href="/accounts/alerts">Alerts</a>
+      </div>
+    </details>
+    <a href="/payments">Payments</a>
+    <a href="/services">Services</a>
+    <a href="/support">Support</a>
+  </nav>
+  <div class="rb-user">
+    <span>Hello, Margaret</span>
+    <button class="rb-btn rb-btn--outline" type="button">Sign out</button>
+  </div>
+</header>
+<section class="rb-hero">
+  <h1>Good morning</h1>
+  <p class="asof">Balances as of November 18, 2026, 9:42 AM</p>
+</section>
+<section class="tiles" aria-label="What would you like to do?">
+  <a class="tile" href="/payments/move">Move money</a>
+  <a class="tile tile--pay" href="/billpay">Pay bills</a>
+  <a class="tile tile--ghost" href="/payments/limits">Transfer limits</a>
+</section>
+<section class="balances">
+  <h2>Balances</h2>
+  <dl>
+    <dt>Everyday Checking ••4821</dt><dd class="amount">$2,431.18</dd>
+    <dt>Savings ••7730</dt><dd class="amount">$10,200.00</dd>
+  </dl>
+</section>
+<footer class="rb-footer">
+  <nav aria-label="Footer">
+    <a href="/locations">Find an ATM or branch</a> ·
+    <a href="/services/mobile-deposit">Mobile deposit</a> ·
+    <a href="/privacy">Privacy</a>
+  </nav>
+  <p class="legal">Riverbank is a fictional bank used for testing. Member FDIC-style notice: deposits are insured up to $250,000 per depositor. Equal Housing Lender.</p>
+</footer>
+</body>
+</html>

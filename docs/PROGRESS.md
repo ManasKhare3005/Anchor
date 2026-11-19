@@ -18,10 +18,10 @@ decision records are in `docs/decisions.md`.
 ## In progress
 
 - **M1: Matcher and benchmark.** Plan: `docs/plan-M1.md`.
-  - [ ] 1.1 Types + candidates + capture
-  - [ ] 1.2 Signals + lexicon
-  - [ ] 1.3 `match()` + tiers
-  - [ ] 1.4 Fixture sites (bank, pharmacy, utility)
+  - [x] 1.1 Types + candidates + capture
+  - [x] 1.2 Signals + lexicon
+  - [x] 1.3 `match()` + tiers
+  - [x] 1.4 Fixture sites (bank, pharmacy, utility)
   - [ ] 1.5 Site state + two-visit rule
   - [ ] 1.6 Elsewhere search (`menuHint`)
   - [ ] 1.7 Runner + report over fixtures
@@ -73,3 +73,10 @@ decision records are in `docs/decisions.md`.
 2. Are the wrong-match targets (1% sure, 5% fairly sure) right? (after the first M1 report)
 3. License and public name for the repository.
 4. Should the helper page sit behind a simple PIN? (M5)
+
+## M1 notes so far (untuned placeholder thresholds)
+
+- Maple Market pairs: 9 correct, 1 correct-absent, 2 not-found, 0 wrong.
+- Fixture sites (135 feature × scenario runs): 105 correct, 21 correct-absent, 8 not-found,
+  **1 wrong at "fairly"**: the planted decoy "Pay my bill by phone" beat the real "Make a payment"
+  (brightline). All 6 non-redesign states match like v1. Tuning happens in task 1.9.

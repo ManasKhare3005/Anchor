@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Brightline | Account dashboard</title>
+<style>
+  body { font-family: "Open Sans", Arial, sans-serif; margin: 0; color: #111; }
+  .hdr { display: flex; align-items: center; gap: 28px; padding: 14px 36px; background: #111; color: #fff; }
+  .hdr a, .hdr summary { color: #fff; }
+  .hdr details { position: relative; }
+  .hdr .menu { position: absolute; background: #fff; padding: 10px; min-width: 220px; }
+  .hdr .menu a { color: #111; }
+  .cards { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; padding: 24px 36px; }
+  .card { border-radius: 10px; box-shadow: 0 1px 4px #0003; padding: 20px; }
+  .amount { font-size: 30px; font-weight: 700; }
+  .btn { display: inline-block; padding: 12px 22px; border-radius: 6px; border: 0; background: #ffb81c; color: #111; font-size: 17px; }
+  .btn--link { background: none; text-decoration: underline; padding: 0; }
+  .ftr { padding: 18px 36px; background: #f3f3f3; font-size: 12px; }
+</style>
+</head>
+<body>
+<header class="hdr">
+  <a class="logo" href="/">Brightline</a>
+  <nav aria-label="Main">
+    <a href="/account">Dashboard</a>
+    <details>
+      <summary>Billing &amp; payments</summary>
+      <div class="menu">
+        <a href="/billing/statements">Bills &amp; statements</a><br>
+        <a href="/billing/autopay">AutoPay</a><br>
+        <a href="/billing/history">Payment history</a>
+      </div>
+    </details>
+    <a href="/outage-center">Outage center</a>
+    <a href="/help">Help</a>
+  </nav>
+</header>
+<main class="cards">
+  <section class="card" aria-label="Current balance">
+    <h1>Current balance</h1>
+    <p>Account 4471-2290-18</p>
+    <p class="amount">$142.37</p>
+    <p>Due December 3, 2026</p>
+    <button class="btn" type="button">Make a payment</button>
+    <a class="btn btn--link" href="/billing/phone">Pay my bill by phone</a>
+  </section>
+  <section class="card" aria-label="Your service">
+    <h2>Your service</h2>
+    <button class="btn btn--link" type="button" data-action="service-change">Start, stop or move service</button>
+    <p><a href="/usage">Energy usage</a></p>
+  </section>
+</main>
+<footer class="ftr">
+  <a href="/help/contact">Contact us</a> · <a href="/privacy">Privacy</a>
+  <p class="legal">Brightline Utilities is fictional and used for testing. Rates are set by the state utility commission. Late payments after the due date may incur a 1.5% monthly charge.</p>
+</footer>
+</body>
+</html>
