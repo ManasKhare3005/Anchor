@@ -1,0 +1,193 @@
+import { JSDOM } from "jsdom";
+
+/**
+ * Proposes ground-truth labels for real archived pages: where each common shopping feature is on
+ * the "before" page and on the "after" page.
+ *
+ * Deliberately independent of the matcher (its own keyword and link rules, no lexicon, no
+ * scoring), so the labels can't simply agree with the matcher by construction. Every proposal is
+ * reviewed and confirmed by Manas before it counts.
+ */
+
+export interface FeatureRule {
+  id: string;
+  label: string;
+  /** Matched against visible text, aria-label and title. */
+  text: RegExp;
+  /** Matched against the link path. */
+  href?: RegExp;
+  /** Text that disqualifies a candidate (e.g. "Sign in" for the cart rule). */
+  not?: RegExp;
+  /** Special locator for search submit buttons. */
+  searchSubmit?: boolean;
+}
+
+export const SHOPPING_FEATURES: FeatureRule[] = [
+  {
+    id: "sign-in",
+    label: "Sign in",
+    text: /\b(sign[ -]?in|log[ -]?in|account (&|and) lists)\b/i,
+    href: /(signin|sign-in|login|log-in|\/account\/?$|myaccount|\/ap\/)/i,
+    not: /\b(sign[ -]?out|register|create)\b/i,
+  },
+  {
+    id: "cart",
+    label: "Cart",
+    text: /^\s*(\d+\s*)?(items? in )?(shopping )?(cart|basket|bag)\b|\bcart\b/i,
+    href: /(cart|basket|\/bag\b)/i,
+    not: /add to (cart|bag|basket)/i,
+  },
+  {
+    id: "orders",
+    label: "Orders / track order",
+    text: /\b(orders|order status|track (an |my )?order|purchase history|returns (&|and) orders)\b/i,
+    href: /(order-history|orderhistory|\/orders?\b|purchase-history|order-status|track-order)/i,
+  },
+  {
+    id: "help",
+    label: "Help / customer service",
+    text: /\b(help|customer service|support|contact us)\b/i,
+    href: /(\/help|customer-service|customerservice|\/support|contact)/i,
+  },
+  {
+    id: "deals",
+    label: "Deals",
+    text: /\b(today'?s deals|deals|weekly ad|daily deals)\b/i,
+    href: /(\/deals|deal|weeklyad|weekly-ad)/i,
+  },
+  { id: "search", label: "Search button", text: /\b(search|go|submit)\b/i, searchSubmit: true },
+];
+
+const INTERACTIVE =
+  "a[href], button, input[type='submit' i], input[type='image' i], [role='button']";
+
+function clean(s: string | null | undefined) {
+  return (s ?? "").replace(/\s+/g, " ").trim();
+}
+
+function labelOf(el: Element): string {
+  return clean(
+    [
+      el.textContent,
+      el.getAttribute("aria-label"),
+      el.getAttribute("title"),
+      el.getAttribute("value"),
+    ]
+      .filter(Boolean)
+      .join(" "),
+  );
+}
+
+function hrefOf(el: Element, base: string): string {
+  const raw = el.getAttribute("href");
+  if (!raw) return "";
+  try {
+    const u = new URL(raw, base);
+    return u.pathname + u.search;
+  } catch {
+    return raw;
+  }
+}
+
+/** A selector that resolves to exactly this element in this document. */
+export function uniqueSelector(el: Element): string {
+  const doc = el.ownerDocument;
+  const id = el.getAttribute("id");
+  if (id && /^[A-Za-z][\w-]*$/.test(id) && doc.querySelectorAll(`#${id}`).length === 1) {
+    return `#${id}`;
+  }
+  const parts: string[] = [];
+  for (let cur: Element | null = el; cur && cur.tagName !== "HTML"; cur = cur.parentElement) {
+    const tag = cur.tagName.toLowerCase();
+    const parent: Element | null = cur.parentElement;
+    const curId = cur.getAttribute("id");
+    if (
+      cur !== el &&
+      curId &&
+      /^[A-Za-z][\w-]*$/.test(curId) &&
+      doc.querySelectorAll(`#${curId}`).length === 1
+    ) {
+      parts.unshift(`#${curId}`);
+      break;
+    }
+    if (!parent) {
+      parts.unshift(tag);
+      break;
+    }
+    const same = [...parent.children].filter((c) => c.tagName === cur?.tagName);
+    parts.unshift(same.length > 1 ? `${tag}:nth-of-type(${same.indexOf(cur) + 1})` : tag);
+  }
+  return parts.join(" > ");
+}
+
+function regionRank(el: Element): number {
+  // Prefer header/nav (where these features usually live), then anything else, footer last.
+  if (el.closest("header, [role='banner'], nav, [role='navigation']")) return 0;
+  if (el.closest("footer, [role='contentinfo']")) return 2;
+  return 1;
+}
+
+export interface Proposal {
+  selector: string;
+  /** Other elements that lead to the same place (any of them is a correct answer). */
+  alternates: string[];
+  text: string;
+  href: string;
+  region: "header/nav" | "body" | "footer";
+}
+
+export function propose(doc: Document, rule: FeatureRule, base: string): Proposal | null {
+  const all = [...doc.querySelectorAll(INTERACTIVE)];
+  let matches: Element[];
+  if (rule.searchSubmit) {
+    matches = all.filter((el) => {
+      const form = el.closest("form");
+      if (!form) return false;
+      const isSubmit =
+        el.tagName === "BUTTON"
+          ? (el.getAttribute("type") ?? "submit") === "submit"
+          : el.tagName === "INPUT";
+      const searchy =
+        form.matches("[role='search'], [action*='search' i], [action*='/s' i]") ||
+        form.querySelector(
+          "input[type='search' i], input[name='q' i], input[name='k' i], input[name*='search' i], input[name='st' i], input[name='_nkw' i]",
+        ) !== null;
+      return isSubmit && searchy;
+    });
+  } else {
+    matches = all.filter((el) => {
+      const text = labelOf(el);
+      if (rule.not?.test(text)) return false;
+      if (text.length > 80) return false;
+      return rule.text.test(text) || (rule.href ? rule.href.test(hrefOf(el, base)) : false);
+    });
+    // Prefer text matches over link-only matches.
+    matches.sort(
+      (a, b) =>
+        Number(!rule.text.test(labelOf(a))) - Number(!rule.text.test(labelOf(b))) ||
+        regionRank(a) - regionRank(b),
+    );
+  }
+  matches.sort((a, b) => regionRank(a) - regionRank(b));
+  const best = matches[0];
+  if (!best) return null;
+  const bestHref = hrefOf(best, base).split("?")[0] ?? "";
+  const alternates = bestHref
+    ? matches
+        .slice(1)
+        .filter((m) => (hrefOf(m, base).split("?")[0] ?? "") === bestHref)
+        .map(uniqueSelector)
+    : [];
+  const rank = regionRank(best);
+  return {
+    selector: uniqueSelector(best),
+    alternates,
+    text: labelOf(best).slice(0, 80),
+    href: hrefOf(best, base).slice(0, 100),
+    region: rank === 0 ? "header/nav" : rank === 2 ? "footer" : "body",
+  };
+}
+
+export function parseArchived(html: string, url: string): Document {
+  return new JSDOM(html, { url }).window.document;
+}

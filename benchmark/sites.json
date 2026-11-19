@@ -1,0 +1,85 @@
+{
+  "$comment": "Real-site benchmark. Public home pages only; archived copies are fetched from the Wayback Machine into benchmark/cache/ (git-ignored). 'before'/'after' are target dates; the closest good capture is used. Phase 1 = generic shopping (Manas, 2026-11-19); sensitive categories follow.",
+  "sites": [
+    {
+      "id": "amazon",
+      "name": "Amazon",
+      "category": "shopping",
+      "url": "https://www.amazon.com/",
+      "before": "20230615",
+      "after": "20250615"
+    },
+    {
+      "id": "walmart",
+      "name": "Walmart",
+      "category": "shopping",
+      "url": "https://www.walmart.com/",
+      "before": "20230615",
+      "after": "20250615"
+    },
+    {
+      "id": "target",
+      "name": "Target",
+      "category": "shopping",
+      "url": "https://www.target.com/",
+      "before": "20230615",
+      "after": "20250615"
+    },
+    {
+      "id": "ebay",
+      "name": "eBay",
+      "category": "shopping",
+      "url": "https://www.ebay.com/",
+      "before": "20230615",
+      "after": "20250615"
+    },
+    {
+      "id": "bestbuy",
+      "name": "Best Buy",
+      "category": "shopping",
+      "url": "https://www.bestbuy.com/",
+      "before": "20230615",
+      "after": "20250615"
+    },
+    {
+      "id": "etsy",
+      "name": "Etsy",
+      "category": "shopping",
+      "url": "https://www.etsy.com/",
+      "before": "20230615",
+      "after": "20250615"
+    },
+    {
+      "id": "costco",
+      "name": "Costco",
+      "category": "shopping",
+      "url": "https://www.costco.com/",
+      "before": "20230615",
+      "after": "20250615"
+    },
+    {
+      "id": "homedepot",
+      "name": "The Home Depot",
+      "category": "shopping",
+      "url": "https://www.homedepot.com/",
+      "before": "20230615",
+      "after": "20250615"
+    },
+    {
+      "id": "kohls",
+      "name": "Kohl's",
+      "category": "shopping",
+      "url": "https://www.kohls.com/",
+      "before": "20230615",
+      "after": "20250615"
+    },
+    {
+      "id": "macys",
+      "name": "Macy's",
+      "category": "shopping",
+      "url": "https://www.macys.com/",
+      "before": "20230615",
+      "after": "20250615"
+    }
+  ]
+}

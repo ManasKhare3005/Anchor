@@ -7,7 +7,9 @@
     "harness": "node --experimental-strip-types src/cli.ts",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run",
-    "benchmark": "node --experimental-strip-types src/bench-cli.ts"
+    "benchmark": "node --experimental-strip-types src/bench-cli.ts",
+    "real:fetch": "node --experimental-strip-types src/real/fetch-cli.ts",
+    "real:propose": "node --experimental-strip-types src/real/propose-cli.ts"
   },
   "dependencies": {
     "@anchor/matcher": "0.0.0",
