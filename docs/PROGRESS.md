@@ -24,7 +24,7 @@ decision records are in `docs/decisions.md`.
   - [x] 1.4 Fixture sites (bank, pharmacy, utility)
   - [x] 1.5 Site state + two-visit rule
   - [x] 1.6 Elsewhere search (`menuHint`)
-  - [ ] 1.7 Runner + report over fixtures
+  - [x] 1.7 Runner + report over fixtures
   - [ ] 1.8 Real-site pipeline, shopping first. Pause for label confirmation.
   - [ ] 1.9 Calibrate, then sensitive categories
   - [ ] 1.10 Matcher runs in real Chromium
@@ -86,3 +86,8 @@ decision records are in `docs/decisions.md`.
 - Elsewhere search: both "moved to another page" fixtures get the right nav-link hint
   ("Deposit a check" → "Mobile deposit", "Report an outage" → "Outage center"); hints never become
   the pointed-at element.
+- First report (`docs/benchmark-report.md`, fixtures only, untuned): sure 109 correct / 0 wrong
+  (95% upper bound 3.4%); fairly 5 / 1 wrong (the planted decoy). Ablation shows text and
+  accessible name double-count: turning either off _improves_ utility. That's the main tuning target.
+  The lexicon puts "pharmacy" in the prescriptions group, which causes misleading hints. Fix before
+  the lexicon freeze.

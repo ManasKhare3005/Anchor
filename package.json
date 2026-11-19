@@ -19,7 +19,8 @@
     "format:check": "prettier --check .",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build",
     "harness": "npm run harness -w @anchor/benchmark",
-    "test:e2e:edge": "npm run test:e2e:edge -w @anchor/extension"
+    "test:e2e:edge": "npm run test:e2e:edge -w @anchor/extension",
+    "benchmark": "npm run benchmark -w @anchor/benchmark"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

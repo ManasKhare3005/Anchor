@@ -29,6 +29,8 @@ export interface SiteRow {
   hintHit: boolean;
   /** Text of whatever hint the matcher gave (null if none). */
   hint: string | null;
+  /** The hint is itself one of the expected elements (e.g. the right link, inside a closed menu). */
+  hintIsTarget: boolean;
   reasons: string[];
 }
 
@@ -105,6 +107,7 @@ export function runSite(loaded: LoadedSite, opts: MatchOptions = {}): SiteRow[] 
         hintExpected: hints.length > 0,
         hintHit: r.menuHint !== null && hints.includes(r.menuHint),
         hint: text(r.menuHint),
+        hintIsTarget: r.menuHint !== null && expected.includes(r.menuHint),
         reasons: r.reasons,
       });
     };
