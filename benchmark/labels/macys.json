@@ -1,0 +1,108 @@
+{
+  "site": "macys",
+  "url": "https://www.macys.com/",
+  "category": "shopping",
+  "before": "20230615022933",
+  "after": "20250615024149",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#signInBanner > a",
+        "alternates": [],
+        "text": "Sign In",
+        "href": "/account/signin",
+        "region": "body"
+      },
+      "after": {
+        "selector": "#nav-header-root > header > section > div > ul:nth-of-type(2) > li:nth-of-type(1) > menu > section > article:nth-of-type(1) > div:nth-of-type(2) > a",
+        "alternates": [
+          "#nav-header-root > header > section > div > ul:nth-of-type(2) > li:nth-of-type(3) > a",
+          "#nav-footer-root > footer > div:nth-of-type(1) > nav > div:nth-of-type(2) > ul > li:nth-of-type(6) > a"
+        ],
+        "text": "Sign in",
+        "href": "/account/signin",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "cart",
+      "label": "Cart",
+      "before": {
+        "selector": "#m-bag-count-anchor",
+        "alternates": [],
+        "text": "0 Shopping bag has 0 items shopping bag",
+        "href": "/my-bag",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#nav-header-root > header > div > div:nth-of-type(2) > div > a",
+        "alternates": [],
+        "text": "0 item in bag Shopping bag",
+        "href": "/my/bag",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "orders",
+      "label": "Orders / track order",
+      "before": null,
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "body > div:nth-of-type(3) > footer > section:nth-of-type(1) > div > div > div:nth-of-type(1) > div > div > button",
+        "alternates": [],
+        "text": "Open Customer Service flyout",
+        "href": "",
+        "region": "footer"
+      },
+      "after": {
+        "selector": "#nav-footer-root > footer > div:nth-of-type(1) > nav > div:nth-of-type(1) > div > button",
+        "alternates": [],
+        "text": "Expand section: Customer Service",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "before": {
+        "selector": "#mainNavigationFlyouts > div:nth-of-type(8) > div:nth-of-type(4) > div:nth-of-type(2) > a:nth-of-type(3)",
+        "alternates": [],
+        "text": "Deals",
+        "href": "/shop/coupons-deals",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#mobile-nav > div > div > div > div > div:nth-of-type(1) > div > ul > li:nth-of-type(3) > a",
+        "alternates": [],
+        "text": "Deals",
+        "href": "/shop/coupons-deals",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "#searchSubmit",
+        "alternates": [],
+        "text": "Submit product search GO",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": null,
+      "status": "proposed"
+    }
+  ]
+}

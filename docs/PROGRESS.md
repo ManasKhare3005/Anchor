@@ -25,7 +25,7 @@ decision records are in `docs/decisions.md`.
   - [x] 1.5 Site state + two-visit rule
   - [x] 1.6 Elsewhere search (`menuHint`)
   - [x] 1.7 Runner + report over fixtures
-  - [ ] 1.8 Real-site pipeline, shopping first. Pause for label confirmation.
+  - [~] 1.8 Real-site pipeline, shopping first. **Waiting for Manas to confirm labels** (`docs/benchmark-labels-review.md`).
   - [ ] 1.9 Calibrate, then sensitive categories
   - [ ] 1.10 Matcher runs in real Chromium
   - [ ] 1.11 Wrap-up
@@ -91,3 +91,9 @@ decision records are in `docs/decisions.md`.
   accessible name double-count: turning either off _improves_ utility. That's the main tuning target.
   The lexicon puts "pharmacy" in the prescriptions group, which causes misleading hints. Fix before
   the lexicon freeze.
+- Real sites: 8 of 10 shopping sites archived (eBay and Kohl's "after" downloads keep failing). The
+  proposer suggested 48 labels; Claude's pre-check marks 36 ok, 7 exclude, 5 skipped. Preview on the
+  36 (unconfirmed, not used for tuning): sure 21 correct / 0 wrong, fairly 5 / 1 wrong, 9 not found.
+  Nearly all of those 9 are the same link shown twice (gap 0.00), which task 1.9 addresses.
+- A fetcher bug was found and fixed: block-page detection matched `CAPTCHA_ENABLED` inside script
+  configs, which wrongly rejected real pages.

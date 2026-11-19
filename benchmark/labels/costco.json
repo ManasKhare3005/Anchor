@@ -1,0 +1,144 @@
+{
+  "site": "costco",
+  "url": "https://www.costco.com/",
+  "category": "shopping",
+  "before": "20230615032845",
+  "after": "20250615214323",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#header_order_and_returns",
+        "alternates": [
+          "#banner-list-actions > li:nth-of-type(2) > a"
+        ],
+        "text": "Orders & Returns",
+        "href": "/myaccount",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#header-content > header > div > div:nth-of-type(1) > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div > nav > ul > li:nth-of-type(2) > a",
+        "alternates": [
+          "#header-content > header > div > div:nth-of-type(1) > div > div:nth-of-type(3) > div:nth-of-type(4) > div:nth-of-type(1) > div > nav > ul > li:nth-of-type(2) > a",
+          "#header-content > header > div > div:nth-of-type(3) > div > div > div > nav > div > a:nth-of-type(2)"
+        ],
+        "text": "Orders & Returns Orders & Returns",
+        "href": "/myaccount",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "cart",
+      "label": "Cart",
+      "before": {
+        "selector": "#cart-m",
+        "alternates": [
+          "#cart-d",
+          "#cart-t"
+        ],
+        "text": "Cart",
+        "href": "/CheckoutCartView",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#header-content > header > div > div:nth-of-type(1) > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div > nav > ul > li:nth-of-type(3) > a",
+        "alternates": [
+          "#header-content > header > div > div:nth-of-type(1) > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div > nav > ul > li:nth-of-type(3) > a",
+          "#header-content > header > div > div:nth-of-type(1) > div > div:nth-of-type(3) > div:nth-of-type(4) > div:nth-of-type(1) > div > nav > ul > li:nth-of-type(3) > a",
+          "#header-content > header > div > div:nth-of-type(1) > div > div:nth-of-type(3) > div:nth-of-type(4) > div:nth-of-type(2) > div > nav > ul > li:nth-of-type(3) > a"
+        ],
+        "text": "Cart Cart",
+        "href": "/CheckoutCartView",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "orders",
+      "label": "Orders / track order",
+      "before": {
+        "selector": "#header_order_and_returns",
+        "alternates": [],
+        "text": "Orders & Returns",
+        "href": "/myaccount",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#header-content > header > div > div:nth-of-type(1) > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div > nav > ul > li:nth-of-type(2) > a",
+        "alternates": [
+          "#header-content > header > div > div:nth-of-type(1) > div > div:nth-of-type(3) > div:nth-of-type(4) > div:nth-of-type(1) > div > nav > ul > li:nth-of-type(2) > a"
+        ],
+        "text": "Orders & Returns Orders & Returns",
+        "href": "/myaccount",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#customer-service-link",
+        "alternates": [
+          "#footer-widget > div > div:nth-of-type(1) > div > div:nth-of-type(1) > div:nth-of-type(2) > a",
+          "#footer-list > div > div:nth-of-type(3) > ul > li:nth-of-type(1) > a",
+          "#footer-list > div > div:nth-of-type(3) > ul > li:nth-of-type(2) > a",
+          "#heading-4 > p > a"
+        ],
+        "text": "Customer Service",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#header-content > header > div > div:nth-of-type(1) > div > div:nth-of-type(1) > div:nth-of-type(1) > nav > ul > li:nth-of-type(8) > a",
+        "alternates": [
+          "#header-content > header > div > div:nth-of-type(1) > div > div:nth-of-type(1) > div:nth-of-type(2) > nav > ul > li:nth-of-type(5) > a",
+          "body > footer > div > div:nth-of-type(3) > div > div:nth-of-type(1) > div > div > a",
+          "body > footer > div > div:nth-of-type(4) > div:nth-of-type(4) > div > div > div > div > div > div > div > ul > li:nth-of-type(1) > a",
+          "body > footer > div > div:nth-of-type(5) > div > div > div:nth-of-type(3) > div > div > ul > li:nth-of-type(1) > a"
+        ],
+        "text": "Customer Service Customer Service",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "before": {
+        "selector": "#navigation-widget > div > nav > div:nth-of-type(3) > a",
+        "alternates": [
+          "#navigation_v2_data > ul > li:nth-of-type(1039) > a",
+          "#navigation_v2_data > ul > div:nth-of-type(5) > div > div > div:nth-of-type(3) > div > a"
+        ],
+        "text": "Deals",
+        "href": "/CatalogSearch",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#header-content > header > div > div:nth-of-type(2) > div > nav > ul > li:nth-of-type(4) > div > button",
+        "alternates": [],
+        "text": "Deals",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "#formcatsearch > input:nth-of-type(2)",
+        "alternates": [],
+        "text": "Submit",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": null,
+      "status": "proposed"
+    }
+  ]
+}

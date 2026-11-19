@@ -1,0 +1,99 @@
+{
+  "site": "etsy",
+  "url": "https://www.etsy.com/",
+  "category": "shopping",
+  "before": "20230615032144",
+  "after": "20250615230744",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#gnav-header-inner > div:nth-of-type(4) > nav > ul > li:nth-of-type(1) > button",
+        "alternates": [],
+        "text": "Sign in",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#gnav-header-inner > div:nth-of-type(4) > nav > ul > li:nth-of-type(1) > button",
+        "alternates": [],
+        "text": "Sign in",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "cart",
+      "label": "Cart",
+      "before": {
+        "selector": "#gnav-header-inner > div:nth-of-type(4) > nav > ul > li:nth-of-type(2) > span > a",
+        "alternates": [],
+        "text": "0 Cart",
+        "href": "/cart",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#gnav-header-inner > div:nth-of-type(4) > nav > ul > li:nth-of-type(3) > span > a",
+        "alternates": [],
+        "text": "0 Cart",
+        "href": "/cart",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "orders",
+      "label": "Orders / track order",
+      "before": null,
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#collage-footer > footer > div:nth-of-type(3) > nav > div > div > div:nth-of-type(4) > button",
+        "alternates": [],
+        "text": "Help",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#collage-footer > footer > div:nth-of-type(3) > nav > div > div > div:nth-of-type(4) > button",
+        "alternates": [],
+        "text": "Help",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "before": null,
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "#gnav-search > div > div:nth-of-type(1) > button:nth-of-type(2)",
+        "alternates": [],
+        "text": "Search Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#gnav-search > div > div:nth-of-type(1) > button:nth-of-type(2)",
+        "alternates": [],
+        "text": "Search Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "site": "amazon",
+  "url": "https://www.amazon.com/",
+  "category": "shopping",
+  "before": "20230615002158",
+  "after": "20250614000516",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#nav-link-accountList",
+        "alternates": [],
+        "text": "Hello, sign in Account & Lists",
+        "href": "/ap/signin",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#nav-link-accountList > a",
+        "alternates": [
+          "#gw-sign-in-button > span > a"
+        ],
+        "text": "Hello, sign in Account & Lists",
+        "href": "/ap/signin",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "cart",
+      "label": "Cart",
+      "before": {
+        "selector": "#nav-cart",
+        "alternates": [],
+        "text": "0 Cart 0 items in cart",
+        "href": "/gp/cart/view.html",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#nav-assist-cart",
+        "alternates": [
+          "#nav-cart"
+        ],
+        "text": "Cart shift + alt + C Cart, shift, alt, c",
+        "href": "/gp/cart/view.html",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "orders",
+      "label": "Orders / track order",
+      "before": {
+        "selector": "#nav-orders",
+        "alternates": [
+          "#navFooter > div:nth-of-type(1) > div > div:nth-of-type(7) > ul > li:nth-of-type(3) > a"
+        ],
+        "text": "Returns & Orders",
+        "href": "/gp/css/order-history",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#nav-assist-your-orders",
+        "alternates": [
+          "#nav-orders",
+          "#navFooter > div:nth-of-type(1) > div > div:nth-of-type(7) > ul > li:nth-of-type(2) > a"
+        ],
+        "text": "Orders shift + alt + O Your orders, shift, alt, o",
+        "href": "/gp/css/order-history",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#nav-xshop > a:nth-of-type(4)",
+        "alternates": [
+          "#navFooter > div:nth-of-type(1) > div > div:nth-of-type(7) > ul > li:nth-of-type(9) > a",
+          "#navFooter > div:nth-of-type(1) > div > div:nth-of-type(7) > ul > li:nth-of-type(1) > a",
+          "#navFooter > div:nth-of-type(1) > div > div:nth-of-type(7) > ul > li:nth-of-type(4) > a",
+          "#navFooter > div:nth-of-type(5) > ul > li:nth-of-type(1) > a",
+          "#navFooter > div:nth-of-type(5) > ul > li:nth-of-type(2) > a"
+        ],
+        "text": "Customer Service",
+        "href": "/gp/help/customer/display.html",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#nav-xshop > ul > li:nth-of-type(14) > div > a",
+        "alternates": [
+          "#navFooter > div:nth-of-type(1) > div > div:nth-of-type(7) > ul > li:nth-of-type(9) > a",
+          "#navFooter > div:nth-of-type(1) > div > div:nth-of-type(7) > ul > li:nth-of-type(3) > a",
+          "#navFooter > div:nth-of-type(5) > ul > li:nth-of-type(1) > a",
+          "#navFooter > div:nth-of-type(5) > ul > li:nth-of-type(2) > a",
+          "#navFooter > div:nth-of-type(5) > ul > li:nth-of-type(3) > a"
+        ],
+        "text": "Customer Service",
+        "href": "/gp/help/customer/display.html",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "before": {
+        "selector": "#nav-xshop > a:nth-of-type(9)",
+        "alternates": [],
+        "text": "Today's Deals",
+        "href": "/deals",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#nav-xshop > ul > li:nth-of-type(9) > div > a",
+        "alternates": [],
+        "text": "Today's Deals",
+        "href": "/deals",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "#nav-search-submit-button",
+        "alternates": [],
+        "text": "Go",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#nav-search-submit-button",
+        "alternates": [],
+        "text": "Go",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

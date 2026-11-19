@@ -8,3 +8,5 @@ test-results
 playwright-report
 CLAUDE.md
 docs/benchmark-report.md
+docs/benchmark-labels-review.md
+benchmark/labels/*.json

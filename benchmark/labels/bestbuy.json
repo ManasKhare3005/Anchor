@@ -1,0 +1,130 @@
+{
+  "site": "bestbuy",
+  "url": "https://www.bestbuy.com/",
+  "category": "shopping",
+  "before": "20230615001002",
+  "after": "20250615130110",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": null,
+      "after": {
+        "selector": "body > div:nth-of-type(4) > nav > ul:nth-of-type(2) > ul > li:nth-of-type(5) > a",
+        "alternates": [],
+        "text": "Account",
+        "href": "/site/customer/myaccount",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "cart",
+      "label": "Cart",
+      "before": {
+        "selector": "#shop-cart-icon-51477444 > div > div > div > a",
+        "alternates": [],
+        "text": "Cart Cart, 0 item Cart",
+        "href": "/cart",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#shop-cart-icon-43802982 > div > div > div > a",
+        "alternates": [],
+        "text": "Cart Cart, 0 item Cart",
+        "href": "/cart",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "orders",
+      "label": "Orders / track order",
+      "before": {
+        "selector": "#order-status-flyout-button > button",
+        "alternates": [],
+        "text": "Order Status",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#order-status-flyout-button > a",
+        "alternates": [
+          "body > div:nth-of-type(4) > nav > ul:nth-of-type(2) > ul > li:nth-of-type(6) > a",
+          "#footer > ul > li:nth-of-type(2) > div > a",
+          "#footer > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(1) > a"
+        ],
+        "text": "Order Status",
+        "href": "/profile/ss/orderlookup",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#footer > ul > li:nth-of-type(1) > div > a",
+        "alternates": [
+          "#footer > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > ul > li:nth-of-type(1) > a"
+        ],
+        "text": "Visit our Support Center",
+        "href": "/support",
+        "region": "footer"
+      },
+      "after": {
+        "selector": "body > div:nth-of-type(4) > nav > ul:nth-of-type(2) > ul > li:nth-of-type(2) > ul > li:nth-of-type(1) > a",
+        "alternates": [
+          "#footer > ul > li:nth-of-type(1) > div > a",
+          "#footer > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > ul > li:nth-of-type(1) > a"
+        ],
+        "text": "Visit our Support Center",
+        "href": "/support",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "before": {
+        "selector": "#shop-header-41733986 > div > div:nth-of-type(1) > header > div:nth-of-type(2) > nav > div > ul > li:nth-of-type(1) > a",
+        "alternates": [
+          "#shop-nba-engage-container-94061015 > div > div > div > div:nth-of-type(2) > a",
+          "#widget-2f5d7948-8d72-4366-a468-ad64cad28970 > div > a",
+          "#widget-2f5d7948-8d72-4366-a468-ad64cad28970 > div > div:nth-of-type(2) > div > div > a"
+        ],
+        "text": "Top Deals",
+        "href": "/site/electronics/top-deals/pcmcat1563299784494.c",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#shop-header-11476148 > div > div:nth-of-type(1) > header > div:nth-of-type(4) > nav > div > ul > li:nth-of-type(1) > a",
+        "alternates": [
+          "body > div:nth-of-type(4) > nav > ul:nth-of-type(2) > ul > li:nth-of-type(1) > ul > li:nth-of-type(1) > a",
+          "body > div:nth-of-type(4) > nav > ul:nth-of-type(2) > ul > li:nth-of-type(9) > a",
+          "#widget-6a689134-7e98-4268-b959-08df4ec687ee > div > div:nth-of-type(3) > div > div:nth-of-type(2) > div > div > ul > li:nth-of-type(1) > div > a:nth-of-type(2)",
+          "#widget-6a689134-7e98-4268-b959-08df4ec687ee > div > div:nth-of-type(3) > div > div:nth-of-type(2) > div > div > ul > li:nth-of-type(1) > a",
+          "#widget-6a689134-7e98-4268-b959-08df4ec687ee > div > div:nth-of-type(3) > div > div:nth-of-type(2) > div > div > ul > li:nth-of-type(1) > div > a:nth-of-type(1)"
+        ],
+        "text": "Top Deals",
+        "href": "/top-deals",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "#shop-header-41733986 > div > div:nth-of-type(1) > header > div:nth-of-type(1) > div > div:nth-of-type(1) > div > form > button:nth-of-type(2)",
+        "alternates": [],
+        "text": "submit search submit search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": null,
+      "status": "proposed"
+    }
+  ]
+}

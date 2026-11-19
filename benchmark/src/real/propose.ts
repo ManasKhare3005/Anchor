@@ -28,7 +28,7 @@ export const SHOPPING_FEATURES: FeatureRule[] = [
     label: "Sign in",
     text: /\b(sign[ -]?in|log[ -]?in|account (&|and) lists)\b/i,
     href: /(signin|sign-in|login|log-in|\/account\/?$|myaccount|\/ap\/)/i,
-    not: /\b(sign[ -]?out|register|create)\b/i,
+    not: /\b(sign[ -]?out|register|create|delete|pay your bill)\b/i,
   },
   {
     id: "cart",
@@ -41,21 +41,28 @@ export const SHOPPING_FEATURES: FeatureRule[] = [
     id: "orders",
     label: "Orders / track order",
     text: /\b(orders|order status|track (an |my )?order|purchase history|returns (&|and) orders)\b/i,
-    href: /(order-history|orderhistory|\/orders?\b|purchase-history|order-status|track-order)/i,
+    href: /(order-history|orderhistory|\/orders?(\/|$)|purchase-history|order-status|orderlookup|track-order|order-tracking)/i,
   },
   {
     id: "help",
     label: "Help / customer service",
     text: /\b(help|customer service|support|contact us)\b/i,
+    not: /(help you find|maker|communit|support (&|and) services)/i,
     href: /(\/help|customer-service|customerservice|\/support|contact)/i,
   },
   {
     id: "deals",
     label: "Deals",
     text: /\b(today'?s deals|deals|weekly ad|daily deals)\b/i,
-    href: /(\/deals|deal|weeklyad|weekly-ad)/i,
+    href: /(\/deals?\b|weeklyad|weekly-ad|top-deals|coupons-deals)/i,
   },
-  { id: "search", label: "Search button", text: /\b(search|go|submit)\b/i, searchSubmit: true },
+  {
+    id: "search",
+    label: "Search button",
+    text: /\b(search|go|submit)\b/i,
+    not: /\b(clear|reset|close|cancel)\b/i,
+    searchSubmit: true,
+  },
 ];
 
 const INTERACTIVE =
@@ -82,8 +89,8 @@ function hrefOf(el: Element, base: string): string {
   const raw = el.getAttribute("href");
   if (!raw) return "";
   try {
-    const u = new URL(raw, base);
-    return u.pathname + u.search;
+    // Path only: tracking parameters (e.g. "ref=DealsRow") must not satisfy a link rule.
+    return new URL(raw, base).pathname.replace(/\/+$/, "") || "/";
   } catch {
     return raw;
   }
@@ -136,7 +143,17 @@ export interface Proposal {
   region: "header/nav" | "body" | "footer";
 }
 
-export function propose(doc: Document, rule: FeatureRule, base: string): Proposal | null {
+/**
+ * @param prefer For the "after" page: the before-page proposal. An after-page element with exactly
+ *   the same text or link target is evidently the same feature and is preferred. Plain equality,
+ *   not the matcher's similarity scoring.
+ */
+export function propose(
+  doc: Document,
+  rule: FeatureRule,
+  base: string,
+  prefer?: Proposal | null,
+): Proposal | null {
   const all = [...doc.querySelectorAll(INTERACTIVE)];
   let matches: Element[];
   if (rule.searchSubmit) {
@@ -152,8 +169,9 @@ export function propose(doc: Document, rule: FeatureRule, base: string): Proposa
         form.querySelector(
           "input[type='search' i], input[name='q' i], input[name='k' i], input[name*='search' i], input[name='st' i], input[name='_nkw' i]",
         ) !== null;
-      return isSubmit && searchy;
+      return isSubmit && searchy && !rule.not?.test(labelOf(el));
     });
+    matches.sort((a, b) => regionRank(a) - regionRank(b));
   } else {
     matches = all.filter((el) => {
       const text = labelOf(el);
@@ -161,23 +179,36 @@ export function propose(doc: Document, rule: FeatureRule, base: string): Proposa
       if (text.length > 80) return false;
       return rule.text.test(text) || (rule.href ? rule.href.test(hrefOf(el, base)) : false);
     });
-    // Prefer text matches over link-only matches.
+    // One sort, in priority order: text matches before link-only matches, then header/nav
+    // before body before footer, then document order (stable sort).
     matches.sort(
       (a, b) =>
         Number(!rule.text.test(labelOf(a))) - Number(!rule.text.test(labelOf(b))) ||
         regionRank(a) - regionRank(b),
     );
   }
-  matches.sort((a, b) => regionRank(a) - regionRank(b));
+  if (prefer) {
+    const same = (el: Element) =>
+      clean(labelOf(el)).toLowerCase() === prefer.text.toLowerCase() ||
+      (prefer.href !== "" && hrefOf(el, base) === prefer.href);
+    matches.sort((a, b) => Number(!same(a)) - Number(!same(b)));
+  }
   const best = matches[0];
   if (!best) return null;
-  const bestHref = hrefOf(best, base).split("?")[0] ?? "";
-  const alternates = bestHref
-    ? matches
-        .slice(1)
-        .filter((m) => (hrefOf(m, base).split("?")[0] ?? "") === bestHref)
-        .map(uniqueSelector)
-    : [];
+  // Other matches that are evidently the same feature: same link target, or the same visible
+  // text in the same region (sites often repeat a link, e.g. a menu button and its link).
+  const bestHref = hrefOf(best, base);
+  const bestText = clean(best.textContent).toLowerCase();
+  const alternates = matches
+    .slice(1)
+    .filter(
+      (m) =>
+        (bestHref !== "" && hrefOf(m, base) === bestHref) ||
+        (bestText !== "" &&
+          clean(m.textContent).toLowerCase() === bestText &&
+          regionRank(m) === regionRank(best)),
+    )
+    .map(uniqueSelector);
   const rank = regionRank(best);
   return {
     selector: uniqueSelector(best),

@@ -1,0 +1,61 @@
+{
+  "$comment": "Claude's pre-check of the proposed labels, shown in docs/benchmark-labels-review.md to make Manas's review quicker. Not a confirmation: only Manas confirms. ok = looks right; exclude = looks wrong or unverifiable (reason given).",
+  "amazon-sign-in": ["ok", ""],
+  "amazon-cart": [
+    "ok",
+    "After shows the keyboard-shortcut copy of the cart link first; the visible cart link counts too (same address)."
+  ],
+  "amazon-orders": [
+    "ok",
+    "Same as cart: shortcut copy listed, visible 'Returns & Orders' link counts too."
+  ],
+  "amazon-help": ["ok", ""],
+  "amazon-deals": ["ok", ""],
+  "amazon-search": ["ok", ""],
+  "bestbuy-cart": ["ok", ""],
+  "bestbuy-orders": ["ok", ""],
+  "bestbuy-help": ["ok", "Moved from footer to header."],
+  "bestbuy-deals": ["ok", ""],
+  "bestbuy-search": [
+    "exclude",
+    "After 'not found' is probably the search box being drawn by scripts, not a real removal."
+  ],
+  "costco-sign-in": [
+    "exclude",
+    "Proposer picked 'Orders & Returns' (an account link), not sign-in."
+  ],
+  "costco-cart": ["ok", ""],
+  "costco-orders": ["ok", ""],
+  "costco-help": ["ok", ""],
+  "costco-deals": ["ok", "'Deals' link → 'Deals' menu button, same header slot."],
+  "costco-search": ["exclude", "After 'not found' is probably script-drawn, not a real removal."],
+  "etsy-sign-in": ["ok", ""],
+  "etsy-cart": ["ok", ""],
+  "etsy-help": ["ok", ""],
+  "etsy-search": ["ok", ""],
+  "homedepot-sign-in": ["ok", "'Sign in' → 'Log In', same purpose."],
+  "homedepot-cart": ["ok", ""],
+  "homedepot-orders": ["ok", ""],
+  "homedepot-help": ["ok", "'Help & FAQs' → 'Customer Service Center', same link target."],
+  "homedepot-deals": [
+    "exclude",
+    "Can't tell if the weekly ad really left the home page or is script-drawn."
+  ],
+  "macys-sign-in": ["ok", ""],
+  "macys-cart": ["ok", "'Shopping bag' in both."],
+  "macys-help": ["ok", "Both open the Customer Service menu; moved from footer to header."],
+  "macys-deals": ["ok", ""],
+  "macys-search": ["exclude", "After 'not found' is probably script-drawn, not a real removal."],
+  "target-sign-in": ["ok", ""],
+  "target-cart": ["ok", ""],
+  "target-orders": ["ok", ""],
+  "target-help": ["ok", ""],
+  "target-deals": ["ok", "'Deals' → 'Top Deals', same category id in the link."],
+  "target-search": ["ok", ""],
+  "walmart-sign-in": ["exclude", "After 'not found' is probably script-drawn, not a real removal."],
+  "walmart-cart": ["ok", ""],
+  "walmart-orders": ["ok", ""],
+  "walmart-help": ["ok", ""],
+  "walmart-deals": ["exclude", "Proposer picked a 'Shop now' promo button, not the Deals link."],
+  "walmart-search": ["ok", ""]
+}

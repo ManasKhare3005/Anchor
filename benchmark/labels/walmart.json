@@ -1,0 +1,125 @@
+{
+  "site": "walmart",
+  "url": "https://www.walmart.com/",
+  "category": "shopping",
+  "before": "20230615004236",
+  "after": "20250615011145",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "body > div > div:nth-of-type(1) > div > span > header > div:nth-of-type(3) > div > div > button:nth-of-type(1)",
+        "alternates": [],
+        "text": "Sign In",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "cart",
+      "label": "Cart",
+      "before": {
+        "selector": "#cart-button-header",
+        "alternates": [],
+        "text": "$0.00 Cart contains 0 items",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#cart-button-header",
+        "alternates": [],
+        "text": "$0.00 Cart contains 0 items Total Amount $0.00",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "orders",
+      "label": "Orders / track order",
+      "before": {
+        "selector": "body > div > div:nth-of-type(1) > div > span > header > div:nth-of-type(3) > div > div > a:nth-of-type(1)",
+        "alternates": [],
+        "text": "Purchase History",
+        "href": "/orders",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "body > div > div:nth-of-type(1) > span > header > nav > ul > li:nth-of-type(2) > div > div > div > div > a:nth-of-type(1)",
+        "alternates": [],
+        "text": "Purchase History",
+        "href": "/orders",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "body > div > div:nth-of-type(1) > div > div > span > footer > section:nth-of-type(2) > ul > li:nth-of-type(6) > a",
+        "alternates": [],
+        "text": "Help",
+        "href": "/help",
+        "region": "footer"
+      },
+      "after": {
+        "selector": "body > div > div:nth-of-type(1) > div > span > footer > section:nth-of-type(2) > ul > li:nth-of-type(6) > a",
+        "alternates": [],
+        "text": "Help",
+        "href": "/help",
+        "region": "footer"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "before": {
+        "selector": "#link-Shopnow-GridPOVBanners-tallBanner-contentZone15-wmJ9ELf7",
+        "alternates": [
+          "#linkcard-Shopnow-GridPOVBanners-tallBanner-contentZone15-wmJ9ELf7"
+        ],
+        "text": "Shop now Shop now",
+        "href": "/shop/deals/flash-picks",
+        "region": "body"
+      },
+      "after": {
+        "selector": "#link-Shopnow-PrismAdjustableCardCarousel-contentZone11-LYdPCyut-card-4",
+        "alternates": [
+          "#linkcard-Shopnow-PrismAdjustableCardCarousel-contentZone11-LYdPCyut-card-4",
+          "#link-Shopnow-PrismAdjustableBanner-gridLarge-contentZone15-LYdPCyut",
+          "#linkcard-Shopnow-PrismAdjustableBanner-gridLarge-contentZone15-LYdPCyut",
+          "#link-Shopnow-PrismAdjustableBanner-gridTall-contentZone23-LYdPCyut",
+          "#linkcard-Shopnow-PrismAdjustableBanner-gridTall-contentZone23-LYdPCyut"
+        ],
+        "text": "Shop now Shop now",
+        "href": "/shop/deals/pets",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "body > div > div:nth-of-type(1) > div > span > header > form > div > button:nth-of-type(2)",
+        "alternates": [],
+        "text": "Search icon",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "body > div > div:nth-of-type(1) > span > header > form > div > button:nth-of-type(2)",
+        "alternates": [],
+        "text": "Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

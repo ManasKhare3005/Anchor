@@ -1,0 +1,124 @@
+{
+  "site": "homedepot",
+  "url": "https://www.homedepot.com/",
+  "category": "shopping",
+  "before": "20230615030829",
+  "after": "20250614044629",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#SPSOSignIn > a",
+        "alternates": [
+          "#signInReminder > div > div:nth-of-type(2) > p > a",
+          "#authSignIn > a",
+          "#headerMyAccount",
+          "#simplePanelMain > ul:nth-of-type(1) > li:nth-of-type(1) > a",
+          "#signIn-php-hydrator > div > div > div:nth-of-type(1) > div:nth-of-type(2) > a"
+        ],
+        "text": "Sign in Sign in to your account",
+        "href": "/auth/view/signin",
+        "region": "body"
+      },
+      "after": {
+        "selector": "#header-nav-container > div > button:nth-of-type(4)",
+        "alternates": [],
+        "text": "Log In open drawer to view Account",
+        "href": "",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "cart",
+      "label": "Cart",
+      "before": {
+        "selector": "#headerCart",
+        "alternates": [],
+        "text": "Cart 0 items",
+        "href": "/mycart/home",
+        "region": "body"
+      },
+      "after": {
+        "selector": "#header-content > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > div > div > a",
+        "alternates": [
+          "#header-content > div:nth-of-type(2) > div:nth-of-type(7) > div:nth-of-type(1) > div > div > a"
+        ],
+        "text": "Cart Click to redirect to view my cart page",
+        "href": "/cart",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "orders",
+      "label": "Orders / track order",
+      "before": {
+        "selector": "#B2CCheckOrder > a",
+        "alternates": [
+          "#B2XCheckOrder > a",
+          "#TasklinkList > li:nth-of-type(6) > a",
+          "#guestMyAccountLinks > li:nth-of-type(1) > a",
+          "#simplePanelMain > ul:nth-of-type(3) > li:nth-of-type(6) > a"
+        ],
+        "text": "Check Order Status",
+        "href": "/order/view/tracking",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#footer-static > div > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(2) > a",
+        "alternates": [],
+        "text": "Check Order Status Check Order Status",
+        "href": "/myaccount/guest-order-tracking",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#footer > div:nth-of-type(2) > nav:nth-of-type(1) > ul > li:nth-of-type(8) > a",
+        "alternates": [
+          "#TasklinkList > li:nth-of-type(8) > a",
+          "#simplePanelMain > ul:nth-of-type(3) > li:nth-of-type(8) > a"
+        ],
+        "text": "Help & FAQs",
+        "href": "/c/customer_service",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#footer-static > div > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > a",
+        "alternates": [
+          "#footer-static > div > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(1) > a",
+          "#footer-static > div > div:nth-of-type(2) > div:nth-of-type(3) > div > a:nth-of-type(1)"
+        ],
+        "text": "Customer Service Center Customer Service Center",
+        "href": "/c/customer_service",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "before": {
+        "selector": "#rv_homepage_rr > div > div:nth-of-type(2) > a",
+        "alternates": [],
+        "text": "Browse Weekly Ad",
+        "href": "/c/localad",
+        "region": "body"
+      },
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": null,
+      "after": null,
+      "status": "proposed"
+    }
+  ]
+}
