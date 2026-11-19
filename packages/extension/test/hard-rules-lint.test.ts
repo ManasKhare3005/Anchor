@@ -33,6 +33,8 @@ const BANNED: [rule: string, code: string][] = [
   ["Hard Rule 1", "location.assign('/x');"],
   ["Hard Rule 1", "window.location.replace('/x');"],
   ["Hard Rule 1", "location.href = '/x';"],
+  ["Hard Rule 1", "window.location.href = '/x';"],
+  ["Hard Rule 1", "window.location = '/x' as unknown as Location;"],
   ["Hard Rule 1", "history.pushState({}, '', '/x');"],
   ["Hard Rule 1", "declare const b: { tabs: { update(o: object): void } }; b.tabs.update({});"],
   ["Hard Rule 6", "void fetch('/x');"],
@@ -56,6 +58,11 @@ describe("Hard Rule lint checks fire on shipped source", () => {
 
   it("allows ordinary code", async () => {
     const ok = "declare const el: HTMLElement; el.scrollIntoView(); el.getAttribute('aria-label');";
+    expect(await messagesFor(ok, SHIPPED_FILE)).toEqual([]);
+  });
+
+  it("allows writing an href field on a plain object (not navigation)", async () => {
+    const ok = "const out: Record<string, string> = {}; out.href = '/orders';";
     expect(await messagesFor(ok, SHIPPED_FILE)).toEqual([]);
   });
 });

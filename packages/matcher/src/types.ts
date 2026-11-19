@@ -1,84 +1,81 @@
+import { z } from "zod";
+
 /**
- * Core data types for the matcher.
+ * Fingerprint schema (CLAUDE.md § Data model, refined in M1).
  *
- * The matcher is pure: it never touches a live DOM. An extractor (elsewhere) turns a page into
- * `CandidateDescriptor[]`; the matcher compares a stored `ElementFingerprint` against them.
- * See DECISIONS.md D-003.
- *
- * Starting point from README §6. Refined in Phase 1.
+ * Built from the element's meaning and structure, never pixel positions (D-016). Stored text is
+ * scrubbed of personal details at capture time.
  */
 
-export interface Rect {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-}
+export const SCHEMA_VERSION = 1;
 
-/** What we remember about an element the user uses. */
-export interface ElementFingerprint {
-  /** Stable id we assign. */
-  id: string;
-  /** Origin, e.g. "https://www.example.com". */
-  site: string;
-  /** Rough page type / URL pattern. */
-  pageKind: string;
-  /** What the user calls it ("Track order"). */
-  label: string;
-  /** Visible text. */
-  text: string;
-  /** ARIA role or tag semantics (button, link, ...). */
-  role: string;
-  ariaLabel?: string;
-  /** id, name, href pattern, data-* ... */
-  attributes: Record<string, string>;
-  /** Structural path. Weak signal. */
-  domPath: string;
-  /** Nearby visible text (context). */
-  neighbors: string[];
-  /** Relative to viewport. */
-  position: Rect;
-  /** Optional perceptual hash of a cropped screenshot. */
-  visualHash?: string;
-  /** ISO date. */
-  lastSeen: string;
-}
+export const SignalsSchema = z.object({
+  /** Visible text, scrubbed. */
+  text: z.string(),
+  /** Approximate accessible name, scrubbed. */
+  accessibleName: z.string(),
+  /** button, link, menuitem, textbox... */
+  role: z.string(),
+  tag: z.string(),
+  /** id, name, type, href (path pattern), class (stable tokens), data-*, aria-* (allow-listed). */
+  attributes: z.record(z.string(), z.string()),
+  neighborText: z.object({ before: z.string(), after: z.string() }),
+  /** Landmarks, headings and form context, outermost first. */
+  ancestorTrail: z.array(z.string()),
+  /** Weak signal only; absent when there is no layout (e.g. jsdom). */
+  visual: z.object({ region: z.string(), sizeBucket: z.string() }).optional(),
+});
 
-/** One element on the new page that might be the remembered one. Produced by an extractor. */
-export interface CandidateDescriptor {
-  /** Extractor-assigned handle so the caller can map back to a real element. */
-  ref: string;
-  text: string;
-  role: string;
-  ariaLabel?: string;
-  attributes: Record<string, string>;
-  domPath: string;
-  neighbors: string[];
-  /** May be absent when extracted without layout (e.g. jsdom). */
-  position?: Rect;
-}
+export type Signals = z.infer<typeof SignalsSchema>;
 
-export type Confidence = "high" | "medium" | "low";
+export const FingerprintSchema = z.object({
+  schemaVersion: z.literal(SCHEMA_VERSION),
+  id: z.string().min(1),
+  /** Registrable domain, e.g. "example.co.uk". */
+  site: z.string().min(1),
+  /** URL path pattern where it was captured, ids replaced by "*". */
+  pagePattern: z.string(),
+  /** The person's own name for it, e.g. "Pay the light bill". */
+  personalName: z.string().optional(),
+  signals: SignalsSchema,
+  /** Extra observed forms (A/B tests). */
+  variants: z.array(SignalsSchema),
+  createdAt: z.string(),
+  lastSeenAt: z.string(),
+});
 
-/** Per-signal contribution, kept so every score is inspectable. */
+export type Fingerprint = z.infer<typeof FingerprintSchema>;
+
+export type Tier = "sure" | "fairly" | "unsure";
+
 export interface SignalScore {
   signal: string;
-  /** Similarity in [0, 1]. */
+  /** 0 to 1. */
   similarity: number;
   weight: number;
 }
 
 export interface ScoredCandidate {
-  ref: string;
-  /** Combined score in [0, 1]. */
+  element: Element;
   score: number;
+  hidden: boolean;
   signals: SignalScore[];
 }
 
 export interface MatchResult {
-  fingerprintId: string;
-  /** Best first. Empty when nothing plausible. */
-  candidates: ScoredCandidate[];
-  /** Confidence in candidates[0]. "low" when there are none. */
-  confidence: Confidence;
+  /** The element to point at. Always null when tier is "unsure" (Hard Rule 5). */
+  element: Element | null;
+  /** 0 to 1, score of the best candidate. */
+  score: number;
+  tier: Tier;
+  /** Score distance from the best candidate to the runner-up. */
+  runnerUpGap: number;
+  /** True when the element exists but is hidden, e.g. inside a closed menu. */
+  hidden: boolean;
+  /** Human-readable explanation for the helper view. Never page content beyond scrubbed labels. */
+  reasons: string[];
+  /** Nav or menu link that probably leads to the feature on another page. Always "unsure". */
+  menuHint: Element | null;
+  /** Best candidates, for debugging and the benchmark. */
+  ranked: ScoredCandidate[];
 }

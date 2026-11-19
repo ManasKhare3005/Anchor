@@ -50,7 +50,8 @@ const HARD_RULE_SYNTAX = [
     message: "Hard Rule 1: no programmatic navigation.",
   },
   {
-    selector: "AssignmentExpression > MemberExpression.left[property.name=/^(location|href)$/]",
+    selector:
+      "AssignmentExpression > MemberExpression.left:matches([property.name='location'], [property.name='href'][object.name='location'], [property.name='href'][object.property.name='location'])",
     message: "Hard Rule 1: no programmatic navigation.",
   },
   {
