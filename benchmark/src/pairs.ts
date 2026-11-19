@@ -5,7 +5,7 @@ import { PairSchema, type Pair } from "./schema.ts";
 
 export const FIXTURES_DIR = resolve(
   dirname(fileURLToPath(import.meta.url)),
-  "../../../fixtures/pairs",
+  "../../fixtures/pairs",
 );
 
 export interface LoadedPair {

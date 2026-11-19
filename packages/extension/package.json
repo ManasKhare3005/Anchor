@@ -7,10 +7,13 @@
     "dev": "wxt",
     "build": "wxt build",
     "typecheck": "wxt prepare && tsc -p tsconfig.json",
-    "test:e2e": "wxt build && playwright test"
+    "test:e2e": "wxt build && playwright test",
+    "test": "wxt build && vitest run",
+    "test:e2e:edge": "wxt build && node e2e/run-edge.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.65.1",
+    "vitest": "5.1.0",
     "wxt": "0.21.5"
   }
 }

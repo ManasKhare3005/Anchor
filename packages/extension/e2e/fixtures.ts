@@ -7,7 +7,7 @@ import { test as base, chromium, type BrowserContext, type Worker } from "@playw
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const EXTENSION_DIR = resolve(here, "../.output/chrome-mv3");
-const FIXTURES_DIR = resolve(here, "../../fixtures");
+const FIXTURES_DIR = resolve(here, "../../../fixtures");
 
 const TYPES: Record<string, string> = {
   ".html": "text/html; charset=utf-8",
@@ -43,6 +43,7 @@ function serveFixtures(): Promise<{ server: Server; origin: string }> {
 interface Fixtures {
   context: BrowserContext;
   serviceWorker: Worker;
+  extensionId: string;
   fixtureOrigin: string;
 }
 
@@ -50,7 +51,8 @@ export const test = base.extend<Fixtures>({
   // eslint-disable-next-line no-empty-pattern
   context: async ({}, use) => {
     const context = await chromium.launchPersistentContext("", {
-      channel: "chromium",
+      // Default: Playwright's bundled Chromium. Set ANCHOR_E2E_CHANNEL=msedge to try Edge.
+      channel: process.env.ANCHOR_E2E_CHANNEL ?? "chromium",
       args: [`--disable-extensions-except=${EXTENSION_DIR}`, `--load-extension=${EXTENSION_DIR}`],
     });
     await use(context);
@@ -59,6 +61,9 @@ export const test = base.extend<Fixtures>({
   serviceWorker: async ({ context }, use) => {
     const sw = context.serviceWorkers()[0] ?? (await context.waitForEvent("serviceworker"));
     await use(sw);
+  },
+  extensionId: async ({ serviceWorker }, use) => {
+    await use(new URL(serviceWorker.url()).host);
   },
   // eslint-disable-next-line no-empty-pattern
   fixtureOrigin: async ({}, use) => {
