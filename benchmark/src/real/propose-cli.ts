@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { LABELS_DIR, allLabels, loadLabels, saveLabels, type Label } from "./labels.ts";
-import { SHOPPING_FEATURES, parseArchived, propose } from "./propose.ts";
+import { featuresFor, parseArchived, propose } from "./propose.ts";
 import { BENCH_DIR, cachePath, cachedFor, loadRealSites } from "./wayback.ts";
 
 /**
@@ -16,14 +16,14 @@ for (const site of loadRealSites()) {
   const after = cachedFor(site.id, "after");
   if (!before || !after) {
     skipped.push(
-      `${site.name}: archived ${!before ? "before" : "after"} page keeps failing to download`,
+      `${site.name}: no usable archived ${!before ? "before" : "after"} page (download failures or only a tiny redirect stub)`,
     );
     continue;
   }
   const docBefore = parseArchived(readFileSync(cachePath(site.id, before), "utf8"), site.url);
   const docAfter = parseArchived(readFileSync(cachePath(site.id, after), "utf8"), site.url);
   const existing = loadLabels(site.id);
-  const features: Label[] = SHOPPING_FEATURES.map((rule) => {
+  const features: Label[] = featuresFor(site.category).map((rule) => {
     const kept = existing?.features.find((f) => f.id === rule.id && f.status !== "proposed");
     if (kept && existing?.before === before && existing.after === after) return kept;
     const onBefore = propose(docBefore, rule, site.url);

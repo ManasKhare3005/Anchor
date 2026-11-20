@@ -7,7 +7,7 @@ Outcomes: **correct** = pointed at the right element; **wrong** = pointed at the
 ## Notes
 
 - Sources: Maple Market pairs and three fixture sites (hand-written), plus real archived shopping home pages (Wayback Machine, original HTML, no scripts run).
-- Real-site labels: 0 confirmed by Manas, 72 proposed and not yet reviewed. Unreviewed rows are marked "real (unconfirmed)" and are never used to set thresholds.
+- Real-site labels: 0 confirmed by Manas, 119 proposed and not yet reviewed. Unreviewed rows are marked "real (unconfirmed)" and are never used to set thresholds.
 
 ## Thresholds
 
@@ -26,15 +26,15 @@ Chosen: sure ≥ 0.60 with gap ≥ 0.25; fairly ≥ 0.35 with gap ≥ 0.20. Thes
 | --- | --- | --- | --- | --- | --- | --- |
 | calibration set (in-sample) | 141 | 112 | 0 | 7 | 0 | 6 |
 | leave-one-site-out (held out) | 140 | 111 | 0 | 7 | 0 | 7 |
-| preview: 54 unconfirmed real labels (pre-checked ok) | 45 | 38 | 0 | 7 | 0 | 9 |
+| preview: 90 unconfirmed real labels (pre-checked ok) | 74 | 66 | 0 | 8 | 0 | 16 |
 
 ## Results by tier (all sources)
 
 | Tier | Correct | Wrong | Not found | Correct absent | Wrong rate | Wrong rate, 95% upper bound |
 | --- | --- | --- | --- | --- | --- | --- |
-| sure | 150 | 0 | 0 | 0 | 0.0% | 2.5% |
-| fairly | 14 | 0 | 0 | 0 | 0.0% | 21.5% |
-| unsure | 0 | 0 | 15 | 22 | n/a | n/a |
+| sure | 178 | 0 | 0 | 0 | 0.0% | 2.1% |
+| fairly | 15 | 0 | 0 | 0 | 0.0% | 20.4% |
+| unsure | 0 | 0 | 22 | 22 | n/a | n/a |
 
 Targets: wrong rate ≤ 1% at **sure**, ≤ 5% at **fairly** (CLAUDE.md). With small samples the upper bound matters more than the point estimate.
 
@@ -44,7 +44,16 @@ Targets: wrong rate ≤ 1% at **sure**, ≤ 5% at **fairly** (CLAUDE.md). With s
 | --- | --- | --- | --- | --- | --- | --- |
 | maple-pairs | 12 | 10 | 1 | 1 | 0 | 0 |
 | fixture-sites | 135 | 109 | 21 | 5 | 0 | 0 |
-| real-sites | 54 | 45 | 0 | 9 | 0 | 0 |
+| real-sites | 90 | 74 | 0 | 16 | 0 | 0 |
+
+## Real sites by category
+
+| Category | Runs | Correct | Correct absent | Not found | Wrong |
+| --- | --- | --- | --- | --- | --- |
+| bank | 11 | 10 | 0 | 1 | 0 |
+| government | 15 | 12 | 0 | 3 | 0 |
+| pharmacy | 9 | 6 | 0 | 3 | 0 |
+| shopping | 55 | 46 | 0 | 9 | 0 |
 
 ## Results by scenario
 
@@ -59,7 +68,7 @@ Targets: wrong rate ≤ 1% at **sure**, ≤ 5% at **fairly** (CLAUDE.md). With s
 | pair:removed | 2 | 1 | 1 | 0 | 0 |
 | pair:renamed | 2 | 2 | 0 | 0 | 0 |
 | pair:restyled | 2 | 2 | 0 | 0 | 0 |
-| real (unconfirmed) | 54 | 45 | 0 | 9 | 0 |
+| real (unconfirmed) | 90 | 74 | 0 | 16 | 0 |
 | sale-banner | 19 | 19 | 0 | 0 | 0 |
 | session-timeout | 19 | 19 | 0 | 0 | 0 |
 | survey-modal | 19 | 19 | 0 | 0 | 0 |
@@ -68,21 +77,21 @@ Targets: wrong rate ≤ 1% at **sure**, ≤ 5% at **fairly** (CLAUDE.md). With s
 
 ## Weakest signal (ablation)
 
-Each signal is turned off in turn. Utility = correct answers − 10 × wrong answers (baseline 186). The signal whose removal hurts least is the weakest: **accessibleName**.
+Each signal is turned off in turn. Utility = correct answers − 10 × wrong answers (baseline 215). The signal whose removal hurts least is the weakest: **role**.
 
 | Signal turned off | Utility | Change | Correct | Wrong |
 | --- | --- | --- | --- | --- |
-| accessibleName | 186 | 0 | 186 | 0 |
-| role | 186 | 0 | 186 | 0 |
-| visual | 186 | 0 | 186 | 0 |
-| class | 185 | -1 | 185 | 0 |
-| tag | 174 | -12 | 184 | 1 |
-| neighbors | 174 | -12 | 184 | 1 |
-| concept | 172 | -14 | 182 | 1 |
-| identity | 171 | -15 | 181 | 1 |
-| href | 171 | -15 | 181 | 1 |
-| text | 167 | -19 | 177 | 1 |
-| trail | 164 | -22 | 184 | 2 |
+| role | 216 | +1 | 216 | 0 |
+| class | 215 | 0 | 215 | 0 |
+| visual | 215 | 0 | 215 | 0 |
+| accessibleName | 214 | -1 | 214 | 0 |
+| concept | 204 | -11 | 214 | 1 |
+| tag | 204 | -11 | 214 | 1 |
+| neighbors | 202 | -13 | 212 | 1 |
+| href | 200 | -15 | 210 | 1 |
+| identity | 198 | -17 | 208 | 1 |
+| text | 196 | -19 | 206 | 1 |
+| trail | 194 | -21 | 214 | 2 |
 
 ## Every wrong match
 
@@ -90,7 +99,7 @@ None.
 
 ## Moved to another page (menu hints)
 
-Expected hints found: 2 of 2. Hints given elsewhere (possibly misleading, always shown as unsure): 14.
+Expected hints found: 2 of 2. Hints given elsewhere (possibly misleading, always shown as unsure): 19.
 
 | Site | Feature | Scenario | Hint | Hint is the feature itself |
 | --- | --- | --- | --- | --- |
@@ -106,8 +115,13 @@ Expected hints found: 2 of 2. Hints given elsewhere (possibly misleading, always
 | costco | orders | real (unconfirmed) | "Orders & Returns" | yes |
 | costco | help | real (unconfirmed) | "Customer Service" | yes |
 | costco | deals | real (unconfirmed) | "Get Email Offers" | no |
+| irs | sign-in | real (unconfirmed) | "Sign in" | yes |
+| irs | search | real (unconfirmed) | "Find a Local Office" | no |
 | macys | cart | real (unconfirmed) | "<a>" | yes |
 | macys | help | real (unconfirmed) | "FAQs" | no |
+| riteaid | refill | real (unconfirmed) | "Transfer Prescriptions chevron right" | no |
+| usps | search | real (unconfirmed) | "Find USPS Locations" | no |
+| walgreens | vaccines | real (unconfirmed) | "Vaccinations" | yes |
 
 ## Site state (redesign vs. different state)
 

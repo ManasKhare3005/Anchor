@@ -67,6 +67,90 @@ export const SHOPPING_FEATURES: FeatureRule[] = [
   },
 ];
 
+const byId = (id: string): FeatureRule => {
+  const r = SHOPPING_FEATURES.find((x) => x.id === id);
+  if (!r) throw new Error(`no shopping rule ${id}`);
+  return r;
+};
+
+/** Common to every category: sign in, help, search. */
+const COMMON = [byId("sign-in"), byId("help"), byId("search")];
+
+export const PHARMACY_FEATURES: FeatureRule[] = [
+  ...COMMON,
+  {
+    id: "refill",
+    label: "Refill prescriptions",
+    text: /\b(refill|renew|reorder)\b.*\b(prescriptions?|rx|meds|medications?)\b|\brefill( rx)?\b/i,
+    href: /(refill|\/rx\/|prescription)/i,
+    not: /\b(reminders?|alerts?|transfer)\b/i,
+  },
+  {
+    id: "find-pharmacy",
+    label: "Find a pharmacy / store",
+    text: /\b(find a (store|pharmacy|location)|store locator|locations?|stores near)\b/i,
+    href: /(store-?locator|\/stores?\b|\/locations?\b|find-a-store)/i,
+  },
+  {
+    id: "vaccines",
+    label: "Vaccines / appointments",
+    text: /\b(vaccines?|vaccinations?|immuni[sz]ations?|flu shots?|appointments?)\b/i,
+    href: /(vaccin|immuni|appointment|flu-shot)/i,
+  },
+];
+
+export const GOVERNMENT_FEATURES: FeatureRule[] = [
+  {
+    ...byId("sign-in"),
+    text: /\b(sign[ -]?in|log[ -]?in|my (social security|account|medicare)|create (an )?account)\b/i,
+    not: /\b(sign[ -]?out)\b/i,
+  },
+  byId("help"),
+  byId("search"),
+  {
+    id: "apply",
+    label: "Apply for benefits",
+    text: /\b(apply( for| online)?|applications?|benefits?)\b/i,
+    href: /(apply|benefits|application)/i,
+    not: /\b(status|calculator|estimat)\b/i,
+  },
+  {
+    id: "find-office",
+    label: "Find an office / location",
+    text: /\b(find (an |a |your )?(office|location|post office)|office locator|locations?)\b/i,
+    href: /(office|locator|locations?)/i,
+  },
+];
+
+export const BANK_FEATURES: FeatureRule[] = [
+  ...COMMON,
+  {
+    id: "open-account",
+    label: "Open an account",
+    text: /\b(open (an |a new )?(account|checking|savings)|get started)\b/i,
+    href: /(open-?account|\/checking|\/open\b|apply)/i,
+  },
+  {
+    id: "atm-branch",
+    label: "Find an ATM / branch",
+    text: /\b(atms?|branch(es)?|locations?|find (us|a branch|an atm))\b/i,
+    href: /(locator|\/atm|branch|locations?)/i,
+  },
+];
+
+export function featuresFor(category: string): FeatureRule[] {
+  switch (category) {
+    case "pharmacy":
+      return PHARMACY_FEATURES;
+    case "government":
+      return GOVERNMENT_FEATURES;
+    case "bank":
+      return BANK_FEATURES;
+    default:
+      return SHOPPING_FEATURES;
+  }
+}
+
 const INTERACTIVE =
   "a[href], button, input[type='submit' i], input[type='image' i], [role='button']";
 

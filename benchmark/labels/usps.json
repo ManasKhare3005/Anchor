@@ -1,0 +1,102 @@
+{
+  "site": "usps",
+  "url": "https://www.usps.com/",
+  "category": "government",
+  "before": "20230615000651",
+  "after": "20250615020813",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#msign > div > a",
+        "alternates": [
+          "#login-register-header"
+        ],
+        "text": "Sign In",
+        "href": "/entreg/LoginAction_input",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#msign > div > a",
+        "alternates": [
+          "#login-register-header"
+        ],
+        "text": "Sign In",
+        "href": "/entreg/LoginAction_input",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#navhelp",
+        "alternates": [],
+        "text": "Skip Help Links",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#navhelp",
+        "alternates": [],
+        "text": "Skip Help Links",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "#g-navigation > div > nav > ul > li:nth-of-type(2) > div > form > span > input:nth-of-type(2)",
+        "alternates": [],
+        "text": "Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#g-navigation > div > nav > ul > li:nth-of-type(2) > div > form > span > input:nth-of-type(2)",
+        "alternates": [],
+        "text": "Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "apply",
+      "label": "Apply for benefits",
+      "before": null,
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "find-office",
+      "label": "Find an office / location",
+      "before": {
+        "selector": "#g-navigation > div > nav > ul > li:nth-of-type(1) > div > ul > li:nth-of-type(3) > a",
+        "alternates": [
+          "#g-navigation > div > nav > ul > li:nth-of-type(2) > div > ul:nth-of-type(1) > li:nth-of-type(6) > a",
+          "#link-locator"
+        ],
+        "text": "Find USPS Locations",
+        "href": "/find-location.htm",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#g-navigation > div > nav > ul > li:nth-of-type(1) > div > ul > li:nth-of-type(3) > a",
+        "alternates": [
+          "#g-navigation > div > nav > ul > li:nth-of-type(2) > div > ul:nth-of-type(1) > li:nth-of-type(6) > a",
+          "#link-locator"
+        ],
+        "text": "Find USPS Locations",
+        "href": "/locations",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

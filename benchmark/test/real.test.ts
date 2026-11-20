@@ -1,6 +1,14 @@
 import { JSDOM } from "jsdom";
 import { describe, expect, it } from "vitest";
-import { SHOPPING_FEATURES, propose, uniqueSelector } from "../src/real/propose.ts";
+import {
+  BANK_FEATURES,
+  GOVERNMENT_FEATURES,
+  PHARMACY_FEATURES,
+  SHOPPING_FEATURES,
+  featuresFor,
+  propose,
+  uniqueSelector,
+} from "../src/real/propose.ts";
 import { problemWith } from "../src/real/wayback.ts";
 
 const BASE = "https://shop.example.com/";
@@ -67,5 +75,50 @@ describe("problemWith (archive sanity checks)", () => {
   it("ignores block-page words inside scripts (e.g. a CAPTCHA_ENABLED config flag)", () => {
     const page = `<html><head><title>Shop</title><script>var c={"GLOBAL_CAPTCHA_ENABLED":true}</script></head><body>${links}${pad}</body></html>`;
     expect(problemWith(page)).toBeNull();
+  });
+});
+
+describe("category feature rules", () => {
+  const page = (html: string) => new JSDOM(html, { url: BASE }).window.document;
+  const find = (rules: typeof SHOPPING_FEATURES, id: string, doc: Document) => {
+    const r = rules.find((x) => x.id === id);
+    if (!r) throw new Error(id);
+    return propose(doc, r, BASE)?.text ?? null;
+  };
+
+  it("pharmacy: refill, find a pharmacy, vaccines — and not 'Refill reminders'", () => {
+    const doc = page(`<header><nav>
+      <button>Refill reminders</button><a href="/rx/refill">Refill prescriptions</a>
+      <a href="/store-locator">Find a store</a><a href="/immunizations">Get vaccinated: flu shots</a>
+    </nav></header>`);
+    expect(find(PHARMACY_FEATURES, "refill", doc)).toBe("Refill prescriptions");
+    expect(find(PHARMACY_FEATURES, "find-pharmacy", doc)).toBe("Find a store");
+    expect(find(PHARMACY_FEATURES, "vaccines", doc)).toMatch(/flu shots/);
+  });
+
+  it("government: my account sign-in, apply (not 'application status'), find an office", () => {
+    const doc = page(`<header><nav>
+      <a href="/myaccount">my Social Security</a>
+      <a href="/status">Check application status</a><a href="/apply">Apply for benefits</a>
+      <a href="/locator">Find an office</a>
+    </nav></header>`);
+    expect(find(GOVERNMENT_FEATURES, "sign-in", doc)).toBe("my Social Security");
+    expect(find(GOVERNMENT_FEATURES, "apply", doc)).toBe("Apply for benefits");
+    expect(find(GOVERNMENT_FEATURES, "find-office", doc)).toBe("Find an office");
+  });
+
+  it("bank: open an account, find an ATM or branch", () => {
+    const doc = page(`<header><nav>
+      <a href="/checking">Open an account</a><a href="/locator">Find ATMs &amp; branches</a>
+    </nav></header>`);
+    expect(find(BANK_FEATURES, "open-account", doc)).toBe("Open an account");
+    expect(find(BANK_FEATURES, "atm-branch", doc)).toMatch(/ATMs/);
+  });
+
+  it("chooses rules by category", () => {
+    expect(featuresFor("pharmacy")).toBe(PHARMACY_FEATURES);
+    expect(featuresFor("government")).toBe(GOVERNMENT_FEATURES);
+    expect(featuresFor("bank")).toBe(BANK_FEATURES);
+    expect(featuresFor("shopping")).toBe(SHOPPING_FEATURES);
   });
 });
