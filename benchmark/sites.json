@@ -31,7 +31,10 @@
       "category": "shopping",
       "url": "https://www.ebay.com/",
       "before": "20230615",
-      "after": "20250615"
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315", "20241201"]
+      }
     },
     {
       "id": "bestbuy",
@@ -71,7 +74,10 @@
       "category": "shopping",
       "url": "https://www.kohls.com/",
       "before": "20230615",
-      "after": "20250615"
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315", "20241201"]
+      }
     },
     {
       "id": "macys",
@@ -80,6 +86,28 @@
       "url": "https://www.macys.com/",
       "before": "20230615",
       "after": "20250615"
+    },
+    {
+      "id": "lowes",
+      "name": "Lowe's",
+      "category": "shopping",
+      "url": "https://www.lowes.com/",
+      "before": "20230615",
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315"]
+      }
+    },
+    {
+      "id": "wayfair",
+      "name": "Wayfair",
+      "category": "shopping",
+      "url": "https://www.wayfair.com/",
+      "before": "20230615",
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315"]
+      }
     }
   ]
 }

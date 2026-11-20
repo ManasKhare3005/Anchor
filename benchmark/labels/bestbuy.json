@@ -8,13 +8,19 @@
     {
       "id": "sign-in",
       "label": "Sign in",
-      "before": null,
-      "after": {
-        "selector": "body > div:nth-of-type(4) > nav > ul:nth-of-type(2) > ul > li:nth-of-type(5) > a",
+      "before": {
+        "selector": "#footer > div:nth-of-type(1) > div:nth-of-type(2) > a:nth-of-type(1)",
         "alternates": [],
-        "text": "Account",
-        "href": "/site/customer/myaccount",
-        "region": "header/nav"
+        "text": "Sign in or Create Account",
+        "href": "/identity/global/signin",
+        "region": "footer"
+      },
+      "after": {
+        "selector": "#footer > div:nth-of-type(1) > div:nth-of-type(3) > a",
+        "alternates": [],
+        "text": "Sign in or Create Account",
+        "href": "/identity/global/signin",
+        "region": "footer"
       },
       "status": "proposed"
     },

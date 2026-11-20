@@ -76,6 +76,7 @@ export function realRows(
         score: r.score,
         gap: r.runnerUpGap,
         outcome,
+        topCorrect: r.ranked[0] !== undefined && expected.includes(r.ranked[0].element),
         got: text(r.element),
         reasons: r.reasons,
         hintExpected: false,

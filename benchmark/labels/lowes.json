@@ -1,0 +1,107 @@
+{
+  "site": "lowes",
+  "url": "https://www.lowes.com/",
+  "category": "shopping",
+  "before": "20230615061649",
+  "after": "20250614233145",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": null,
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "cart",
+      "label": "Cart",
+      "before": {
+        "selector": "#cart-preview-wrapper > a",
+        "alternates": [],
+        "text": "Cart with 0 itemsCart Cart Count",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#cart-count-wrapper",
+        "alternates": [],
+        "text": "Cart with 0 itemsCart Cart Count",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "orders",
+      "label": "Orders / track order",
+      "before": {
+        "selector": "#quicklink_3",
+        "alternates": [],
+        "text": "Order Status",
+        "href": "/mylowes/orders",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#quicklink_3",
+        "alternates": [],
+        "text": "Order Status",
+        "href": "/mylowes/orders",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#app > div:nth-of-type(2) > div > div:nth-of-type(20) > div > div > div:nth-of-type(1) > a",
+        "alternates": [
+          "#app > div:nth-of-type(2) > div > div:nth-of-type(20) > div > div > div:nth-of-type(1) > div > a"
+        ],
+        "text": "Buy online or through our mobile app and pick up at your local Lowe’s.",
+        "href": "/l/help/store-pickup",
+        "region": "body"
+      },
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "before": {
+        "selector": "#quicklink_4",
+        "alternates": [],
+        "text": "Weekly Ad",
+        "href": "/weekly-ad",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#quicklink_4",
+        "alternates": [],
+        "text": "Weekly Ad",
+        "href": "/weekly-ad",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "#frmQuickSearch > section > button",
+        "alternates": [],
+        "text": "Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#frmQuickSearch > section > button",
+        "alternates": [],
+        "text": "Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "site": "ebay",
+  "url": "https://www.ebay.com/",
+  "category": "shopping",
+  "before": "20230615001035",
+  "after": "20250315015048",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#gh-eb-u > noscript > a",
+        "alternates": [
+          "#gh-wl-click-body > div:nth-of-type(2) > span > a"
+        ],
+        "text": "Sign in",
+        "href": "/ws/eBayISAPI.dll",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#gh-ident-srvr-wrap > span:nth-of-type(2) > a",
+        "alternates": [
+          "#s0-1-5-9-11-0-1-dialog > div > div > div:nth-of-type(1) > span > a"
+        ],
+        "text": "Sign in",
+        "href": "/ws/eBayISAPI.dll",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "cart",
+      "label": "Cart",
+      "before": {
+        "selector": "#gh-minicart-hover > div > a:nth-of-type(1)",
+        "alternates": [
+          "#gh-minicart-hover > div > a:nth-of-type(2)"
+        ],
+        "text": "Your shopping cart",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#gh > nav > div:nth-of-type(2) > div:nth-of-type(4) > div > button",
+        "alternates": [],
+        "text": "Expand Cart",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "orders",
+      "label": "Orders / track order",
+      "before": {
+        "selector": "#gh-ul-nav > li:nth-of-type(5) > a",
+        "alternates": [],
+        "text": "Purchase History",
+        "href": "/mye/myebay/purchase",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#s0-1-5-9-10-0-dialog > div > ul > li:nth-of-type(5) > a",
+        "alternates": [],
+        "text": "Purchase History",
+        "href": "/mye/myebay/purchase",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#gh-p-3 > a",
+        "alternates": [],
+        "text": "Help & Contact",
+        "href": "/ocs/home",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#gh > nav > div:nth-of-type(1) > span:nth-of-type(5) > a",
+        "alternates": [],
+        "text": "Help & Contact Help & Contact",
+        "href": "/help/home",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "before": {
+        "selector": "#gh-p-1 > a",
+        "alternates": [
+          "#items_list1 > div:nth-of-type(1) > div > div:nth-of-type(1) > h2 > a",
+          "#items_list1 > div:nth-of-type(1) > div > div:nth-of-type(2) > a"
+        ],
+        "text": "Daily Deals",
+        "href": "/deals",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#gh > nav > div:nth-of-type(1) > span:nth-of-type(2) > a",
+        "alternates": [
+          "#mainContent > div > div > div:nth-of-type(2) > div:nth-of-type(12) > div:nth-of-type(1) > div:nth-of-type(1) > div > h2 > a",
+          "#mainContent > div > div > div:nth-of-type(2) > div:nth-of-type(12) > div:nth-of-type(2) > div > div > div > ul > li:nth-of-type(1) > div > h2 > a",
+          "#mainContent > div > div > div:nth-of-type(2) > div:nth-of-type(12) > div:nth-of-type(1) > div:nth-of-type(1) > div > div:nth-of-type(2) > a",
+          "#mainContent > div > div > div:nth-of-type(2) > div:nth-of-type(12) > div:nth-of-type(2) > div > div > div > ul > li:nth-of-type(1) > div > div:nth-of-type(2) > a"
+        ],
+        "text": "Daily Deals Daily Deals",
+        "href": "/deals",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "#gh-btn",
+        "alternates": [],
+        "text": "Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#gh-search-btn",
+        "alternates": [],
+        "text": "Search Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import {
   type Tier,
 } from "@anchor/matcher";
 import { classifyAllSites, type StateRow } from "./classify-sites.ts";
+import type { Evaluation, HeldOut } from "./calibrate.ts";
 import { runAll } from "./run.ts";
 import type { Outcome } from "./run.ts";
 import { runAllSites } from "./run-sites.ts";
@@ -23,6 +24,8 @@ export interface BenchRow {
   score: number;
   gap: number;
   outcome: Outcome;
+  /** Whether the top-ranked candidate is a right answer, whatever the tier (used to re-tier during calibration). */
+  topCorrect: boolean;
   got: string | null;
   reasons: string[];
   hintExpected: boolean;
@@ -46,6 +49,7 @@ export function fixtureRows(opts: MatchOptions = {}): BenchRow[] {
     score: r.score,
     gap: r.gap,
     outcome: r.outcome,
+    topCorrect: r.topCorrect,
     got: r.got,
     reasons: r.reasons,
     hintExpected: false,
@@ -162,6 +166,38 @@ function table(header: string[], body: (string | number)[][]): string {
   ].join("\n");
 }
 
+function evalRow(name: string, e: Evaluation): (string | number)[] {
+  return [name, e.good, e.sure.correct, e.sure.wrong, e.fairly.correct, e.fairly.wrong, e.notFound];
+}
+
+function calibrationSection(c: NonNullable<ReportInput["calibration"]>): string[] {
+  const head = [
+    "Set",
+    "Good",
+    "Sure correct",
+    "Sure wrong",
+    "Fairly correct",
+    "Fairly wrong",
+    "Not found",
+  ];
+  const rows: (string | number)[][] = [];
+  if (c.chosen) rows.push(evalRow("calibration set (in-sample)", c.chosen));
+  rows.push(evalRow("leave-one-site-out (held out)", c.loso.total));
+  if (c.preview) rows.push(evalRow(c.preview.description, c.preview.result));
+  return [
+    "## Calibration",
+    "",
+    `Calibration set: ${c.setDescription}. Thresholds are chosen to find the most features with **zero** wrong matches on that set (a safety margin under the 1% / 5% targets; tuning up to the targets overfit). Leave-one-site-out re-tunes without each site in turn and scores that site, to show how the thresholds do on a site they never saw.`,
+    "",
+    c.chosen
+      ? `Chosen: sure ≥ ${c.chosen.thresholds.sure.score.toFixed(2)} with gap ≥ ${c.chosen.thresholds.sure.gap.toFixed(2)}; fairly ≥ ${c.chosen.thresholds.fairly.score.toFixed(2)} with gap ≥ ${c.chosen.thresholds.fairly.gap.toFixed(2)}. ${c.matchesDefaults ? "These are the matcher's built-in defaults." : "**These differ from the matcher's built-in defaults; update packages/matcher/src/match.ts.**"}`
+      : "No setting meets the targets.",
+    "",
+    table(head, rows),
+    "",
+  ];
+}
+
 export interface ReportInput {
   rows: BenchRow[];
   thresholds: Thresholds;
@@ -169,6 +205,13 @@ export interface ReportInput {
   states: StateRow[];
   notes?: string[];
   generatedAt: string;
+  calibration?: {
+    setDescription: string;
+    chosen: Evaluation | null;
+    loso: { folds: HeldOut[]; total: Evaluation };
+    matchesDefaults: boolean;
+    preview?: { description: string; result: Evaluation };
+  };
 }
 
 export function renderReport(input: ReportInput): string {
@@ -198,6 +241,7 @@ export function renderReport(input: ReportInput): string {
       ],
     ),
     "",
+    ...(input.calibration ? calibrationSection(input.calibration) : []),
     "## Results by tier (all sources)",
     "",
     table(
@@ -340,6 +384,7 @@ export function buildReport(
   opts: MatchOptions = {},
   extra: RowSource[] = [],
   notes: string[] = [],
+  calibration?: ReportInput["calibration"],
 ) {
   const thresholds = opts.thresholds ?? DEFAULT_THRESHOLDS;
   return renderReport({
@@ -349,5 +394,6 @@ export function buildReport(
     states: classifyAllSites(),
     notes,
     generatedAt: new Date().toISOString().slice(0, 10),
+    ...(calibration ? { calibration } : {}),
   });
 }

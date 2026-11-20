@@ -1,0 +1,137 @@
+{
+  "site": "kohls",
+  "url": "https://www.kohls.com/",
+  "category": "shopping",
+  "before": "20230615004347",
+  "after": "20250613143500",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#footer2022 > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > ul > li:nth-of-type(1) > a",
+        "alternates": [],
+        "text": "Sign In",
+        "href": "/myaccount/kohls_login.jsp",
+        "region": "footer"
+      },
+      "after": {
+        "selector": "#footer2022 > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > ul > li:nth-of-type(1) > a",
+        "alternates": [
+          "#footer2022 > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > ul > li:nth-of-type(2) > a"
+        ],
+        "text": "Sign In",
+        "href": "/myaccount/signin.jsp",
+        "region": "footer"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "cart",
+      "label": "Cart",
+      "before": {
+        "selector": "#tr_phase2_ShoppingBg",
+        "alternates": [],
+        "text": "0 item(s), $0.00 Mini Shopping Cart",
+        "href": "/checkout/shopping_cart.jsp",
+        "region": "body"
+      },
+      "after": {
+        "selector": "#tr_phase2_ShoppingBg",
+        "alternates": [],
+        "text": "0 item(s), $0.00 Mini Shopping Cart",
+        "href": "/checkout/shopping_cart.jsp",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "orders",
+      "label": "Orders / track order",
+      "before": {
+        "selector": "#top-nav-right > li:nth-of-type(3) > a:nth-of-type(1)",
+        "alternates": [
+          "#top-nav-right > li:nth-of-type(3) > a:nth-of-type(2)",
+          "#footer2022 > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > ul > li:nth-of-type(2) > a",
+          "#footer2022 > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > ul > li:nth-of-type(4) > a"
+        ],
+        "text": "Order Status Order Status",
+        "href": "/upgrade/myaccount/order_status_login.jsp",
+        "region": "body"
+      },
+      "after": {
+        "selector": "#top-nav-right > li:nth-of-type(4) > a:nth-of-type(1)",
+        "alternates": [
+          "#top-nav-right > li:nth-of-type(4) > a:nth-of-type(2)",
+          "#footer2022 > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > ul > li:nth-of-type(2) > a"
+        ],
+        "text": "Order Status Order Status",
+        "href": "/upgrade/myaccount/order_status_login.jsp",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#top-nav-right > li:nth-of-type(4) > a",
+        "alternates": [
+          "#footer2022 > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > ul > li:nth-of-type(1) > a"
+        ],
+        "text": "Help",
+        "href": "/",
+        "region": "body"
+      },
+      "after": {
+        "selector": "#top-nav-right > li:nth-of-type(5) > a",
+        "alternates": [],
+        "text": "Help",
+        "href": "/",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "before": {
+        "selector": "#top-nav-right > li:nth-of-type(2) > a",
+        "alternates": [
+          "#open-drawer > div > div:nth-of-type(3) > a",
+          "#footer2022 > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > ul > li:nth-of-type(6) > a"
+        ],
+        "text": "Kohl’s Coupons",
+        "href": "/sale-event/coupons-deals.jsp",
+        "region": "body"
+      },
+      "after": {
+        "selector": "#hp-equity01 > div:nth-of-type(5) > div:nth-of-type(1) > div > p > a:nth-of-type(6)",
+        "alternates": [],
+        "text": "clearance deals",
+        "href": "/catalog/clearance.jsp",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "#site-search > fieldset > input:nth-of-type(1)",
+        "alternates": [],
+        "text": "",
+        "href": "",
+        "region": "body"
+      },
+      "after": {
+        "selector": "#site-search > fieldset > input:nth-of-type(1)",
+        "alternates": [],
+        "text": "",
+        "href": "",
+        "region": "body"
+      },
+      "status": "proposed"
+    }
+  ]
+}

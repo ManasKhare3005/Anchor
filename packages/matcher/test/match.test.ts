@@ -97,11 +97,47 @@ describe("match", () => {
 });
 
 describe("tierFor", () => {
+  const T = { sure: { score: 0.75, gap: 0.15 }, fairly: { score: 0.55, gap: 0.08 } };
+
   it("needs both score and gap", () => {
-    expect(tierFor(0.95, 0.5, DEFAULT_THRESHOLDS)).toBe("sure");
-    expect(tierFor(0.95, 0.1, DEFAULT_THRESHOLDS)).toBe("fairly");
-    expect(tierFor(0.95, 0.01, DEFAULT_THRESHOLDS)).toBe("unsure");
-    expect(tierFor(0.6, 0.5, DEFAULT_THRESHOLDS)).toBe("fairly");
-    expect(tierFor(0.4, 0.5, DEFAULT_THRESHOLDS)).toBe("unsure");
+    expect(tierFor(0.95, 0.5, T)).toBe("sure");
+    expect(tierFor(0.95, 0.1, T)).toBe("fairly");
+    expect(tierFor(0.95, 0.01, T)).toBe("unsure");
+    expect(tierFor(0.6, 0.5, T)).toBe("fairly");
+    expect(tierFor(0.4, 0.5, T)).toBe("unsure");
+  });
+
+  it("calibrated defaults keep fairly no stricter than sure", () => {
+    expect(DEFAULT_THRESHOLDS.fairly.score).toBeLessThanOrEqual(DEFAULT_THRESHOLDS.sure.score);
+    expect(DEFAULT_THRESHOLDS.fairly.gap).toBeLessThanOrEqual(DEFAULT_THRESHOLDS.sure.gap);
+  });
+});
+
+describe("duplicate links (same feature shown twice)", () => {
+  const fpCart = remember(`<header><nav><a href="/cart">Cart</a></nav></header>`, "a");
+
+  it("treats two links to the same address with the same label as one feature", () => {
+    const doc = dom(
+      `<header><nav class="desktop"><a id="d" href="/cart">Cart</a></nav>
+               <nav class="mobile"><a id="m" href="/cart">Cart</a></nav></header>`,
+      URL_,
+    );
+    const r = match(doc, fpCart);
+    expect(r.tier).not.toBe("unsure");
+    expect([one(doc, "#d"), one(doc, "#m")]).toContain(r.element);
+  });
+
+  it("still refuses when the twin links go to different places", () => {
+    const doc = dom(
+      `<header><a href="/cart">Cart</a></header><footer><a href="/cart-help">Cart</a></footer>`,
+      URL_,
+    );
+    const r = match(doc, remember(`<a href="/cart-x">Cart</a>`, "a"));
+    expect(r.element).toBeNull();
+  });
+
+  it("never merges identical buttons without a link", () => {
+    const doc = dom(`<button>Continue</button><button>Continue</button>`, URL_);
+    expect(match(doc, remember(`<button>Continue</button>`, "button")).element).toBeNull();
   });
 });
