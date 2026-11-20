@@ -19,6 +19,7 @@ const row = (over: Partial<BenchRow>): BenchRow => ({
   hintHit: false,
   hint: null,
   hintIsTarget: false,
+  topCorrect: true,
   ...over,
 });
 

@@ -21,6 +21,8 @@ export interface ResultRow {
   score: number;
   gap: number;
   outcome: Outcome;
+  /** Whether the top-ranked candidate is a right answer, whatever the tier (used to re-tier during calibration). */
+  topCorrect: boolean;
   /** Text of the element the matcher pointed at, for the report. */
   got: string | null;
   reasons: string[];
@@ -80,6 +82,7 @@ export function runPair(loaded: LoadedPair, opts: MatchOptions = {}): ResultRow[
       score: result.score,
       gap: result.runnerUpGap,
       outcome: classify(expected, result.element),
+      topCorrect: expected !== null && result.ranked[0]?.element === expected,
       got: result.element ? (result.element.textContent ?? "").replace(/\s+/g, " ").trim() : null,
       reasons: result.reasons,
     };

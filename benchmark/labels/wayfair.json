@@ -1,0 +1,91 @@
+{
+  "site": "wayfair",
+  "url": "https://www.wayfair.com/",
+  "category": "shopping",
+  "before": "20230615114051",
+  "after": "20250614104555",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#store_nav > header > div:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(3) > span > div > a",
+        "alternates": [
+          "#store_nav > header > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > span > div > a"
+        ],
+        "text": "My AccountSign In",
+        "href": "/v/account/authentication/login",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#store_nav > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(3) > div > div > div > div > div > a",
+        "alternates": [
+          "#store_nav > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div > div > div > div > div > a"
+        ],
+        "text": "Sign In",
+        "href": "/v/account/authentication/login",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "cart",
+      "label": "Cart",
+      "before": {
+        "selector": "#store_nav > header > div:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(3) > a",
+        "alternates": [
+          "#store_nav > header > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > a"
+        ],
+        "text": "Cart",
+        "href": "/v/checkout/basket/show",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#store_nav > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(3) > a",
+        "alternates": [
+          "#store_nav > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > a"
+        ],
+        "text": "Cart",
+        "href": "/v/checkout/basket/show",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "orders",
+      "label": "Orders / track order",
+      "before": null,
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": null,
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "before": null,
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": null,
+      "after": {
+        "selector": "#store_nav > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > div > div > form > div > div > div > div > div > button",
+        "alternates": [
+          "#store_nav > div > div:nth-of-type(3) > div > div > div > div > div > form > div > div > div > div > div > button"
+        ],
+        "text": "Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { collectCandidates, isHidden, signalsOf } from "./dom.ts";
 import { findMenuHint } from "./hint.ts";
+import { normalize } from "./text.ts";
 import {
   DEFAULT_WEIGHTS,
   combine,
@@ -15,12 +16,17 @@ export interface Thresholds {
 }
 
 /**
- * Placeholder thresholds. Replaced by values calibrated on the benchmark in M1 task 1.9.
- * A tier needs a high score AND a clear gap to the runner-up (CLAUDE.md § Matching approach).
+ * Thresholds calibrated by `npm run benchmark` (benchmark/src/calibrate.ts): the setting that finds
+ * the most features with ZERO wrong matches on the calibration set, ties going to the stricter
+ * setting. A tier needs a high score AND a clear gap to the runner-up (CLAUDE.md § Matching).
+ *
+ * Calibration set: fixtures + real-site labels confirmed by Manas. Interim (2026-11-20): no real
+ * labels confirmed yet, so these come from fixtures only. A benchmark test fails if they drift
+ * from what calibration produces.
  */
 export const DEFAULT_THRESHOLDS: Thresholds = {
-  sure: { score: 0.75, gap: 0.15 },
-  fairly: { score: 0.55, gap: 0.08 },
+  sure: { score: 0.6, gap: 0.25 },
+  fairly: { score: 0.35, gap: 0.2 },
 };
 
 export interface MatchOptions {
@@ -91,6 +97,27 @@ function explain(best: ScoredCandidate | undefined, gap: number, tier: Tier, t: 
 }
 
 /**
+ * Two candidates are the same feature when one is nested in the other, or when both are links to
+ * the same address with the same visible label. Buttons without a link are never merged: two
+ * identical "Continue" buttons may do different things, so they stay ambiguous (Hard Rule 5).
+ */
+export function sameFeature(
+  a: Element,
+  b: Element,
+  signals: ReadonlyMap<Element, Signals>,
+): boolean {
+  if (a.contains(b) || b.contains(a)) return true;
+  const sa = signals.get(a);
+  const sb = signals.get(b);
+  if (!sa || !sb) return false;
+  const hrefA = sa.attributes.href;
+  if (!hrefA || hrefA !== sb.attributes.href) return false;
+  if ((sa.attributes["href-host"] ?? "") !== (sb.attributes["href-host"] ?? "")) return false;
+  const label = (s: Signals) => normalize(s.accessibleName || s.text);
+  return label(sa) !== "" && label(sa) === label(sb);
+}
+
+/**
  * Find the remembered feature on a page.
  *
  * Below the "fairly sure" tier, `element` is null: Anchor never falls back to the best available
@@ -123,7 +150,13 @@ export function match(
   const top = scored[0];
   if (top) top.hidden = isHidden(top.element);
   const score = top?.score ?? 0;
-  const gap = top ? score - (scored[1]?.score ?? 0) : 0;
+  // The runner-up is the best candidate that is a genuinely different control. Sites often show
+  // the same link twice (desktop and mobile menus, a skip link); those are one feature, not rivals.
+  const signalsOf = new Map(page.candidates.map((c) => [c.element, c.signals]));
+  const rival = top
+    ? scored.slice(1).find((c) => !sameFeature(top.element, c.element, signalsOf))
+    : undefined;
+  const gap = top ? score - (rival?.score ?? 0) : 0;
   const tier = top ? tierFor(score, gap, t) : "unsure";
   // Only look elsewhere when nothing here is a confident pick. The hint is a separate field and
   // never becomes `element` (Hard Rule 5).

@@ -198,7 +198,15 @@ export function compareSignals(
 ): SignalScore[] {
   const raw: [SignalName, number | null][] = [
     ["text", textSimilarity(remembered.text, candidate.text)],
-    ["accessibleName", textSimilarity(remembered.accessibleName, candidate.accessibleName)],
+    // When the accessible name is just the visible text again, comparing it would count the label
+    // twice (the M1 ablation showed this lets look-alike decoys win). Count it only when it adds
+    // information, e.g. an icon button whose name comes from aria-label.
+    [
+      "accessibleName",
+      normalize(remembered.accessibleName) === normalize(remembered.text)
+        ? null
+        : textSimilarity(remembered.accessibleName, candidate.accessibleName),
+    ],
     ["concept", conceptSimilarity(remembered, candidate)],
     ["role", roleSimilarity(remembered.role, candidate.role)],
     ["tag", remembered.tag === candidate.tag ? 1 : 0],

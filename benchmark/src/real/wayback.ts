@@ -24,6 +24,13 @@ export const RealSiteSchema = z.object({
   url: z.string().url(),
   before: z.string().regex(/^\d{8}$/),
   after: z.string().regex(/^\d{8}$/),
+  /** Other target dates to try, in order, when nothing usable exists near the main one. */
+  fallbacks: z
+    .object({
+      before: z.array(z.string().regex(/^\d{8}$/)).optional(),
+      after: z.array(z.string().regex(/^\d{8}$/)).optional(),
+    })
+    .optional(),
 });
 export type RealSite = z.infer<typeof RealSiteSchema>;
 
@@ -135,16 +142,41 @@ export async function fetchUsable(
 ): Promise<{ timestamp: string } | { error: string }> {
   const cached = cachedFor(site.id, which);
   if (cached) return { timestamp: cached };
-  const captures = await capturesNear(site.url, site[which]);
-  if (!captures.length) return { error: "no captures within ±45 days" };
   const problems: string[] = [];
+  const targets = [site[which], ...(site.fallbacks?.[which] ?? [])];
+  for (const target of targets) {
+    const found = await tryNear(site, which, target, tries, problems);
+    if (found) return { timestamp: found };
+  }
+  return { error: problems.join("; ") };
+}
+
+async function tryNear(
+  site: RealSite,
+  which: "before" | "after",
+  target: string,
+  tries: number,
+  problems: string[],
+): Promise<string | null> {
+  const captures = await capturesNear(site.url, target);
+  if (!captures.length) {
+    problems.push(`${target}: no captures within ±45 days`);
+    return null;
+  }
   for (const c of captures.slice(0, tries)) {
-    const res = await politeFetch(`https://web.archive.org/web/${c.timestamp}id_/${site.url}`);
-    if (!res.ok) {
-      problems.push(`${c.timestamp}: HTTP ${res.status}`);
+    let html: string;
+    try {
+      const res = await politeFetch(`https://web.archive.org/web/${c.timestamp}id_/${site.url}`);
+      if (!res.ok) {
+        problems.push(`${c.timestamp}: HTTP ${res.status}`);
+        continue;
+      }
+      html = await res.text();
+    } catch (err) {
+      // Large pages sometimes drop mid-download ("terminated"); try the next capture.
+      problems.push(`${c.timestamp}: download failed (${(err as Error).message})`);
       continue;
     }
-    const html = await res.text();
     const problem = problemWith(html);
     if (problem) {
       problems.push(`${c.timestamp}: ${problem}`);
@@ -156,7 +188,7 @@ export async function fetchUsable(
     const meta = existsSync(metaFile) ? JSON.parse(readFileSync(metaFile, "utf8")) : {};
     meta[which] = c.timestamp;
     writeFileSync(metaFile, JSON.stringify(meta, null, 2));
-    return { timestamp: c.timestamp };
+    return c.timestamp;
   }
-  return { error: problems.join("; ") };
+  return null;
 }

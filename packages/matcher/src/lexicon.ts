@@ -26,7 +26,9 @@ export const CONCEPTS: Record<string, RegExp> = {
   billing: /\b(bills?|billing|statements?|invoices?|balance)\b/,
   refill:
     /\b(refills?|renew( (my|your))? (prescriptions?|rx|meds|medications?)|reorder (prescriptions?|rx|meds))\b/,
-  prescriptions: /\b(prescriptions?|rx|medications?|meds|pharmacy)\b/,
+  // "pharmacy" removed 2026-11-20: it names a department or a store ("Find a pharmacy"), not a
+  // prescription task, and made "Find a pharmacy" hint at "Refill Rx" (fixture benchmark).
+  prescriptions: /\b(prescriptions?|rx|medications?|meds)\b/,
   appointments:
     /\b(appointments?|book (a |an )?(visit|appointment)|schedule|vaccines?|vaccinations?)\b/,
   locations:

@@ -21,8 +21,8 @@
     "After 'not found' is probably the search box being drawn by scripts, not a real removal."
   ],
   "costco-sign-in": [
-    "exclude",
-    "Proposer picked 'Orders & Returns' (an account link), not sign-in."
+    "ok",
+    "'Sign In / Register' → 'Sign In or Register' (after copy listed is in the footer)."
   ],
   "costco-cart": ["ok", ""],
   "costco-orders": ["ok", ""],
@@ -52,10 +52,35 @@
   "target-help": ["ok", ""],
   "target-deals": ["ok", "'Deals' → 'Top Deals', same category id in the link."],
   "target-search": ["ok", ""],
-  "walmart-sign-in": ["exclude", "After 'not found' is probably script-drawn, not a real removal."],
+  "walmart-sign-in": ["ok", "'Sign In' → 'Sign in or create account'."],
   "walmart-cart": ["ok", ""],
   "walmart-orders": ["ok", ""],
   "walmart-help": ["ok", ""],
   "walmart-deals": ["exclude", "Proposer picked a 'Shop now' promo button, not the Deals link."],
-  "walmart-search": ["ok", ""]
+  "walmart-search": ["ok", ""],
+  "ebay-sign-in": ["ok", ""],
+  "ebay-cart": [
+    "exclude",
+    "Before is a cart link, after is an 'Expand Cart' menu button; unclear they are the same control."
+  ],
+  "ebay-orders": ["ok", ""],
+  "ebay-help": ["ok", ""],
+  "ebay-deals": ["ok", ""],
+  "ebay-search": ["ok", ""],
+  "kohls-sign-in": ["ok", "Same label; link address changed."],
+  "kohls-cart": ["ok", ""],
+  "kohls-orders": ["ok", ""],
+  "kohls-help": ["ok", ""],
+  "kohls-deals": [
+    "exclude",
+    "Before is 'Kohl's Coupons', after is 'clearance deals': different pages."
+  ],
+  "kohls-search": ["ok", "Icon-only search button in both."],
+  "lowes-cart": ["ok", ""],
+  "lowes-orders": ["ok", ""],
+  "lowes-help": ["exclude", "Proposer picked a store-pickup promo, not a help link."],
+  "lowes-deals": ["ok", ""],
+  "lowes-search": ["ok", ""],
+  "wayfair-sign-in": ["ok", ""],
+  "wayfair-cart": ["ok", ""]
 }

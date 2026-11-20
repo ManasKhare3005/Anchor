@@ -28,7 +28,9 @@ export const SHOPPING_FEATURES: FeatureRule[] = [
     label: "Sign in",
     text: /\b(sign[ -]?in|log[ -]?in|account (&|and) lists)\b/i,
     href: /(signin|sign-in|login|log-in|\/account\/?$|myaccount|\/ap\/)/i,
-    not: /\b(sign[ -]?out|register|create|delete|pay your bill)\b/i,
+    // "register"/"create" only disqualify when the text doesn't also say sign in
+    // ("Sign in or create account" is the sign-in link).
+    not: /\b(sign[ -]?out|delete|pay your bill)\b|^(?!.*\bsign[ -]?in\b).*\b(register|create)\b/i,
   },
   {
     id: "cart",

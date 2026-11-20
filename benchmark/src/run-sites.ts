@@ -23,6 +23,8 @@ export interface SiteRow {
   score: number;
   gap: number;
   outcome: Outcome;
+  /** Whether the top-ranked candidate is a right answer, whatever the tier (used to re-tier during calibration). */
+  topCorrect: boolean;
   got: string | null;
   /** Whether a nav/menu hint was expected here, and whether the matcher's hint hit one. */
   hintExpected: boolean;
@@ -103,6 +105,7 @@ export function runSite(loaded: LoadedSite, opts: MatchOptions = {}): SiteRow[] 
         score: r.score,
         gap: r.runnerUpGap,
         outcome: judge(expected, r.element),
+        topCorrect: r.ranked[0] !== undefined && expected.includes(r.ranked[0].element),
         got: text(r.element),
         hintExpected: hints.length > 0,
         hintHit: r.menuHint !== null && hints.includes(r.menuHint),

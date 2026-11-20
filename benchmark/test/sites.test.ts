@@ -76,9 +76,9 @@ describe("fixture sites with the current matcher", () => {
     expect(rows.length).toBeGreaterThan(100);
   });
 
-  it("records every wrong match (none allowed at 'sure')", () => {
-    const wrongSure = rows.filter((r) => r.outcome === "wrong" && r.tier === "sure");
-    expect(wrongSure.map((r) => `${r.site}/${r.feature}/${r.scenario} → ${r.got}`)).toEqual([]);
+  it("has no wrong matches at any tier with the calibrated thresholds", () => {
+    const wrong = rows.filter((r) => r.outcome === "wrong");
+    expect(wrong.map((r) => `${r.site}/${r.feature}/${r.scenario} → ${r.got}`)).toEqual([]);
   });
 });
 
@@ -91,9 +91,9 @@ describe("site-state classification on fixture sites", () => {
     expect(states.filter((r) => r.got !== r.expected)).toEqual([]);
   });
 
-  it("never mistakes a redesign for normal or logged-out (tightened to 'redesign' after tuning)", () => {
+  it("classifies every v2 redesign as a redesign", () => {
     for (const r of rows.filter((x) => x.kind === "v2")) {
-      expect(["redesign", "unknown"], r.site).toContain(r.got);
+      expect(r.got, r.site).toBe("redesign");
     }
   });
 });

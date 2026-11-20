@@ -8,11 +8,6 @@ Why some rows are excluded: archived pages are the original HTML with no scripts
 
 Archived pages: Wayback Machine, original HTML (no scripts run). Public home pages only.
 
-**Sites without a usable archive (excluded for now):**
-
-- eBay: archived after page keeps failing to download
-- Kohl's: archived after page keeps failing to download
-
 ## amazon — https://www.amazon.com/
 
 Before: [2023-06-15](https://web.archive.org/web/20230615002158/https://www.amazon.com/) · After: [2025-06-14](https://web.archive.org/web/20250614000516/https://www.amazon.com/) (archived copies; open to check)
@@ -32,7 +27,7 @@ Before: [2023-06-15](https://web.archive.org/web/20230615001002/https://www.best
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| bestbuy-1 | Sign in | _not found_ | **Account**<br>`/site/customer/myaccount`<br>header/nav | skipped (not on before page) | proposed |
+| bestbuy-1 | Sign in | **Sign in or Create Account**<br>`/identity/global/signin`<br>footer | **Sign in or Create Account**<br>`/identity/global/signin`<br>footer | ? | proposed |
 | bestbuy-2 | Cart | **Cart Cart, 0 item Cart**<br>`/cart`<br>header/nav | **Cart Cart, 0 item Cart**<br>`/cart`<br>header/nav | ok | proposed |
 | bestbuy-3 | Orders / track order | **Order Status**<br>`-`<br>header/nav | **Order Status**<br>`/profile/ss/orderlookup`<br>header/nav | ok | proposed |
 | bestbuy-4 | Help / customer service | **Visit our Support Center**<br>`/support`<br>footer | **Visit our Support Center**<br>`/support`<br>header/nav | ok: Moved from footer to header. | proposed |
@@ -45,12 +40,25 @@ Before: [2023-06-15](https://web.archive.org/web/20230615032845/https://www.cost
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| costco-1 | Sign in | **Orders & Returns**<br>`/myaccount`<br>header/nav | **Orders & Returns Orders & Returns**<br>`/myaccount`<br>header/nav | exclude: Proposer picked 'Orders & Returns' (an account link), not sign-in. | proposed |
+| costco-1 | Sign in | **Sign In / Register**<br>`/LogonForm`<br>header/nav | **Sign In or Register**<br>`/LogonForm`<br>footer | ok: 'Sign In / Register' → 'Sign In or Register' (after copy listed is in the footer). | proposed |
 | costco-2 | Cart | **Cart**<br>`/CheckoutCartView`<br>header/nav | **Cart Cart**<br>`/CheckoutCartView`<br>header/nav | ok | proposed |
 | costco-3 | Orders / track order | **Orders & Returns**<br>`/myaccount`<br>header/nav | **Orders & Returns Orders & Returns**<br>`/myaccount`<br>header/nav | ok | proposed |
 | costco-4 | Help / customer service | **Customer Service**<br>`/`<br>header/nav | **Customer Service Customer Service**<br>`/`<br>header/nav | ok | proposed |
 | costco-5 | Deals | **Deals**<br>`/CatalogSearch`<br>header/nav | **Deals**<br>`-`<br>header/nav | ok: 'Deals' link → 'Deals' menu button, same header slot. | proposed |
 | costco-6 | Search button | **Submit**<br>`-`<br>header/nav | _not found_ | exclude: After 'not found' is probably script-drawn, not a real removal. | proposed |
+
+## ebay — https://www.ebay.com/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615001035/https://www.ebay.com/) · After: [2025-03-15](https://web.archive.org/web/20250315015048/https://www.ebay.com/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| ebay-1 | Sign in | **Sign in**<br>`/ws/eBayISAPI.dll`<br>header/nav | **Sign in**<br>`/ws/eBayISAPI.dll`<br>header/nav | ok | proposed |
+| ebay-2 | Cart | **Your shopping cart**<br>`/`<br>header/nav | **Expand Cart**<br>`-`<br>header/nav | exclude: Before is a cart link, after is an 'Expand Cart' menu button; unclear they are the same control. | proposed |
+| ebay-3 | Orders / track order | **Purchase History**<br>`/mye/myebay/purchase`<br>header/nav | **Purchase History**<br>`/mye/myebay/purchase`<br>header/nav | ok | proposed |
+| ebay-4 | Help / customer service | **Help & Contact**<br>`/ocs/home`<br>header/nav | **Help & Contact Help & Contact**<br>`/help/home`<br>header/nav | ok | proposed |
+| ebay-5 | Deals | **Daily Deals**<br>`/deals`<br>header/nav | **Daily Deals Daily Deals**<br>`/deals`<br>header/nav | ok | proposed |
+| ebay-6 | Search button | **Search**<br>`-`<br>header/nav | **Search Search**<br>`-`<br>header/nav | ok | proposed |
 
 ## etsy — https://www.etsy.com/
 
@@ -77,6 +85,32 @@ Before: [2023-06-15](https://web.archive.org/web/20230615030829/https://www.home
 | homedepot-4 | Help / customer service | **Help & FAQs**<br>`/c/customer_service`<br>header/nav | **Customer Service Center Customer Service Center**<br>`/c/customer_service`<br>body | ok: 'Help & FAQs' → 'Customer Service Center', same link target. | proposed |
 | homedepot-5 | Deals | **Browse Weekly Ad**<br>`/c/localad`<br>body | _not found_ | exclude: Can't tell if the weekly ad really left the home page or is script-drawn. | proposed |
 | homedepot-6 | Search button | _not found_ | _not found_ | skipped (not on before page) | proposed |
+
+## kohls — https://www.kohls.com/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615004347/https://www.kohls.com/) · After: [2025-06-13](https://web.archive.org/web/20250613143500/https://www.kohls.com/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| kohls-1 | Sign in | **Sign In**<br>`/myaccount/kohls_login.jsp`<br>footer | **Sign In**<br>`/myaccount/signin.jsp`<br>footer | ok: Same label; link address changed. | proposed |
+| kohls-2 | Cart | **0 item(s), $0.00 Mini Shopping Cart**<br>`/checkout/shopping_cart.jsp`<br>body | **0 item(s), $0.00 Mini Shopping Cart**<br>`/checkout/shopping_cart.jsp`<br>body | ok | proposed |
+| kohls-3 | Orders / track order | **Order Status Order Status**<br>`/upgrade/myaccount/order_status_login.jsp`<br>body | **Order Status Order Status**<br>`/upgrade/myaccount/order_status_login.jsp`<br>body | ok | proposed |
+| kohls-4 | Help / customer service | **Help**<br>`/`<br>body | **Help**<br>`/`<br>body | ok | proposed |
+| kohls-5 | Deals | **Kohl’s Coupons**<br>`/sale-event/coupons-deals.jsp`<br>body | **clearance deals**<br>`/catalog/clearance.jsp`<br>body | exclude: Before is 'Kohl's Coupons', after is 'clearance deals': different pages. | proposed |
+| kohls-6 | Search button | **(no text)**<br>`-`<br>body | **(no text)**<br>`-`<br>body | ok: Icon-only search button in both. | proposed |
+
+## lowes — https://www.lowes.com/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615061649/https://www.lowes.com/) · After: [2025-06-14](https://web.archive.org/web/20250614233145/https://www.lowes.com/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| lowes-1 | Sign in | _not found_ | _not found_ | skipped (not on before page) | proposed |
+| lowes-2 | Cart | **Cart with 0 itemsCart Cart Count**<br>`-`<br>header/nav | **Cart with 0 itemsCart Cart Count**<br>`-`<br>header/nav | ok | proposed |
+| lowes-3 | Orders / track order | **Order Status**<br>`/mylowes/orders`<br>header/nav | **Order Status**<br>`/mylowes/orders`<br>header/nav | ok | proposed |
+| lowes-4 | Help / customer service | **Buy online or through our mobile app and pick up at your local Lowe’s.**<br>`/l/help/store-pickup`<br>body | _not found_ | exclude: Proposer picked a store-pickup promo, not a help link. | proposed |
+| lowes-5 | Deals | **Weekly Ad**<br>`/weekly-ad`<br>header/nav | **Weekly Ad**<br>`/weekly-ad`<br>header/nav | ok | proposed |
+| lowes-6 | Search button | **Search**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | proposed |
 
 ## macys — https://www.macys.com/
 
@@ -110,9 +144,22 @@ Before: [2023-06-15](https://web.archive.org/web/20230615004236/https://www.walm
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| walmart-1 | Sign in | **Sign In**<br>`-`<br>header/nav | _not found_ | exclude: After 'not found' is probably script-drawn, not a real removal. | proposed |
+| walmart-1 | Sign in | **Sign In**<br>`-`<br>header/nav | **Sign in or create account**<br>`-`<br>header/nav | ok: 'Sign In' → 'Sign in or create account'. | proposed |
 | walmart-2 | Cart | **$0.00 Cart contains 0 items**<br>`-`<br>header/nav | **$0.00 Cart contains 0 items Total Amount $0.00**<br>`-`<br>header/nav | ok | proposed |
 | walmart-3 | Orders / track order | **Purchase History**<br>`/orders`<br>header/nav | **Purchase History**<br>`/orders`<br>header/nav | ok | proposed |
 | walmart-4 | Help / customer service | **Help**<br>`/help`<br>footer | **Help**<br>`/help`<br>footer | ok | proposed |
 | walmart-5 | Deals | **Shop now Shop now**<br>`/shop/deals/flash-picks`<br>body | **Shop now Shop now**<br>`/shop/deals/pets`<br>body | exclude: Proposer picked a 'Shop now' promo button, not the Deals link. | proposed |
 | walmart-6 | Search button | **Search icon**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | proposed |
+
+## wayfair — https://www.wayfair.com/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615114051/https://www.wayfair.com/) · After: [2025-06-14](https://web.archive.org/web/20250614104555/https://www.wayfair.com/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| wayfair-1 | Sign in | **My AccountSign In**<br>`/v/account/authentication/login`<br>header/nav | **Sign In**<br>`/v/account/authentication/login`<br>header/nav | ok | proposed |
+| wayfair-2 | Cart | **Cart**<br>`/v/checkout/basket/show`<br>header/nav | **Cart**<br>`/v/checkout/basket/show`<br>header/nav | ok | proposed |
+| wayfair-3 | Orders / track order | _not found_ | _not found_ | skipped (not on before page) | proposed |
+| wayfair-4 | Help / customer service | _not found_ | _not found_ | skipped (not on before page) | proposed |
+| wayfair-5 | Deals | _not found_ | _not found_ | skipped (not on before page) | proposed |
+| wayfair-6 | Search button | _not found_ | **Search**<br>`-`<br>header/nav | skipped (not on before page) | proposed |
