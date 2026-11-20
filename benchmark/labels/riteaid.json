@@ -1,0 +1,127 @@
+{
+  "site": "riteaid",
+  "url": "https://www.riteaid.com/",
+  "category": "pharmacy",
+  "before": "20230615091711",
+  "after": "20250615060358",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#loginForm > button",
+        "alternates": [],
+        "text": "Hi, Log In Account",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#loginForm > button",
+        "alternates": [],
+        "text": "Hi, Log In Account",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#experiencefragment-2223a64485 > div > div > div:nth-of-type(4) > footer > div > div:nth-of-type(3) > div > div:nth-of-type(3) > div > div > h2 > a",
+        "alternates": [],
+        "text": "Help",
+        "href": "/faq",
+        "region": "footer"
+      },
+      "after": {
+        "selector": "#experiencefragment-2223a64485 > div > div > div:nth-of-type(5) > footer > div > div:nth-of-type(3) > div > div:nth-of-type(2) > div > div > h2 > a",
+        "alternates": [],
+        "text": "Help",
+        "href": "/faq",
+        "region": "footer"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "#store-locator-modal > div:nth-of-type(2) > form > div:nth-of-type(2) > button",
+        "alternates": [],
+        "text": "Find Stores",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#store-locator-modal > div:nth-of-type(2) > form > div:nth-of-type(2) > button",
+        "alternates": [],
+        "text": "Find Stores",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "refill",
+      "label": "Refill prescriptions",
+      "before": {
+        "selector": "body > div > div > div:nth-of-type(10) > div > div:nth-of-type(1) > div > div:nth-of-type(1) > a",
+        "alternates": [],
+        "text": "REFILL YOUR RX",
+        "href": "/pharmacy/services/prescription-refills/online-prescription-refills",
+        "region": "body"
+      },
+      "after": {
+        "selector": "body > div > div > div:nth-of-type(10) > div > div:nth-of-type(3) > div > div:nth-of-type(1) > a",
+        "alternates": [],
+        "text": "REFILL YOUR RX",
+        "href": "/pharmacy/refill-prescriptions.html",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "find-pharmacy",
+      "label": "Find a pharmacy / store",
+      "before": {
+        "selector": "#store-locator-modal > div:nth-of-type(2) > form > div:nth-of-type(1) > a",
+        "alternates": [],
+        "text": "Current Location",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#store-locator-modal > div:nth-of-type(2) > form > div:nth-of-type(1) > a",
+        "alternates": [],
+        "text": "Current Location",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "vaccines",
+      "label": "Vaccines / appointments",
+      "before": {
+        "selector": "#mySidenav > nav > div > div:nth-of-type(1) > ul > li:nth-of-type(2) > a",
+        "alternates": [
+          "#med-16 > div > div > ul > li:nth-of-type(2) > a",
+          "#experiencefragment-861122a47d > div > div > div:nth-of-type(17) > ul > li:nth-of-type(2) > a",
+          "#homeCarousel > section:nth-of-type(1) > div > div:nth-of-type(1) > div:nth-of-type(1) > div > a:nth-of-type(1)"
+        ],
+        "text": "Schedule a Vaccination Schedule a Vaccination",
+        "href": "/pharmacy/scheduler",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#mySidenav > nav > div > div:nth-of-type(1) > ul > li:nth-of-type(4) > a",
+        "alternates": [],
+        "text": "Schedule a Vaccination Schedule a Vaccination",
+        "href": "/pharmacy/scheduler",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

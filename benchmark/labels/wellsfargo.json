@@ -1,0 +1,128 @@
+{
+  "site": "wellsfargo",
+  "url": "https://www.wellsfargo.com/",
+  "category": "bank",
+  "before": "20230615000418",
+  "after": "20250615082642",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "body > div:nth-of-type(1) > header > div > nav > ul > li:nth-of-type(6) > div > a",
+        "alternates": [
+          "#sign-on-app-modal > div > div > div:nth-of-type(3) > a:nth-of-type(2)"
+        ],
+        "text": "Sign On",
+        "href": "/auth/login/present",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "body > div:nth-of-type(1) > header > div > nav > ul > li:nth-of-type(5) > div > a",
+        "alternates": [],
+        "text": "Sign On",
+        "href": "/auth/login/present",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "body > div:nth-of-type(1) > header > div > nav > ul > li:nth-of-type(2) > a",
+        "alternates": [
+          "body > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > ul > li:nth-of-type(3) > a",
+          "body > div:nth-of-type(1) > main > div:nth-of-type(9) > div:nth-of-type(2) > ul > li:nth-of-type(3) > a"
+        ],
+        "text": "Help",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "body > div:nth-of-type(1) > header > div > nav > ul > li:nth-of-type(2) > a",
+        "alternates": [
+          "body > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > ul > li:nth-of-type(3) > a",
+          "body > div:nth-of-type(1) > main > div:nth-of-type(9) > div:nth-of-type(2) > ul > li:nth-of-type(3) > a"
+        ],
+        "text": "Help",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "#find_location_block > div > form > div:nth-of-type(2) > button",
+        "alternates": [
+          "#make_appointment_block > div > form > div:nth-of-type(2) > button",
+          "body > div:nth-of-type(1) > main > div:nth-of-type(9) > div:nth-of-type(2) > ul > li:nth-of-type(1) > div > div > form > div:nth-of-type(2) > button",
+          "body > div:nth-of-type(1) > main > div:nth-of-type(9) > div:nth-of-type(2) > ul > li:nth-of-type(2) > div > div > form > div:nth-of-type(2) > button"
+        ],
+        "text": "Go",
+        "href": "",
+        "region": "body"
+      },
+      "after": {
+        "selector": "#find_location_block > div > form > div:nth-of-type(2) > button",
+        "alternates": [
+          "#make_appointment_block > div > form > div:nth-of-type(2) > button",
+          "body > div:nth-of-type(1) > main > div:nth-of-type(9) > div:nth-of-type(2) > ul > li:nth-of-type(1) > div > div > form > div:nth-of-type(2) > button",
+          "body > div:nth-of-type(1) > main > div:nth-of-type(9) > div:nth-of-type(2) > ul > li:nth-of-type(2) > div > div > form > div:nth-of-type(2) > button"
+        ],
+        "text": "Go",
+        "href": "",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "open-account",
+      "label": "Open an account",
+      "before": {
+        "selector": "body > div:nth-of-type(1) > div:nth-of-type(5) > div > div:nth-of-type(5) > div:nth-of-type(2) > div:nth-of-type(3) > a:nth-of-type(1)",
+        "alternates": [
+          "body > div:nth-of-type(1) > main > div:nth-of-type(5) > div > div > div > div > div > div > div:nth-of-type(2) > div > a"
+        ],
+        "text": "Buy a home Get started on your homeownership journey",
+        "href": "/mortgage/buying-a-house",
+        "region": "body"
+      },
+      "after": {
+        "selector": "body > div:nth-of-type(1) > div:nth-of-type(5) > div > div:nth-of-type(5) > div:nth-of-type(2) > div:nth-of-type(3) > a:nth-of-type(1)",
+        "alternates": [
+          "body > div:nth-of-type(1) > main > div:nth-of-type(5) > div > div > div > div > div > div > div:nth-of-type(2) > div > a"
+        ],
+        "text": "Buy a home Get started on your homeownership journey",
+        "href": "/mortgage/buying-a-house",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "atm-branch",
+      "label": "Find an ATM / branch",
+      "before": {
+        "selector": "body > div:nth-of-type(1) > header > div > nav > ul > li:nth-of-type(1) > a",
+        "alternates": [
+          "body > div:nth-of-type(1) > div:nth-of-type(5) > nav > div:nth-of-type(2) > div:nth-of-type(3) > ul > li:nth-of-type(1) > a"
+        ],
+        "text": "ATMs/Locations",
+        "href": "/locator",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "body > div:nth-of-type(1) > header > div > nav > ul > li:nth-of-type(1) > a",
+        "alternates": [
+          "body > div:nth-of-type(1) > div:nth-of-type(5) > nav > div:nth-of-type(2) > div:nth-of-type(3) > ul > li:nth-of-type(1) > a"
+        ],
+        "text": "ATMs/Locations",
+        "href": "/locator",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "site": "irs",
+  "url": "https://www.irs.gov/",
+  "category": "government",
+  "before": "20230615002515",
+  "after": "20250615014309",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#main-content > div > div:nth-of-type(1) > div > ul > li:nth-of-type(2) > div > a",
+        "alternates": [],
+        "text": "Sign in to Your Account",
+        "href": "/payments/your-online-account",
+        "region": "body"
+      },
+      "after": {
+        "selector": "#block-pup-irs-informationmenu-2 > ul > li:nth-of-type(4) > a",
+        "alternates": [
+          "#pup-mobile-navbar-infoBtn > div > a",
+          "#block-pup-irs-informationmenu > ul > li:nth-of-type(4) > a"
+        ],
+        "text": "Sign in",
+        "href": "/your-account",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#block-pup-irs-informationmenu-2 > ul > li:nth-of-type(1) > a",
+        "alternates": [
+          "#block-helpmenumobile > ul > li > a",
+          "#block-pup-irs-informationmenu > ul > li:nth-of-type(1) > a",
+          "#block-pup-irs-infomenumobile > ul > li:nth-of-type(1) > a",
+          "#block-footernavigation-2 > ul > li:nth-of-type(1) > ul > li:nth-of-type(5) > a"
+        ],
+        "text": "Help Help",
+        "href": "/help/telephone-assistance",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#block-pup-irs-informationmenu-2 > ul > li:nth-of-type(1) > a",
+        "alternates": [
+          "#block-pup-irs-informationmenu > ul > li:nth-of-type(1) > a",
+          "#block-pup-irs-infomenumobile > ul > li:nth-of-type(2) > a",
+          "#block-footernavigation-2 > ul > li:nth-of-type(1) > div > ul > li:nth-of-type(5) > a"
+        ],
+        "text": "Help Help",
+        "href": "/help/let-us-help-you",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "#edit-submit-pup-site-index-search--2",
+        "alternates": [
+          "#edit-submit-pup-site-index-search"
+        ],
+        "text": "Search Search Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#edit-submit-pup-site-index-search",
+        "alternates": [
+          "#edit-submit-pup-site-index-search--2"
+        ],
+        "text": "Search Search Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "apply",
+      "label": "Apply for benefits",
+      "before": {
+        "selector": "#block-mainnavigationmobile-2 > ul > li:nth-of-type(1) > ul > div > div:nth-of-type(3) > li:nth-of-type(3) > a",
+        "alternates": [
+          "#block-accordionmainnavigationmobile > div > div:nth-of-type(1) > ul > li:nth-of-type(18) > a",
+          "#block-mainnavigationmobile > ul > li:nth-of-type(1) > ul > div > div:nth-of-type(3) > li:nth-of-type(3) > a",
+          "#main-content > div > div:nth-of-type(1) > div > ul > li:nth-of-type(9) > div > a"
+        ],
+        "text": "Apply for an Employer ID Number (EIN)",
+        "href": "/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#accessible-megamenu-file-submenu-16",
+        "alternates": [
+          "#block-accordionmainnavigationmobile > div > div:nth-of-type(1) > ul > li:nth-of-type(17) > a",
+          "body > div:nth-of-type(2) > div:nth-of-type(2) > div > div > section > div > article > div > div:nth-of-type(1) > div > ul > li:nth-of-type(8) > div > a"
+        ],
+        "text": "Apply for an Employer ID Number (EIN)",
+        "href": "/businesses/small-businesses-self-employed/get-an-employer-identification-number",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "find-office",
+      "label": "Find an office / location",
+      "before": {
+        "selector": "#block-footernavigation-2 > ul > li:nth-of-type(1) > ul > li:nth-of-type(6) > a",
+        "alternates": [],
+        "text": "Find a Local Office",
+        "href": "/help/contact-your-local-irs-office",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#block-footernavigation-2 > ul > li:nth-of-type(1) > div > ul > li:nth-of-type(6) > a",
+        "alternates": [],
+        "text": "Find a Local Office",
+        "href": "/help/contact-your-local-irs-office",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

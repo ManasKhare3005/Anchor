@@ -1,0 +1,118 @@
+{
+  "site": "bofa",
+  "url": "https://www.bankofamerica.com/",
+  "category": "bank",
+  "before": "20230615040404",
+  "after": "20250615185057",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#LOGIN_SMALL",
+        "alternates": [
+          "#LOGIN_MEDIUM",
+          "#hpGetTheAppModalContinue"
+        ],
+        "text": "Login",
+        "href": "/cavmwebbactouch/common/index.html",
+        "region": "body"
+      },
+      "after": {
+        "selector": "#LOGIN_SMALL",
+        "alternates": [
+          "#LOGIN_MEDIUM",
+          "#hpGetTheAppModalContinue"
+        ],
+        "text": "Login",
+        "href": "/cavmwebbactouch/common/index.html",
+        "region": "body"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#NAV_CONTACT_US",
+        "alternates": [
+          "#NAV_CONTACT_US_MEDIUM",
+          "#NAV_CONTACT_US_MOBILE",
+          "#footer_bofa_contactus"
+        ],
+        "text": "Contact Us",
+        "href": "/customer-service/contact-us",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#NAV_CONTACT_US",
+        "alternates": [
+          "#NAV_CONTACT_US_MEDIUM",
+          "#NAV_CONTACT_US_MOBILE",
+          "#footer_bofa_contactus"
+        ],
+        "text": "Contact us",
+        "href": "/customer-service/contact-us",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": null,
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "open-account",
+      "label": "Open an account",
+      "before": {
+        "selector": "#navChecking",
+        "alternates": [
+          "#navCheckingMobile",
+          "#navCheckingTablet"
+        ],
+        "text": "Open Checking Menu Collapsed",
+        "href": "/deposits/checking/checking-accounts",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#navChecking",
+        "alternates": [
+          "#navCheckingMobile",
+          "#navCheckingTablet"
+        ],
+        "text": "Open Checking Menu",
+        "href": "/deposits/checking/checking-accounts",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "atm-branch",
+      "label": "Find an ATM / branch",
+      "before": {
+        "selector": "#NAV_FIND_LOCATION",
+        "alternates": [
+          "#footer_bofa_locations",
+          "#finCenterLocator"
+        ],
+        "text": "Find a Location",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#NAV_FIND_LOCATION",
+        "alternates": [
+          "#footer_bofa_locations",
+          "#finCenterLocator"
+        ],
+        "text": "Find a Location",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

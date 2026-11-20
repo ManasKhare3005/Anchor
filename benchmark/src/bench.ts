@@ -295,6 +295,19 @@ export function renderReport(input: ReportInput): string {
       }),
     ),
     "",
+    "## Real sites by category",
+    "",
+    table(
+      ["Category", "Runs", "Correct", "Correct absent", "Not found", "Wrong"],
+      [...new Set(rows.filter((r) => r.source === "real-sites").map((r) => r.category))]
+        .sort()
+        .map((cat) => {
+          const r = rows.filter((x) => x.source === "real-sites" && x.category === cat);
+          const n = (o: Outcome) => r.filter((x) => x.outcome === o).length;
+          return [cat, r.length, n("correct"), n("correct-absent"), n("not-found"), n("wrong")];
+        }),
+    ),
+    "",
     "## Results by scenario",
     "",
     table(

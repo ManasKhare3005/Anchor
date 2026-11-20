@@ -8,6 +8,10 @@ Why some rows are excluded: archived pages are the original HTML with no scripts
 
 Archived pages: Wayback Machine, original HTML (no scripts run). Public home pages only.
 
+**Sites without a usable archive (excluded for now):**
+
+- CVS Pharmacy: no usable archived before page (download failures or only a tiny redirect stub)
+
 ## amazon — https://www.amazon.com/
 
 Before: [2023-06-15](https://web.archive.org/web/20230615002158/https://www.amazon.com/) · After: [2025-06-14](https://web.archive.org/web/20250614000516/https://www.amazon.com/) (archived copies; open to check)
@@ -27,12 +31,36 @@ Before: [2023-06-15](https://web.archive.org/web/20230615001002/https://www.best
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| bestbuy-1 | Sign in | **Sign in or Create Account**<br>`/identity/global/signin`<br>footer | **Sign in or Create Account**<br>`/identity/global/signin`<br>footer | ? | proposed |
+| bestbuy-1 | Sign in | **Sign in or Create Account**<br>`/identity/global/signin`<br>footer | **Sign in or Create Account**<br>`/identity/global/signin`<br>footer | ok: Newly found after the sign-in rule fix. | proposed |
 | bestbuy-2 | Cart | **Cart Cart, 0 item Cart**<br>`/cart`<br>header/nav | **Cart Cart, 0 item Cart**<br>`/cart`<br>header/nav | ok | proposed |
 | bestbuy-3 | Orders / track order | **Order Status**<br>`-`<br>header/nav | **Order Status**<br>`/profile/ss/orderlookup`<br>header/nav | ok | proposed |
 | bestbuy-4 | Help / customer service | **Visit our Support Center**<br>`/support`<br>footer | **Visit our Support Center**<br>`/support`<br>header/nav | ok: Moved from footer to header. | proposed |
 | bestbuy-5 | Deals | **Top Deals**<br>`/site/electronics/top-deals/pcmcat1563299784494.c`<br>header/nav | **Top Deals**<br>`/top-deals`<br>header/nav | ok | proposed |
 | bestbuy-6 | Search button | **submit search submit search**<br>`-`<br>header/nav | _not found_ | exclude: After 'not found' is probably the search box being drawn by scripts, not a real removal. | proposed |
+
+## bofa — https://www.bankofamerica.com/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615040404/https://www.bankofamerica.com/) · After: [2025-06-15](https://web.archive.org/web/20250615185057/https://www.bankofamerica.com/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| bofa-1 | Sign in | **Login**<br>`/cavmwebbactouch/common/index.html`<br>body | **Login**<br>`/cavmwebbactouch/common/index.html`<br>body | ok | proposed |
+| bofa-2 | Help / customer service | **Contact Us**<br>`/customer-service/contact-us`<br>header/nav | **Contact us**<br>`/customer-service/contact-us`<br>header/nav | ok | proposed |
+| bofa-3 | Search button | _not found_ | _not found_ | skipped (not on before page) | proposed |
+| bofa-4 | Open an account | **Open Checking Menu Collapsed**<br>`/deposits/checking/checking-accounts`<br>header/nav | **Open Checking Menu**<br>`/deposits/checking/checking-accounts`<br>header/nav | ok | proposed |
+| bofa-5 | Find an ATM / branch | **Find a Location**<br>`/`<br>header/nav | **Find a Location**<br>`/`<br>header/nav | ok | proposed |
+
+## chase — https://www.chase.com/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615000129/https://www.chase.com/) · After: [2025-06-15](https://web.archive.org/web/20250615093340/https://www.chase.com/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| chase-1 | Sign in | **Sign in for offers**<br>`/personal/offers/secureshopping`<br>header/nav | **Sign In**<br>`/web/auth/dashboard`<br>header/nav | exclude: Before picked 'Sign in for offers', not the main sign-in. | proposed |
+| chase-2 | Help / customer service | **Customer service**<br>`-`<br>header/nav | **Customer service**<br>`-`<br>header/nav | ok | proposed |
+| chase-3 | Search button | _not found_ | _not found_ | skipped (not on before page) | proposed |
+| chase-4 | Open an account | **Choose a checking account**<br>`/personal/checking`<br>header/nav | **Choose a checking account**<br>`/personal/checking`<br>header/nav | ok | proposed |
+| chase-5 | Find an ATM / branch | **Find ATM or branch**<br>`/`<br>header/nav | **Find ATM or branch**<br>`/`<br>header/nav | ok | proposed |
 
 ## costco — https://www.costco.com/
 
@@ -86,6 +114,18 @@ Before: [2023-06-15](https://web.archive.org/web/20230615030829/https://www.home
 | homedepot-5 | Deals | **Browse Weekly Ad**<br>`/c/localad`<br>body | _not found_ | exclude: Can't tell if the weekly ad really left the home page or is script-drawn. | proposed |
 | homedepot-6 | Search button | _not found_ | _not found_ | skipped (not on before page) | proposed |
 
+## irs — https://www.irs.gov/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615002515/https://www.irs.gov/) · After: [2025-06-15](https://web.archive.org/web/20250615014309/https://www.irs.gov/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| irs-1 | Sign in | **Sign in to Your Account**<br>`/payments/your-online-account`<br>body | **Sign in**<br>`/your-account`<br>header/nav | ok: Moved from page body to header. | proposed |
+| irs-2 | Help / customer service | **Help Help**<br>`/help/telephone-assistance`<br>header/nav | **Help Help**<br>`/help/let-us-help-you`<br>header/nav | ok | proposed |
+| irs-3 | Search button | **Search Search Search**<br>`-`<br>header/nav | **Search Search Search**<br>`-`<br>header/nav | ok | proposed |
+| irs-4 | Apply for benefits | **Apply for an Employer ID Number (EIN)**<br>`/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online`<br>header/nav | **Apply for an Employer ID Number (EIN)**<br>`/businesses/small-businesses-self-employed/get-an-employer-identification-number`<br>header/nav | ok: It is the EIN application link, the same in both. | proposed |
+| irs-5 | Find an office / location | **Find a Local Office**<br>`/help/contact-your-local-irs-office`<br>header/nav | **Find a Local Office**<br>`/help/contact-your-local-irs-office`<br>header/nav | ok | proposed |
+
 ## kohls — https://www.kohls.com/
 
 Before: [2023-06-15](https://web.archive.org/web/20230615004347/https://www.kohls.com/) · After: [2025-06-13](https://web.archive.org/web/20250613143500/https://www.kohls.com/) (archived copies; open to check)
@@ -125,6 +165,43 @@ Before: [2023-06-15](https://web.archive.org/web/20230615022933/https://www.macy
 | macys-5 | Deals | **Deals**<br>`/shop/coupons-deals`<br>header/nav | **Deals**<br>`/shop/coupons-deals`<br>header/nav | ok | proposed |
 | macys-6 | Search button | **Submit product search GO**<br>`-`<br>header/nav | _not found_ | exclude: After 'not found' is probably script-drawn, not a real removal. | proposed |
 
+## medicare — https://www.medicare.gov/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615040055/https://www.medicare.gov/) · After: [2025-06-15](https://web.archive.org/web/20250615025336/https://www.medicare.gov/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| medicare-1 | Sign in | **Log in/Create Account**<br>`/account/login`<br>body | **Log in/Create Account**<br>`/account/login`<br>body | ok | proposed |
+| medicare-2 | Help / customer service | **Get Help**<br>`/talk-to-someone`<br>body | **Get Help**<br>`/talk-to-someone`<br>body | ok | proposed |
+| medicare-3 | Search button | **Search**<br>`-`<br>body | **Submit Search Search**<br>`-`<br>body | ok | proposed |
+| medicare-4 | Apply for benefits | _not found_ | _not found_ | skipped (not on before page) | proposed |
+| medicare-5 | Find an office / location | _not found_ | _not found_ | skipped (not on before page) | proposed |
+
+## riteaid — https://www.riteaid.com/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615091711/https://www.riteaid.com/) · After: [2025-06-15](https://web.archive.org/web/20250615060358/https://www.riteaid.com/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| riteaid-1 | Sign in | **Hi, Log In Account**<br>`-`<br>header/nav | **Hi, Log In Account**<br>`-`<br>header/nav | ok | proposed |
+| riteaid-2 | Help / customer service | **Help**<br>`/faq`<br>footer | **Help**<br>`/faq`<br>footer | ok | proposed |
+| riteaid-3 | Search button | **Find Stores**<br>`-`<br>header/nav | **Find Stores**<br>`-`<br>header/nav | exclude: Proposer picked 'Find Stores', not the search button. | proposed |
+| riteaid-4 | Refill prescriptions | **REFILL YOUR RX**<br>`/pharmacy/services/prescription-refills/online-prescription-refills`<br>body | **REFILL YOUR RX**<br>`/pharmacy/refill-prescriptions.html`<br>body | ok | proposed |
+| riteaid-5 | Find a pharmacy / store | **Current Location**<br>`/`<br>header/nav | **Current Location**<br>`/`<br>header/nav | exclude: Picked 'Current Location', not the store finder. | proposed |
+| riteaid-6 | Vaccines / appointments | **Schedule a Vaccination Schedule a Vaccination**<br>`/pharmacy/scheduler`<br>header/nav | **Schedule a Vaccination Schedule a Vaccination**<br>`/pharmacy/scheduler`<br>header/nav | ok | proposed |
+
+## ssa — https://www.ssa.gov/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615085519/https://www.ssa.gov/) · After: [2025-06-15](https://web.archive.org/web/20250615050845/https://www.ssa.gov/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| ssa-1 | Sign in | **Sign in**<br>`/RIL/SiView.action`<br>header/nav | **Sign in**<br>`/RIL/SiView.action`<br>header/nav | ok | proposed |
+| ssa-2 | Help / customer service | **Apply for Part D Extra Help**<br>`/medicare/part-d-extra-help`<br>header/nav | **Apply for Part D Extra Help**<br>`/medicare/part-d-extra-help`<br>header/nav | exclude: Picked 'Apply for Part D Extra Help' (a benefit), not help/contact. | proposed |
+| ssa-3 | Search button | **Search**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | proposed |
+| ssa-4 | Apply for benefits | **Benefits**<br>`/menu`<br>header/nav | **Benefits**<br>`/menu`<br>header/nav | ok: The 'Benefits' menu. | proposed |
+| ssa-5 | Find an office / location | **Find an office**<br>`/locator`<br>header/nav | **Find an office**<br>`/locator`<br>header/nav | ok | proposed |
+
 ## target — https://www.target.com/
 
 Before: [2023-06-15](https://web.archive.org/web/20230615023129/https://www.target.com/) · After: [2025-06-15](https://web.archive.org/web/20250615022544/https://www.target.com/) (archived copies; open to check)
@@ -137,6 +214,31 @@ Before: [2023-06-15](https://web.archive.org/web/20230615023129/https://www.targ
 | target-4 | Help / customer service | **Target Help**<br>`/help`<br>body | **Target Help**<br>`/help`<br>body | ok | proposed |
 | target-5 | Deals | **Deals Deals**<br>`/c/weekly-deals/-/N-4xw74`<br>header/nav | **Deals Deals**<br>`/c/weekly-deals/-/N-4xw74`<br>body | ok: 'Deals' → 'Top Deals', same category id in the link. | proposed |
 | target-6 | Search button | **search search**<br>`-`<br>header/nav | **search search**<br>`-`<br>body | ok | proposed |
+
+## usps — https://www.usps.com/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615000651/https://www.usps.com/) · After: [2025-06-15](https://web.archive.org/web/20250615020813/https://www.usps.com/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| usps-1 | Sign in | **Sign In**<br>`/entreg/LoginAction_input`<br>header/nav | **Sign In**<br>`/entreg/LoginAction_input`<br>header/nav | ok | proposed |
+| usps-2 | Help / customer service | **Skip Help Links**<br>`/`<br>header/nav | **Skip Help Links**<br>`/`<br>header/nav | exclude: Picked a 'Skip Help Links' accessibility link. | proposed |
+| usps-3 | Search button | **Search**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | proposed |
+| usps-4 | Apply for benefits | _not found_ | _not found_ | skipped (not on before page) | proposed |
+| usps-5 | Find an office / location | **Find USPS Locations**<br>`/find-location.htm`<br>header/nav | **Find USPS Locations**<br>`/locations`<br>header/nav | ok | proposed |
+
+## walgreens — https://www.walgreens.com/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615065341/https://www.walgreens.com/) · After: [2025-06-15](https://web.archive.org/web/20250615030916/https://www.walgreens.com/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| walgreens-1 | Sign in | **Sign in**<br>`-`<br>header/nav | **Sign in**<br>`-`<br>header/nav | ok | proposed |
+| walgreens-2 | Help / customer service | **Support Wraps**<br>`/store/c/support-wraps/ID=361173-tier3`<br>header/nav | **Customer Service**<br>`/topic/help/customerservicehelp/customer_service_help_main.jsp`<br>footer | exclude: Before picked a product ('Support Wraps'), not customer service. | proposed |
+| walgreens-3 | Search button | **Search**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | proposed |
+| walgreens-4 | Refill prescriptions | **Refill with Rx Number**<br>`/rx-checkout/guest-express-refill`<br>header/nav | **Refill with Rx Number**<br>`/rx-checkout/guest-express-refill`<br>header/nav | ok | proposed |
+| walgreens-5 | Find a pharmacy / store | **Find a Store**<br>`/storelocator/find.jsp`<br>header/nav | **Find a Store**<br>`/storelocator/find.jsp`<br>header/nav | ok | proposed |
+| walgreens-6 | Vaccines / appointments | **Vaccines**<br>`void(0);`<br>header/nav | **Vaccinations**<br>`/topic/pharmacy/immunization-services-appointments.jsp`<br>header/nav | ok: Menu button 'Vaccines' → link 'Vaccinations'. | proposed |
 
 ## walmart — https://www.walmart.com/
 
@@ -163,3 +265,15 @@ Before: [2023-06-15](https://web.archive.org/web/20230615114051/https://www.wayf
 | wayfair-4 | Help / customer service | _not found_ | _not found_ | skipped (not on before page) | proposed |
 | wayfair-5 | Deals | _not found_ | _not found_ | skipped (not on before page) | proposed |
 | wayfair-6 | Search button | _not found_ | **Search**<br>`-`<br>header/nav | skipped (not on before page) | proposed |
+
+## wellsfargo — https://www.wellsfargo.com/
+
+Before: [2023-06-15](https://web.archive.org/web/20230615000418/https://www.wellsfargo.com/) · After: [2025-06-15](https://web.archive.org/web/20250615082642/https://www.wellsfargo.com/) (archived copies; open to check)
+
+| # | Feature | Before | After | Claude's check | Status |
+| --- | --- | --- | --- | --- | --- |
+| wellsfargo-1 | Sign in | **Sign On**<br>`/auth/login/present`<br>header/nav | **Sign On**<br>`/auth/login/present`<br>header/nav | ok | proposed |
+| wellsfargo-2 | Help / customer service | **Help**<br>`/`<br>header/nav | **Help**<br>`/`<br>header/nav | ok | proposed |
+| wellsfargo-3 | Search button | **Go**<br>`-`<br>body | **Go**<br>`-`<br>body | ok | proposed |
+| wellsfargo-4 | Open an account | **Buy a home Get started on your homeownership journey**<br>`/mortgage/buying-a-house`<br>body | **Buy a home Get started on your homeownership journey**<br>`/mortgage/buying-a-house`<br>body | exclude: Picked a mortgage 'Get started' promo, not opening an account. | proposed |
+| wellsfargo-5 | Find an ATM / branch | **ATMs/Locations**<br>`/locator`<br>header/nav | **ATMs/Locations**<br>`/locator`<br>header/nav | ok | proposed |

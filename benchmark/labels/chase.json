@@ -1,0 +1,112 @@
+{
+  "site": "chase",
+  "url": "https://www.chase.com/",
+  "category": "bank",
+  "before": "20230615000129",
+  "after": "20250615093340",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#product-sidenav-3 > div > ul > li:nth-of-type(4) > a",
+        "alternates": [
+          "#product-3 > ul > li:nth-of-type(4) > a"
+        ],
+        "text": "Sign in for offers",
+        "href": "/personal/offers/secureshopping",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "body > div > div:nth-of-type(4) > div > div > header > section:nth-of-type(1) > div > section:nth-of-type(3) > a",
+        "alternates": [
+          "body > div > div:nth-of-type(4) > div > div > header > section:nth-of-type(1) > div > section:nth-of-type(3) > div > div:nth-of-type(1) > a",
+          "body > div > div:nth-of-type(4) > div > div > header > section:nth-of-type(2) > section:nth-of-type(2) > section:nth-of-type(2) > div > div > a"
+        ],
+        "text": "Sign In",
+        "href": "/web/auth/dashboard",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#side-menu-header > section:nth-of-type(4) > div:nth-of-type(2) > ul > li:nth-of-type(2) > button",
+        "alternates": [
+          "body > div > div:nth-of-type(4) > div > div > header > section:nth-of-type(2) > section:nth-of-type(1) > section:nth-of-type(2) > nav > ul > li:nth-of-type(2) > a"
+        ],
+        "text": "Customer service",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#side-menu-header > section:nth-of-type(4) > div:nth-of-type(2) > ul > li:nth-of-type(2) > button",
+        "alternates": [
+          "body > div > div:nth-of-type(4) > div > div > header > section:nth-of-type(2) > section:nth-of-type(1) > section:nth-of-type(2) > nav > ul > li:nth-of-type(2) > a"
+        ],
+        "text": "Customer service",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": null,
+      "after": null,
+      "status": "proposed"
+    },
+    {
+      "id": "open-account",
+      "label": "Open an account",
+      "before": {
+        "selector": "#product-sidenav-1 > div > ul > li:nth-of-type(1) > a",
+        "alternates": [
+          "#product-1 > ul > li:nth-of-type(1) > a",
+          "body > div > footer > div > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) > div > div:nth-of-type(1) > div > div:nth-of-type(2) > p > a:nth-of-type(1)"
+        ],
+        "text": "Choose a checking account",
+        "href": "/personal/checking",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#product-sidenav-1 > div > ul > li:nth-of-type(1) > a",
+        "alternates": [
+          "#product-1 > ul > li:nth-of-type(1) > a",
+          "body > div > footer > div > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) > div > div:nth-of-type(1) > div > div:nth-of-type(2) > p > a:nth-of-type(1)"
+        ],
+        "text": "Choose a checking account",
+        "href": "/personal/checking",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "atm-branch",
+      "label": "Find an ATM / branch",
+      "before": {
+        "selector": "#product-customer-service > div > ul:nth-of-type(2) > li:nth-of-type(3) > a",
+        "alternates": [
+          "#contact-2 > ul > li:nth-of-type(3) > a"
+        ],
+        "text": "Find ATM or branch",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#product-customer-service > div > ul:nth-of-type(2) > li:nth-of-type(3) > a",
+        "alternates": [
+          "#contact-2 > ul > li:nth-of-type(3) > a",
+          "body > div > footer > div > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) > div > div:nth-of-type(8) > div > div:nth-of-type(2) > p:nth-of-type(1) > a:nth-of-type(4)"
+        ],
+        "text": "Find ATM or branch",
+        "href": "/",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

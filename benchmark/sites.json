@@ -1,5 +1,5 @@
 {
-  "$comment": "Real-site benchmark. Public home pages only; archived copies are fetched from the Wayback Machine into benchmark/cache/ (git-ignored). 'before'/'after' are target dates; the closest good capture is used. Phase 1 = generic shopping (Manas, 2026-11-19); sensitive categories follow.",
+  "$comment": "Real-site benchmark. Public home pages only; archived copies are fetched from the Wayback Machine into benchmark/cache/ (git-ignored). 'before'/'after' are target dates; the closest good capture is used. Phase 1 = generic shopping (Manas, 2026-11-19); then sensitive categories: pharmacy, government, bank public pages (never logged-in pages).",
   "sites": [
     {
       "id": "amazon",
@@ -107,6 +107,126 @@
       "after": "20250615",
       "fallbacks": {
         "after": ["20250315"]
+      }
+    },
+    {
+      "id": "cvs",
+      "name": "CVS Pharmacy",
+      "category": "pharmacy",
+      "url": "https://www.cvs.com/",
+      "before": "20230615",
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315", "20241201"],
+        "before": ["20230315"]
+      }
+    },
+    {
+      "id": "walgreens",
+      "name": "Walgreens",
+      "category": "pharmacy",
+      "url": "https://www.walgreens.com/",
+      "before": "20230615",
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315", "20241201"],
+        "before": ["20230315"]
+      }
+    },
+    {
+      "id": "riteaid",
+      "name": "Rite Aid",
+      "category": "pharmacy",
+      "url": "https://www.riteaid.com/",
+      "before": "20230615",
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315", "20241201"],
+        "before": ["20230315"]
+      }
+    },
+    {
+      "id": "ssa",
+      "name": "Social Security (SSA)",
+      "category": "government",
+      "url": "https://www.ssa.gov/",
+      "before": "20230615",
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315", "20241201"],
+        "before": ["20230315"]
+      }
+    },
+    {
+      "id": "medicare",
+      "name": "Medicare.gov",
+      "category": "government",
+      "url": "https://www.medicare.gov/",
+      "before": "20230615",
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315", "20241201"],
+        "before": ["20230315"]
+      }
+    },
+    {
+      "id": "usps",
+      "name": "USPS",
+      "category": "government",
+      "url": "https://www.usps.com/",
+      "before": "20230615",
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315", "20241201"],
+        "before": ["20230315"]
+      }
+    },
+    {
+      "id": "irs",
+      "name": "IRS",
+      "category": "government",
+      "url": "https://www.irs.gov/",
+      "before": "20230615",
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315", "20241201"],
+        "before": ["20230315"]
+      }
+    },
+    {
+      "id": "chase",
+      "name": "Chase (public home page)",
+      "category": "bank",
+      "url": "https://www.chase.com/",
+      "before": "20230615",
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315", "20241201"],
+        "before": ["20230315"]
+      }
+    },
+    {
+      "id": "bofa",
+      "name": "Bank of America (public home page)",
+      "category": "bank",
+      "url": "https://www.bankofamerica.com/",
+      "before": "20230615",
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315", "20241201"],
+        "before": ["20230315"]
+      }
+    },
+    {
+      "id": "wellsfargo",
+      "name": "Wells Fargo (public home page)",
+      "category": "bank",
+      "url": "https://www.wellsfargo.com/",
+      "before": "20230615",
+      "after": "20250615",
+      "fallbacks": {
+        "after": ["20250315", "20241201"],
+        "before": ["20230315"]
       }
     }
   ]

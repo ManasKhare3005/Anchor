@@ -1,0 +1,136 @@
+{
+  "site": "walgreens",
+  "url": "https://www.walgreens.com/",
+  "category": "pharmacy",
+  "before": "20230615065341",
+  "after": "20250615030916",
+  "features": [
+    {
+      "id": "sign-in",
+      "label": "Sign in",
+      "before": {
+        "selector": "#pf-dropdown-signin",
+        "alternates": [],
+        "text": "Sign in",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#pf-mb-signin",
+        "alternates": [
+          "#pf-dropdown-signin"
+        ],
+        "text": "Sign in",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "help",
+      "label": "Help / customer service",
+      "before": {
+        "selector": "#mega-dropdown__4-2-8__361173-tier3 > a",
+        "alternates": [
+          "#mega-dropdown__4-11-7__361173-tier3 > a",
+          "#mega-dropdown__7-9-7__361173-tier3 > a"
+        ],
+        "text": "Support Wraps",
+        "href": "/store/c/support-wraps/ID=361173-tier3",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#retail-home-page-406dd9159f > div:nth-of-type(2) > footer > div > section > div:nth-of-type(2) > div > div > div > div:nth-of-type(1) > h2:nth-of-type(1) > a",
+        "alternates": [],
+        "text": "Customer Service",
+        "href": "/topic/help/customerservicehelp/customer_service_help_main.jsp",
+        "region": "footer"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "search",
+      "label": "Search button",
+      "before": {
+        "selector": "body > header > div > nav > div > div > div:nth-of-type(3) > form > button:nth-of-type(2)",
+        "alternates": [],
+        "text": "Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#wag-header-search-container > div > form > button",
+        "alternates": [],
+        "text": "Search",
+        "href": "",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "refill",
+      "label": "Refill prescriptions",
+      "before": {
+        "selector": "#menu-ul-menu-prescrip-refills > li:nth-of-type(11) > ul > li:nth-of-type(4) > a",
+        "alternates": [],
+        "text": "Refill with Rx Number",
+        "href": "/rx-checkout/guest-express-refill",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#refill_with_rx_number",
+        "alternates": [],
+        "text": "Refill with Rx Number",
+        "href": "/rx-checkout/guest-express-refill",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "find-pharmacy",
+      "label": "Find a pharmacy / store",
+      "before": {
+        "selector": "#menu-store-locator > a",
+        "alternates": [
+          "body > footer > div > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a",
+          "body > footer > div > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div > div:nth-of-type(2) > h2:nth-of-type(1) > a"
+        ],
+        "text": "Find a Store",
+        "href": "/storelocator/find.jsp",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#menu-store-locator > a",
+        "alternates": [
+          "#retail-home-page-406dd9159f > div:nth-of-type(2) > footer > div > section > div:nth-of-type(2) > div > div > div > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a",
+          "#retail-home-page-406dd9159f > div:nth-of-type(2) > footer > div > section > div:nth-of-type(2) > div > div > div > div:nth-of-type(2) > h2:nth-of-type(1) > a"
+        ],
+        "text": "Find a Store",
+        "href": "/storelocator/find.jsp",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    },
+    {
+      "id": "vaccines",
+      "label": "Vaccines / appointments",
+      "before": {
+        "selector": "#menu-ul-menu-find-care > li:nth-of-type(10) > a",
+        "alternates": [],
+        "text": "Vaccines",
+        "href": "void(0);",
+        "region": "header/nav"
+      },
+      "after": {
+        "selector": "#menu-ul-menu-find-care > li:nth-of-type(4) > a",
+        "alternates": [
+          "#menu-immunizations > a"
+        ],
+        "text": "Vaccinations",
+        "href": "/topic/pharmacy/immunization-services-appointments.jsp",
+        "region": "header/nav"
+      },
+      "status": "proposed"
+    }
+  ]
+}

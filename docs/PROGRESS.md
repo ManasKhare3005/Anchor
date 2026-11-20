@@ -25,12 +25,18 @@ decision records are in `docs/decisions.md`.
   - [x] 1.5 Site state + two-visit rule
   - [x] 1.6 Elsewhere search (`menuHint`)
   - [x] 1.7 Runner + report over fixtures
-  - [~] 1.8 Real-site pipeline, shopping first. **Waiting for Manas to confirm labels** (`docs/benchmark-labels-review.md`).
-  - [ ] 1.9 Calibrate, then sensitive categories
+  - [~] 1.8 Real-site pipeline. 21 sites (12 shopping, 3 pharmacy, 4 government, 3 bank; CVS skipped). **Waiting for Manas to confirm labels** (`docs/benchmark-labels-review.md`).
+  - [~] 1.9 Calibrate (interim thresholds set from fixtures; final once labels are confirmed), then sensitive categories (done: 9 of 10 fetched; CVS has no usable 2023 copy)
   - [x] 1.10 Matcher runs in real Chromium
   - [ ] 1.11 Wrap-up
 
 ## Decisions made
+
+- 2026-11-20: Calibration optimizes for **zero** wrong matches on the calibration set (a margin under the 1%/5% targets). Tuning up to 5% overfit: leave-one-site-out "fairly" wrong rate was 10.8%, while zero-tolerance held out at 0 wrong.
+- 2026-11-20: Copies of the same link (same address + same label) are one feature, not rivals. Buttons without a link are never merged.
+- 2026-11-20: The accessible name only counts as a separate signal when it differs from the visible text (it was double-counting the label).
+- 2026-11-20: Lexicon change after freeze: "pharmacy" removed from the prescriptions group (it caused a misleading hint on fixtures).
+- 2026-11-20: No `Claude-Session:` or other AI lines in commits (Manas's rule). One pushed commit (`6187602`) carries one by mistake; it is left as is unless Manas wants history rewritten.
 
 - 2026-11-20: The matcher may read the `value` attribute of `<input type=submit|button|reset>` only. That attribute is a caption the site wrote, which nobody can type into. It goes through one audited helper (`buttonInputLabel`) with an eslint exception and tests proving no other input type is read (Manas).
 - 2026-11-20: eBay and Kohl's: retry with other archive dates **and** add two more shopping sites (Manas: "it only makes our case more accurate").
@@ -97,3 +103,5 @@ decision records are in `docs/decisions.md`.
 - In real Chromium: capture → match works on fixture v1 → v2, the visual signal is present (real
   layout), removed features return no element, the cookie-popup state is "normal", and the bundled
   matcher passes the Rule 1/6 scan.
+- After task 1.9 (interim thresholds: sure ≥ 0.60 / gap ≥ 0.25, fairly ≥ 0.35 / gap ≥ 0.20): fixtures 0 wrong; all three v2 redesigns now classify as "redesign"; leave-one-site-out 0 wrong; 54 pre-checked real labels: 45 good, 0 wrong. Report total: sure 150 correct / 0 wrong (95% upper bound 2.5%), fairly 14 / 0.
+- All 21 real sites with pre-checked labels (90 ok, unconfirmed): 74 correct, 16 not found, **0 wrong**. By category: bank 10/11, government 12/15, pharmacy 6/9, shopping 46/55, with no wrong match in any. Report totals: sure 178 / 0 wrong (95% upper bound 2.1%), fairly 15 / 0.
