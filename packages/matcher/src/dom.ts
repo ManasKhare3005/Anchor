@@ -170,6 +170,24 @@ function textById(scopeOf: Element, id: string): string {
   return target ? textOf(target) : "";
 }
 
+/** Input types whose value attribute is a label the site wrote, never text the person typed. */
+const BUTTON_INPUT_TYPES = new Set(["submit", "button", "reset"]);
+
+/**
+ * The ONLY place the matcher reads a value attribute (Hard Rule 7 exception, approved by Manas
+ * 2026-11-20). On <input type=submit|button|reset> the value attribute is the button's caption,
+ * written by the site ("Pay now"); a person cannot type into these inputs. Every other input type
+ * returns "" without touching the attribute. Reads the attribute, never the live `.value`
+ * property. Covered by tests in dom.test.ts.
+ */
+export function buttonInputLabel(el: Element): string {
+  if (el.tagName !== "INPUT") return "";
+  const type = (el.getAttribute("type") ?? "text").toLowerCase();
+  if (!BUTTON_INPUT_TYPES.has(type)) return "";
+  // eslint-disable-next-line no-restricted-syntax -- audited exception above: button caption, not typed input
+  return clean(el.getAttribute("value"));
+}
+
 /**
  * Approximate accessible name (simplified accname rules): aria-labelledby, aria-label,
  * associated <label>, alt, title, placeholder, then contents. Never the value attribute.
@@ -197,6 +215,8 @@ export function accessibleNameOf(el: Element): string {
   }
   const alt = clean(el.getAttribute("alt"));
   if (alt) return alt;
+  const authored = buttonInputLabel(el);
+  if (authored) return authored;
   const contents = tag === "INPUT" ? "" : textOf(el);
   if (contents) return contents;
   const title = clean(el.getAttribute("title"));

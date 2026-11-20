@@ -195,3 +195,15 @@ Each entry: the decision, why, and the alternatives considered. Newest last. Cha
 - **Decision:** `npm run test:e2e:edge` runs the same Playwright suite with `channel: "msedge"`.
 - **Why:** v2 says the extension should also load in Edge. Unlike branded Chrome, Edge still
   accepts `--load-extension`, so the check can be automated instead of manual.
+
+## D-019 — Button captions from `value` attributes (Hard Rule 7 exception)
+
+- **Date:** 2026-11-20 · **Milestone:** M1 (Manas approved)
+- **Decision:** `buttonInputLabel()` in `packages/matcher/src/dom.ts` reads the `value`
+  attribute of `<input type="submit" | "button" | "reset">` and nothing else. It is the only
+  `getAttribute("value")` in shipped code, marked with an eslint exception and a written reason.
+- **Why:** On those input types the value attribute is the visible caption the site wrote ("Pay
+  now"); a person cannot type into them. Older sites (government especially) label buttons this
+  way, so ignoring it lost a strong signal.
+- **Guarded by:** tests that every other input type (text, email, search, tel, password, hidden,
+  number, checkbox, image) is never read, plus the existing typed-value tests.

@@ -32,6 +32,9 @@ decision records are in `docs/decisions.md`.
 
 ## Decisions made
 
+- 2026-11-20: The matcher may read the `value` attribute of `<input type=submit|button|reset>` only. That attribute is a caption the site wrote, which nobody can type into. It goes through one audited helper (`buttonInputLabel`) with an eslint exception and tests proving no other input type is read (Manas).
+- 2026-11-20: eBay and Kohl's: retry with other archive dates **and** add two more shopping sites (Manas: "it only makes our case more accurate").
+
 - 2026-11-19: `MYCLAUDE.md` renamed to `CLAUDE.md`, so Claude Code loads it every session (Manas).
 - 2026-11-19: Push to `origin/main` after each finished task, without asking. Short summary at the
   end of each milestone (Manas).
@@ -64,15 +67,9 @@ decision records are in `docs/decisions.md`.
 
 ## Questions for Manas
 
-1. **`<input type=submit value="Pay now">`:** the `value` attribute here is a label the site wrote,
-   not something the person typed. Hard Rule 7 says never read `.value`, so for now the matcher
-   doesn't read it at all (the cautious option). That costs a matching signal on older sites,
-   especially government ones. May the matcher read the `value` **attribute** only on
-   submit/button/reset inputs, through one audited helper, with a test proving text inputs are
-   never read?
-2. Are the wrong-match targets (1% sure, 5% fairly sure) right? (after the first M1 report)
-3. License and public name for the repository.
-4. Should the helper page sit behind a simple PIN? (M5)
+1. Are the wrong-match targets (1% sure, 5% fairly sure) right? (after the first M1 report)
+2. License and public name for the repository.
+3. Should the helper page sit behind a simple PIN? (M5)
 
 ## M1 notes so far (untuned placeholder thresholds)
 

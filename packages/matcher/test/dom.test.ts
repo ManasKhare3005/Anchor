@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   accessibleNameOf,
+  buttonInputLabel,
   ancestorTrailOf,
   attributesOf,
   collectCandidates,
@@ -80,10 +81,26 @@ describe("accessibleNameOf", () => {
     expect(accessibleNameOf(one(doc, "#f"))).toBe("Search products");
   });
 
-  it("never uses the value attribute, even on submit buttons (cautious Hard Rule 7)", () => {
-    const doc = dom(`<input id="s" type="submit" value="Pay now">`);
-    expect(accessibleNameOf(one(doc, "#s"))).toBe("Submit");
+  it("uses the site-written caption of submit/button/reset inputs", () => {
+    const doc = dom(`
+      <input id="s" type="submit" value="Pay now">
+      <input id="b" type="button" value="Continue">
+      <input id="r" type="reset" value="Start over">
+      <input id="e" type="submit">`);
+    expect(accessibleNameOf(one(doc, "#s"))).toBe("Pay now");
+    expect(accessibleNameOf(one(doc, "#b"))).toBe("Continue");
+    expect(accessibleNameOf(one(doc, "#r"))).toBe("Start over");
+    expect(accessibleNameOf(one(doc, "#e"))).toBe("Submit");
   });
+
+  it.each(["text", "email", "search", "tel", "password", "hidden", "number", "checkbox", "image"])(
+    "never reads the value attribute of type=%s inputs",
+    (type) => {
+      const doc = dom(`<input id="i" type="${type}" value="PRIVATE-VALUE">`);
+      expect(buttonInputLabel(one(doc, "#i"))).toBe("");
+      expect(JSON.stringify(signalsOf(one(doc, "#i")))).not.toMatch(/PRIVATE/);
+    },
+  );
 });
 
 describe("roleOf", () => {
