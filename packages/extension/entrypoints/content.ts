@@ -8,6 +8,7 @@ import {
 } from "../src/messages.ts";
 import { removeOverlay } from "../src/content/overlay.ts";
 import { startPicking, stopPicking } from "../src/content/pick.ts";
+import { point, stopPointing } from "../src/content/point.ts";
 
 // Restricted to fixture origins for now; widened per site later.
 // Hard Rule 4: everything Anchor shows lives in one Shadow DOM host marked data-anchor, and
@@ -35,6 +36,7 @@ export default defineContentScript({
           return Promise.resolve(reply);
         }
         case "anchor:pick-start":
+          stopPointing();
           startPicking(document, {
             onPicked: (fingerprint) => send({ type: "anchor:picked", fingerprint }),
             onCancelled: () => send({ type: "anchor:pick-cancelled" }),
@@ -43,8 +45,12 @@ export default defineContentScript({
         case "anchor:pick-stop":
           stopPicking();
           return Promise.resolve({ ok: true });
+        case "anchor:find":
+          stopPicking();
+          return Promise.resolve(point(document, r.fingerprint, r.siteButtons));
         case "anchor:show-original":
           stopPicking();
+          stopPointing();
           removeOverlay();
           return Promise.resolve({ ok: true });
         default:

@@ -1,14 +1,22 @@
-/* Interface rules: 18px+ text, strong contrast, nothing moves. */
+/* Interface rules: 18px+ text, 44px+ targets, strong contrast, nothing moves or blinks. */
 :root {
   color-scheme: light dark;
   --fg: #111;
   --bg: #fff;
+  --muted: #444;
+  --line: #111;
+  --button: #f1f1f1;
+  --accent: #0b57d0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --fg: #f2f2f2;
     --bg: #161616;
+    --muted: #cfcfcf;
+    --line: #f2f2f2;
+    --button: #2a2a2a;
+    --accent: #8ab4f8;
   }
 }
 
@@ -27,6 +35,125 @@ h1 {
   margin: 0 0 12px;
 }
 
+h2 {
+  font-size: 22px;
+  margin: 20px 0 8px;
+}
+
+h3 {
+  font-size: 20px;
+  margin: 16px 0 6px;
+}
+
 p {
+  margin: 0 0 8px;
+}
+
+ul {
+  list-style: none;
   margin: 0;
+  padding: 0;
+}
+
+li {
+  margin: 0 0 8px;
+}
+
+button,
+input {
+  font: inherit;
+  color: var(--fg);
+}
+
+button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 6px 14px;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  background: var(--button);
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.shelf-button {
+  width: 100%;
+  text-align: left;
+  font-size: 22px;
+}
+
+#show-original {
+  margin-top: 12px;
+}
+
+#note {
+  padding: 12px;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  margin: 0 0 12px;
+}
+
+details {
+  margin-top: 24px;
+  border-top: 2px solid var(--line);
+  padding-top: 8px;
+}
+
+summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+form {
+  margin: 12px 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  padding: 6px 10px;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.manage-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#details {
+  color: var(--muted);
+  font-size: 18px;
+}
+
+@media (forced-colors: active) {
+  button,
+  input,
+  #note {
+    border-color: CanvasText;
+  }
 }

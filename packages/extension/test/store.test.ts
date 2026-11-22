@@ -95,12 +95,13 @@ function fakeArea(initial?: unknown): StorageArea & { data: Record<string, unkno
   };
 }
 
-const PANEL = { id: "ext" };
+const ORIGIN = "chrome-extension://ext/";
+const PANEL = { id: "ext", url: `${ORIGIN}sidepanel.html` };
 
 describe("writer (single writer in the service worker)", () => {
   it("applies concurrent requests one at a time", async () => {
     const area = fakeArea();
-    const write = createWriter(area, "ext");
+    const write = createWriter(area, "ext", ORIGIN);
     const replies = await Promise.all(
       ["a", "b", "c", "d"].map((id) =>
         write({ type: "anchor:shelf-add", fingerprint: fp(id) }, PANEL),
@@ -113,11 +114,14 @@ describe("writer (single writer in the service worker)", () => {
 
   it("refuses senders that are not extension pages", async () => {
     const area = fakeArea();
-    const write = createWriter(area, "ext");
+    const write = createWriter(area, "ext", ORIGIN);
     const add = { type: "anchor:shelf-add", fingerprint: fp("a") };
-    expect(await write(add, { id: "other" })).toEqual({ ok: false, error: "not allowed" });
-    // A content script has the same id but comes from a tab.
-    expect(await write(add, { id: "ext", tab: { id: 1 } })).toEqual({
+    expect(await write(add, { id: "other", url: `${ORIGIN}x` })).toEqual({
+      ok: false,
+      error: "not allowed",
+    });
+    // A content script has the same id but reports the web page's URL.
+    expect(await write(add, { id: "ext", url: "https://bank.example/" })).toEqual({
       ok: false,
       error: "not allowed",
     });
@@ -125,7 +129,7 @@ describe("writer (single writer in the service worker)", () => {
   });
 
   it("refuses malformed requests", async () => {
-    const write = createWriter(fakeArea(), "ext");
+    const write = createWriter(fakeArea(), "ext", ORIGIN);
     expect((await write({ type: "anchor:shelf-add", fingerprint: { id: "x" } }, PANEL)).ok).toBe(
       false,
     );
@@ -135,7 +139,7 @@ describe("writer (single writer in the service worker)", () => {
   it("never writes over stored data it cannot read", async () => {
     const corrupt = { schemaVersion: 99, buttons: "?" };
     const area = fakeArea(corrupt);
-    const write = createWriter(area, "ext");
+    const write = createWriter(area, "ext", ORIGIN);
     const r = await write({ type: "anchor:shelf-add", fingerprint: fp("a") }, PANEL);
     expect(r.ok).toBe(false);
     expect(area.data[STORE_KEY]).toEqual(corrupt);
@@ -143,7 +147,7 @@ describe("writer (single writer in the service worker)", () => {
 
   it("a failed request does not block later ones", async () => {
     const area = fakeArea();
-    const write = createWriter(area, "ext");
+    const write = createWriter(area, "ext", ORIGIN);
     expect((await write({ type: "anchor:shelf-remove", id: "nope" }, PANEL)).ok).toBe(false);
     expect((await write({ type: "anchor:shelf-add", fingerprint: fp("a") }, PANEL)).ok).toBe(true);
   });

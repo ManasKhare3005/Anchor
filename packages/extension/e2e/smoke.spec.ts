@@ -48,9 +48,7 @@ test("side panel renders large, labeled text", async ({ context, extensionId }) 
   const page = await context.newPage();
   await page.goto(`chrome-extension://${extensionId}/sidepanel.html`);
   await expect(page.getByRole("heading", { name: "Anchor" })).toBeVisible();
-  await expect(page.getByRole("status")).toHaveText(
-    "Anchor is ready. Your buttons will appear here.",
-  );
+  await expect(page.getByRole("status")).toHaveText("Anchor can't help on this page.");
   const fontPx = await page
     .getByRole("status")
     .evaluate((el) => parseFloat(getComputedStyle(el).fontSize));

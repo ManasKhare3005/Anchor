@@ -8,7 +8,33 @@
   <body>
     <main aria-labelledby="title">
       <h1 id="title">Anchor</h1>
-      <p id="status" role="status">Anchor is ready. Your buttons will appear here.</p>
+      <p id="status" role="status">Anchor is getting ready.</p>
+      <div id="note" hidden>
+        <p id="note-text"></p>
+        <button type="button" id="copy-note">Copy the help note</button>
+      </div>
+
+      <h2 id="shelf-title">My buttons</h2>
+      <ul id="shelf" aria-labelledby="shelf-title"></ul>
+
+      <button type="button" id="show-original">Show original</button>
+
+      <details id="helper">
+        <summary>For helpers</summary>
+        <button type="button" id="remember">Remember a button</button>
+        <form id="name-form" hidden>
+          <label for="name">What should this button be called?</label>
+          <input id="name" name="name" maxlength="60" autocomplete="off" />
+          <div class="row">
+            <button type="submit">Save</button>
+            <button type="button" id="cancel-name">Cancel</button>
+          </div>
+        </form>
+        <h3 id="manage-title">Buttons on this website</h3>
+        <ul id="manage" aria-labelledby="manage-title"></ul>
+        <h3>Last check</h3>
+        <p id="details">Nothing checked yet.</p>
+      </details>
     </main>
     <script type="module" src="./main.ts"></script>
   </body>

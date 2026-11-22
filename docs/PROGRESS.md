@@ -28,6 +28,10 @@ decision records are in `docs/decisions.md`.
 
 ## Decisions made
 
+- 2026-11-21: The side panel's own name field is read through one audited helper (`readNameField`). Hard Rule 7 covers what the person types into websites; this field is where the helper names a shelf button for Anchor.
+- 2026-11-21: Only Anchor's own pages may write the shelf: the service worker checks the sender's URL is the extension origin (content scripts share the extension id but report the page URL).
+- 2026-11-21: Pointing never focuses the element (focus can open site menus). The panel status is a live region, so screen readers hear the result.
+- 2026-11-21: A button hidden in a closed menu: the ring goes on the menu (`<summary>` or nearest visible ancestor) with "Open the menu, and I'll show you", and moves to the button once the person opens it. Anchor never opens the menu.
 - 2026-11-20: Calibration optimizes for **zero** wrong matches on the calibration set (a margin under the 1%/5% targets). Tuning up to 5% overfit: leave-one-site-out "fairly" wrong rate was 10.8%, while zero-tolerance held out at 0 wrong.
 - 2026-11-20: Copies of the same link (same address + same label) are one feature, not rivals. Buttons without a link are never merged.
 - 2026-11-20: The accessible name only counts as a separate signal when it differs from the visible text (it was double-counting the label).

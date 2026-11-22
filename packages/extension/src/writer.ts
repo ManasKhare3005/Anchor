@@ -15,17 +15,20 @@ export interface StorageArea {
   set(items: Record<string, unknown>): Promise<void>;
 }
 
-/** Who sent a message. Only extension pages (no tab) may write; content scripts and pages may not. */
+/**
+ * Who sent a message. Only Anchor's own pages (the side panel) may write. Content scripts share
+ * the extension id but report the web page's URL, so they are refused.
+ */
 export interface Sender {
   id?: string;
-  tab?: unknown;
+  url?: string;
 }
 
 /**
  * The single writer for the shelf. Requests are applied one at a time (each read-modify-write
  * finishes before the next starts), so two quick saves can't overwrite each other.
  */
-export function createWriter(area: StorageArea, extensionId: string) {
+export function createWriter(area: StorageArea, extensionId: string, extensionOrigin: string) {
   let queue: Promise<unknown> = Promise.resolve();
 
   async function apply(change: (s: Store) => Store): Promise<ShelfReply> {
@@ -43,7 +46,7 @@ export function createWriter(area: StorageArea, extensionId: string) {
   }
 
   return function handle(message: unknown, sender: Sender): Promise<ShelfReply> {
-    if (sender.id !== extensionId || sender.tab !== undefined) {
+    if (sender.id !== extensionId || !sender.url?.startsWith(extensionOrigin)) {
       return Promise.resolve({ ok: false, error: "not allowed" });
     }
     const req = ShelfRequestSchema.safeParse(message);

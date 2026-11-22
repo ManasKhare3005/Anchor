@@ -1,4 +1,4 @@
-import { FingerprintSchema } from "@anchor/matcher";
+import { FingerprintSchema, type SiteState, type Tier } from "@anchor/matcher";
 import { z } from "zod";
 
 /**
@@ -73,3 +73,17 @@ export const PickEventSchema = z.discriminatedUnion("type", [
 ]);
 
 export type PickEvent = z.infer<typeof PickEventSchema>;
+
+// ---- Content script → side panel: reply to anchor:find ----
+
+export interface FindReply {
+  tier: Tier;
+  /** The element is hidden inside a closed menu; the ring is on the menu instead. */
+  inMenu: boolean;
+  /** Site state from all of this site's buttons (logged-out, redesign...). */
+  state: SiteState;
+  score: number;
+  gap: number;
+  /** For the helper section only. */
+  reasons: string[];
+}

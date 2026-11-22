@@ -12,6 +12,7 @@ export default defineBackground(() => {
       set: (items) => browser.storage.local.set(items),
     },
     browser.runtime.id,
+    browser.runtime.getURL("/"),
   );
 
   browser.runtime.onMessage.addListener((message: unknown, sender) => {
