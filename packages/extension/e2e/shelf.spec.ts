@@ -1,6 +1,7 @@
 import { expect, test } from "./fixtures.ts";
 import { anchorNodeCount } from "./helpers.ts";
 import {
+  goto,
   openHelper,
   openShelf,
   remember,
@@ -78,8 +79,7 @@ test("points at the redesigned button; the ring is dashed when only fairly sure"
   expect(await ringIsOn(site, ["#atm-link"])).toBe(true);
   expect((await ring(site))?.dashed).toBe(false);
 
-  await site.goto(`${fixtureOrigin}${RB}/v2/home.html`);
-  await expect(status(s)).not.toHaveText("Looking…");
+  await goto(s, `${fixtureOrigin}${RB}/v2/home.html`);
   const message = await tap(s, "Cash machine");
   expect([
     "Here it is. It's circled on the page.",
@@ -102,8 +102,7 @@ test("a button inside a closed menu: ring on the menu, then on the button once o
   const s = await openShelf(context, sw, extensionId, site);
   await remember(s, "#statements-link", "Statements");
 
-  await site.goto(`${fixtureOrigin}${RB}/v2/home.html`);
-  await expect(status(s)).not.toHaveText("Looking…");
+  await goto(s, `${fixtureOrigin}${RB}/v2/home.html`);
   expect(await tap(s, "Statements")).toBe("It's inside a menu. Open the menu, and I'll show you.");
   expect(await ringIsOn(site, ["details.rb-menu > summary"])).toBe(true);
 
@@ -126,8 +125,7 @@ test("a removed button: calm ask with a help note, no ring (Hard Rule 5)", async
   await remember(s, "#order-checks", "Order checks");
   await remember(s, "#paybill-btn", "Pay a bill");
 
-  await site.goto(`${fixtureOrigin}${RB}/v2/home.html`);
-  await expect(status(s)).not.toHaveText("Looking…");
+  await goto(s, `${fixtureOrigin}${RB}/v2/home.html`);
   expect(await tap(s, "Order checks")).toBe("This website changed. Let's ask your helper.");
   expect(await ring(site)).toBeNull();
   const note = s.panel.locator("#note-text");
@@ -153,8 +151,7 @@ test("signed out: says so calmly instead of 'website changed'", async ({
   await remember(s, "#transfer-btn", "Transfer");
   await remember(s, "#statements-link", "Statements");
 
-  await site.goto(`${fixtureOrigin}${RB}/states/logged-out.html`);
-  await expect(status(s)).not.toHaveText("Looking…");
+  await goto(s, `${fixtureOrigin}${RB}/states/logged-out.html`);
   expect(await tap(s, "Pay a bill")).toBe(
     "You may need to sign in first. Then tap the button again.",
   );

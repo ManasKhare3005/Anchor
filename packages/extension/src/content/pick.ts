@@ -91,7 +91,13 @@ export function startPicking(doc: Document, cb: PickCallbacks): void {
     if (fromOverlay(e)) return;
     const el = candidateFor(e.composedPath()[0] ?? e.target, candidates());
     hover.hidden = el === null;
-    if (el) placeOver(hover, el);
+    if (!el) return;
+    placeOver(hover, el);
+    // Keep the banner off the control being pointed at.
+    const a = el.getBoundingClientRect();
+    const b = banner.getBoundingClientRect();
+    const overlaps = a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+    if (overlaps) banner.classList.toggle("top");
   }
 
   function onKey(e: KeyboardEvent) {

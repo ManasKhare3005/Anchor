@@ -38,7 +38,11 @@ const CSS = `
   font: 20px/1.4 system-ui, sans-serif;
   pointer-events: auto;
 }
-.banner { top: 12px; left: 50%; transform: translateX(-50%); }
+/* The pick banner lets clicks through everywhere except its own button, and moves away from
+   whatever the helper is pointing at. */
+.banner { bottom: 12px; right: 12px; pointer-events: none; }
+.banner.top { bottom: auto; top: 12px; }
+.banner button { pointer-events: auto; }
 .card p { margin: 0 0 8px; }
 .card button {
   min-height: 44px;

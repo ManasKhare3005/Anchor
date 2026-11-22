@@ -103,3 +103,13 @@ export async function ringIsOn(site: Page, selectors: string[]): Promise<boolean
     { selectors, box },
   );
 }
+
+/** Navigate the site tab and wait until the shelf has refreshed for the new page. */
+export async function goto(s: Shelf, url: string): Promise<void> {
+  await s.panel.evaluate(() => {
+    const el = document.getElementById("status");
+    if (el) el.textContent = "";
+  });
+  await s.site.goto(url);
+  await expect(status(s)).toHaveText(/^(Tap a button|No buttons|Anchor can't)/);
+}
