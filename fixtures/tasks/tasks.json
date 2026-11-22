@@ -1,0 +1,161 @@
+{
+  "_doc": "Ground truth for the M3 route tests. Each step: what a person does on v1 (action on selector, with a value for fields), which elements count as right on v1 (expect, default [selector]) and on v2 (v2; empty means the step is gone). Values are marker strings that must never appear in Anchor's storage.",
+  "sites": [
+    {
+      "id": "riverbank",
+      "task": "Pay the light bill",
+      "start": "v1/home.html",
+      "v2start": "v2/home.html",
+      "steps": [
+        {
+          "kind": "click",
+          "action": "click",
+          "selector": "#billpay-link",
+          "v2": ["a.nav-pay"],
+          "page": "home.html"
+        },
+        {
+          "kind": "your-turn",
+          "action": "select",
+          "selector": "#payee",
+          "value": "City Electric",
+          "v2": ["#f-payee"],
+          "page": "billpay.html"
+        },
+        {
+          "kind": "your-turn",
+          "action": "fill",
+          "selector": "#amount",
+          "value": "61.07",
+          "v2": ["#f-amt"],
+          "page": "billpay.html"
+        },
+        {
+          "kind": "your-turn",
+          "action": "fill",
+          "selector": "#memo",
+          "value": "Zebrafinch Marmalade",
+          "v2": ["#f-note"],
+          "page": "billpay.html"
+        },
+        {
+          "kind": "click",
+          "action": "click",
+          "selector": "#review-btn",
+          "v2": ["input.cta"],
+          "page": "billpay.html"
+        },
+        {
+          "kind": "click",
+          "action": "click",
+          "selector": "#paynow-btn",
+          "v2": ["form button.cta"],
+          "page": "review.html"
+        }
+      ],
+      "detourPage": "v1/billpay.html",
+      "detourStep": 2
+    },
+    {
+      "id": "carewell",
+      "task": "Refill my pills",
+      "start": "v1/home.html",
+      "v2start": "v2/home.html",
+      "steps": [
+        {
+          "kind": "click",
+          "action": "click",
+          "selector": "#refill-link",
+          "v2": ["a.hdr-refills"],
+          "page": "home.html"
+        },
+        {
+          "kind": "your-turn",
+          "action": "select",
+          "selector": "#rx",
+          "value": "Metformin 500 mg",
+          "v2": ["#med"],
+          "page": "refill.html"
+        },
+        {
+          "kind": "your-turn",
+          "action": "check",
+          "selector": "input[name=store][value=oak]",
+          "expect": ["input[name=store]"],
+          "v2": ["input[name=store]"],
+          "page": "refill.html"
+        },
+        {
+          "kind": "your-turn",
+          "action": "check",
+          "selector": "#text-me",
+          "v2": ["input[name=text]"],
+          "page": "refill.html"
+        },
+        {
+          "kind": "click",
+          "action": "click",
+          "selector": "#continue-btn",
+          "v2": ["button.pill"],
+          "page": "refill.html"
+        },
+        {
+          "kind": "click",
+          "action": "click",
+          "selector": "#request-btn",
+          "v2": [],
+          "page": "confirm.html"
+        }
+      ],
+      "detourPage": "v1/refill.html",
+      "detourStep": 1
+    },
+    {
+      "id": "brightline",
+      "task": "Pay the electric bill",
+      "start": "v1/home.html",
+      "v2start": "v2/home.html",
+      "steps": [
+        {
+          "kind": "click",
+          "action": "click",
+          "selector": "#paybill-link",
+          "v2": [".pay-card"],
+          "page": "home.html"
+        },
+        {
+          "kind": "your-turn",
+          "action": "fill",
+          "selector": "#acct",
+          "value": "Quokka Lantern",
+          "v2": ["#a1"],
+          "page": "pay.html"
+        },
+        {
+          "kind": "your-turn",
+          "action": "fill",
+          "selector": "#amt",
+          "value": "73.19",
+          "v2": ["#a2"],
+          "page": "pay.html"
+        },
+        {
+          "kind": "click",
+          "action": "click",
+          "selector": "#continue-btn",
+          "v2": ["button.btn"],
+          "page": "pay.html"
+        },
+        {
+          "kind": "click",
+          "action": "click",
+          "selector": "#submit-btn",
+          "v2": [".submit-link"],
+          "page": "review.html"
+        }
+      ],
+      "detourPage": "v1/pay.html",
+      "detourStep": 1
+    }
+  ]
+}
