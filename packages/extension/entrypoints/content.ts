@@ -2,13 +2,14 @@ import { pagePatternOf, registrableDomain } from "@anchor/matcher";
 import {
   ContentRequestSchema,
   isPing,
-  type PickEvent,
+  type PageEvent,
   type PingReply,
   type WhereReply,
 } from "../src/messages.ts";
 import { removeOverlay } from "../src/content/overlay.ts";
 import { startPicking, stopPicking } from "../src/content/pick.ts";
 import { point, stopPointing } from "../src/content/point.ts";
+import { startRecording, stopRecording } from "../src/content/record.ts";
 
 // Restricted to fixture origins for now; widened per site later.
 // Hard Rule 4: everything Anchor shows lives in one Shadow DOM host marked data-anchor, and
@@ -17,7 +18,7 @@ export default defineContentScript({
   matches: ["http://localhost/*", "http://127.0.0.1/*"],
   runAt: "document_idle",
   main() {
-    const send = (event: PickEvent) => void browser.runtime.sendMessage(event).catch(() => {});
+    const send = (event: PageEvent) => void browser.runtime.sendMessage(event).catch(() => {});
 
     browser.runtime.onMessage.addListener((message: unknown) => {
       if (isPing(message)) {
@@ -48,9 +49,18 @@ export default defineContentScript({
         case "anchor:find":
           stopPicking();
           return Promise.resolve(point(document, r.fingerprint, r.siteButtons));
+        case "anchor:record-start":
+          stopPicking();
+          stopPointing();
+          startRecording(document, r.afterInput, (step) => send({ type: "anchor:recorded", step }));
+          return Promise.resolve({ ok: true });
+        case "anchor:record-stop":
+          stopRecording();
+          return Promise.resolve({ ok: true });
         case "anchor:show-original":
           stopPicking();
           stopPointing();
+          stopRecording();
           removeOverlay();
           return Promise.resolve({ ok: true });
         default:

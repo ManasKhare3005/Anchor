@@ -1,4 +1,5 @@
 import { capture, collectCandidates, type Fingerprint } from "@anchor/matcher";
+import { candidateFor } from "./candidate.ts";
 import { card, fromOverlay, getOverlay, placeOver, removeOverlay } from "./overlay.ts";
 
 /**
@@ -35,22 +36,6 @@ export function isPicking(): boolean {
 
 export function stopPicking(): void {
   active?.stop();
-}
-
-/** The nearest element the matcher would consider, from the clicked node upward. */
-function candidateFor(target: EventTarget | null, candidates: Set<Element>): Element | null {
-  let node = target instanceof Element ? target : null;
-  while (node) {
-    if (candidates.has(node)) return node;
-    const parent: Element | null = node.parentElement;
-    if (parent) {
-      node = parent;
-      continue;
-    }
-    const root = node.getRootNode();
-    node = root instanceof ShadowRoot ? root.host : null;
-  }
-  return null;
 }
 
 export function startPicking(doc: Document, cb: PickCallbacks): void {

@@ -17,6 +17,19 @@
       <h2 id="shelf-title">My buttons</h2>
       <ul id="shelf" aria-labelledby="shelf-title"></ul>
 
+      <section id="guide" hidden aria-labelledby="guide-title">
+        <h2 id="guide-title"></h2>
+        <p id="guide-progress"></p>
+        <p id="guide-text"></p>
+        <div class="row">
+          <button type="button" id="guide-next" hidden>Next</button>
+          <button type="button" id="guide-stop">Stop the task</button>
+        </div>
+      </section>
+
+      <h2 id="tasks-title">My tasks</h2>
+      <ul id="tasks" aria-labelledby="tasks-title"></ul>
+
       <button type="button" id="show-original">Show original</button>
 
       <details id="helper">
@@ -32,6 +45,25 @@
         </form>
         <h3 id="manage-title">Buttons on this website</h3>
         <ul id="manage" aria-labelledby="manage-title"></ul>
+        <h3 id="manage-tasks-title">Tasks on this website</h3>
+        <button type="button" id="record">Record a task</button>
+        <div id="recorder" hidden>
+          <ol id="recorded" aria-label="Steps written down"></ol>
+          <div class="row">
+            <button type="button" id="record-finish">Finish</button>
+            <button type="button" id="record-undo">Undo last step</button>
+            <button type="button" id="record-cancel">Cancel</button>
+          </div>
+        </div>
+        <form id="task-form" hidden>
+          <label for="task-name">What is this task called?</label>
+          <input id="task-name" name="task-name" maxlength="60" autocomplete="off" />
+          <div class="row">
+            <button type="submit">Save task</button>
+            <button type="button" id="task-cancel">Cancel</button>
+          </div>
+        </form>
+        <ul id="manage-tasks" aria-labelledby="manage-tasks-title"></ul>
         <h3>Last check</h3>
         <p id="details">Nothing checked yet.</p>
       </details>

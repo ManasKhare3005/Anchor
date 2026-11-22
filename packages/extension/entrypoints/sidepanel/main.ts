@@ -1,7 +1,7 @@
 import "./style.css";
 import type { Fingerprint } from "@anchor/matcher";
 import {
-  PickEventSchema,
+  PageEventSchema,
   type ContentRequest,
   type FindReply,
   type ShelfReply,
@@ -10,11 +10,12 @@ import {
 } from "../../src/messages.ts";
 import { readNameField } from "../../src/panel/name-field.ts";
 import { WORDS, detailsFor, helpNote, messageFor } from "../../src/panel/words.ts";
-import { STORE_KEY, buttonsFor, displayName, parseStore } from "../../src/store.ts";
+import type { Route, Step } from "../../src/route.ts";
+import { STORE_KEY, buttonsFor, displayName, parseStore, routesFor } from "../../src/store.ts";
 
 /**
- * The My buttons shelf. Calm for the person (their buttons, one message at a time), details for
- * the helper (under "For helpers").
+ * The My buttons shelf and My tasks. Calm for the person (their buttons and tasks, one message at
+ * a time), details for the helper (under "For helpers").
  */
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -27,13 +28,26 @@ const details = $<HTMLParagraphElement>("details");
 const nameForm = $<HTMLFormElement>("name-form");
 const nameInput = $<HTMLInputElement>("name");
 const rememberButton = $<HTMLButtonElement>("remember");
+const recordButton = $<HTMLButtonElement>("record");
+const recorder = $<HTMLDivElement>("recorder");
+const recordedList = $<HTMLOListElement>("recorded");
+const taskForm = $<HTMLFormElement>("task-form");
+const taskName = $<HTMLInputElement>("task-name");
+const taskList = $<HTMLUListElement>("tasks");
+const manageTasks = $<HTMLUListElement>("manage-tasks");
 
 /** Which tab the shelf is for. `?tab=<id>` pins one (e2e opens the panel as a normal page). */
 const pinned = Number(new URLSearchParams(location.search).get("tab"));
 let tabId: number | null = null;
 let where: WhereReply | null = null;
 let buttons: Fingerprint[] = [];
+let routes: Route[] = [];
 let pending: Fingerprint | null = null;
+
+/** A task being recorded: steps so far, all on one site. Lives here because pages reload. */
+let recording: { site: string; steps: Step[] } | null = null;
+/** A recorded task waiting for its name. */
+let unnamed: { site: string; steps: Step[] } | null = null;
 
 function say(message: string): void {
   status.textContent = message;
@@ -76,6 +90,17 @@ function button(label: string, onPress: () => void, className = ""): HTMLButtonE
   return b;
 }
 
+function manageItem(label: string, removeLabel: string, onRemove: () => void): HTMLLIElement {
+  const li = document.createElement("li");
+  li.className = "manage-item";
+  const name = document.createElement("span");
+  name.textContent = label;
+  const rm = button("Remove", onRemove, "remove");
+  rm.setAttribute("aria-label", removeLabel);
+  li.append(name, rm);
+  return li;
+}
+
 function renderShelf(): void {
   shelf.replaceChildren(
     ...buttons.map((fp) => {
@@ -85,16 +110,31 @@ function renderShelf(): void {
     }),
   );
   manage.replaceChildren(
-    ...buttons.map((fp) => {
+    ...buttons.map((fp) =>
+      manageItem(displayName(fp), `Remove ${displayName(fp)}`, () => void remove(fp)),
+    ),
+  );
+  taskList.replaceChildren(
+    ...routes.map((r) => {
       const li = document.createElement("li");
-      li.className = "manage-item";
-      const name = document.createElement("span");
-      name.textContent = displayName(fp);
-      li.append(
-        name,
-        button("Remove", () => void remove(fp), "remove"),
-      );
-      li.lastElementChild?.setAttribute("aria-label", `Remove ${displayName(fp)}`);
+      li.append(button(r.name, () => void startGuide(r), "shelf-button task-button"));
+      return li;
+    }),
+  );
+  manageTasks.replaceChildren(
+    ...routes.map((r) =>
+      manageItem(`${r.name} (${r.steps.length} steps)`, `Remove ${r.name}`, () => {
+        void removeTask(r);
+      }),
+    ),
+  );
+}
+
+function renderRecorded(): void {
+  recordedList.replaceChildren(
+    ...(recording?.steps ?? []).map((st) => {
+      const li = document.createElement("li");
+      li.textContent = st.instruction;
       return li;
     }),
   );
@@ -103,6 +143,7 @@ function renderShelf(): void {
 async function loadButtons(): Promise<void> {
   const parsed = parseStore((await browser.storage.local.get(STORE_KEY))[STORE_KEY]);
   buttons = parsed.ok && where ? buttonsFor(parsed.store, where.site) : [];
+  routes = parsed.ok && where ? routesFor(parsed.store, where.site) : [];
   renderShelf();
 }
 
@@ -111,10 +152,18 @@ async function refresh(): Promise<void> {
   tabId = await targetTab();
   where = await toPage<WhereReply>({ type: "anchor:where" });
   rememberButton.disabled = where === null;
+  recordButton.disabled = where === null || recording !== null;
   await loadButtons();
   showNote(null);
+  if (recording && where) {
+    // Each page load starts a fresh content script: ask it to keep writing steps down.
+    await toPage({ type: "anchor:record-start", afterInput: typedSoFar() });
+    say(WORDS.recording);
+    return;
+  }
+  if (await resumeGuide()) return;
   if (!where) say(WORDS.unsupported);
-  else say(buttons.length ? WORDS.ready : WORDS.empty);
+  else say(buttons.length || routes.length ? WORDS.ready : WORDS.empty);
 }
 
 async function find(fp: Fingerprint): Promise<void> {
@@ -174,10 +223,118 @@ $<HTMLButtonElement>("cancel-name").addEventListener("click", () => {
   say(WORDS.pickCancelled);
 });
 
+// ---- Recording a task ----
+
+function typedSoFar(): boolean {
+  return recording?.steps.some((st) => st.kind === "your-turn") ?? false;
+}
+
+function stopRecordingUi(): void {
+  recording = null;
+  recorder.hidden = true;
+  recordButton.disabled = where === null;
+  renderRecorded();
+}
+
+recordButton.addEventListener("click", () => {
+  void (async () => {
+    if (!where) return;
+    await stopGuide(false);
+    showNote(null);
+    taskForm.hidden = true;
+    recording = { site: where.site, steps: [] };
+    renderRecorded();
+    recorder.hidden = false;
+    recordButton.disabled = true;
+    const ok = await toPage<{ ok: boolean }>({ type: "anchor:record-start", afterInput: false });
+    if (!ok) {
+      stopRecordingUi();
+      say(WORDS.unsupported);
+      return;
+    }
+    say(WORDS.recording);
+  })();
+});
+
+$<HTMLButtonElement>("record-undo").addEventListener("click", () => {
+  recording?.steps.pop();
+  renderRecorded();
+});
+
+$<HTMLButtonElement>("record-cancel").addEventListener("click", () => {
+  void toPage({ type: "anchor:record-stop" });
+  stopRecordingUi();
+  say(WORDS.recordCancelled);
+});
+
+$<HTMLButtonElement>("record-finish").addEventListener("click", () => {
+  if (!recording) return;
+  if (recording.steps.length === 0) {
+    say(WORDS.recordEmpty);
+    return;
+  }
+  void toPage({ type: "anchor:record-stop" });
+  unnamed = recording;
+  stopRecordingUi();
+  taskForm.reset();
+  taskForm.hidden = false;
+  taskName.focus();
+  say(WORDS.taskName);
+});
+
+taskForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const draft = unnamed;
+  if (!draft) return;
+  void (async () => {
+    const name = readNameField(taskName).trim() || "My task";
+    const r = await toStore({
+      type: "anchor:shelf-route-add",
+      route: { id: crypto.randomUUID(), name, site: draft.site, steps: draft.steps },
+    });
+    if (r.ok) {
+      unnamed = null;
+      taskForm.hidden = true;
+    }
+    say(r.ok ? WORDS.taskSaved : WORDS.problem);
+  })();
+});
+
+$<HTMLButtonElement>("task-cancel").addEventListener("click", () => {
+  unnamed = null;
+  taskForm.hidden = true;
+  say(WORDS.recordCancelled);
+});
+
+async function removeTask(r: Route): Promise<void> {
+  const reply = await toStore({ type: "anchor:shelf-route-remove", id: r.id });
+  say(reply.ok ? WORDS.removed : WORDS.problem);
+}
+
+// ---- Guiding a task (M3 task 4) ----
+
+async function startGuide(r: Route): Promise<void> {
+  void r;
+  await Promise.resolve();
+}
+
+async function stopGuide(announce: boolean): Promise<void> {
+  void announce;
+  await Promise.resolve();
+}
+
+async function resumeGuide(): Promise<boolean> {
+  return Promise.resolve(false);
+}
+
+// ---- Always there ----
+
 $<HTMLButtonElement>("show-original").addEventListener("click", () => {
   void (async () => {
     showNote(null);
     await toPage({ type: "anchor:show-original" });
+    if (recording) stopRecordingUi();
+    await stopGuide(false);
     say(WORDS.original);
   })();
 });
@@ -189,23 +346,35 @@ $<HTMLButtonElement>("copy-note").addEventListener("click", () => {
   );
 });
 
-// Picks come from the content script of the tab this shelf is for.
+// Events come from the content script of the tab this shelf is for.
 browser.runtime.onMessage.addListener((message: unknown, sender) => {
   if (sender.tab?.id === undefined || sender.tab.id !== tabId) return undefined;
-  const event = PickEventSchema.safeParse(message);
+  const event = PageEventSchema.safeParse(message);
   if (!event.success) return undefined;
-  if (event.data.type === "anchor:pick-cancelled") {
-    say(WORDS.pickCancelled);
-    return undefined;
+  const e = event.data;
+  switch (e.type) {
+    case "anchor:recorded":
+      if (recording && e.step.fingerprint?.site === recording.site) {
+        recording.steps.push(e.step);
+        renderRecorded();
+      }
+      break;
+    case "anchor:pick-cancelled":
+      say(WORDS.pickCancelled);
+      break;
+    case "anchor:picked":
+      pending = e.fingerprint;
+      nameInput.defaultValue = displayName(pending);
+      nameForm.reset();
+      nameForm.hidden = false;
+      $<HTMLDetailsElement>("helper").open = true;
+      nameInput.focus();
+      nameInput.select();
+      say("What should this button be called?");
+      break;
+    default:
+      break;
   }
-  pending = event.data.fingerprint;
-  nameInput.defaultValue = displayName(pending);
-  nameForm.reset();
-  nameForm.hidden = false;
-  $<HTMLDetailsElement>("helper").open = true;
-  nameInput.focus();
-  nameInput.select();
-  say("What should this button be called?");
   return undefined;
 });
 

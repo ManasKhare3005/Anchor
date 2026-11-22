@@ -46,18 +46,33 @@ export function clickInstruction(fp: Fingerprint): string {
   return label ? `Click "${label}".` : "Click the circled button.";
 }
 
-export function yourTurnInstruction(fp: Fingerprint, field: FieldKind): string {
-  const label = labelOf(fp);
+export function yourTurnInstruction(fp: Fingerprint, field: FieldKind, groupLabel = ""): string {
+  const label = groupLabel || labelOf(fp);
   if (field === "choose") return label ? `Your turn: choose "${label}".` : "Your turn: choose one.";
   return label ? `Your turn: fill in "${label}".` : "Your turn: fill in the circled box.";
+}
+
+/**
+ * Once the person has typed or chosen something, later pages can show it again ("Paying City
+ * Electric 61.07", review pages). Text around a button is then not safe to keep: it could hold
+ * what the person typed (Hard Rule 7). The matcher skips an empty neighbor signal, so this costs
+ * one weak signal and nothing else.
+ */
+export function withoutNeighborText(fp: Fingerprint): Fingerprint {
+  return { ...fp, signals: { ...fp.signals, neighborText: { before: "", after: "" } } };
 }
 
 export function clickStep(fp: Fingerprint): Step {
   return { kind: "click", fingerprint: fp, instruction: clickInstruction(fp) };
 }
 
-export function yourTurnStep(fp: Fingerprint, field: FieldKind): Step {
-  return { kind: "your-turn", fingerprint: fp, instruction: yourTurnInstruction(fp, field) };
+/** `groupLabel` names a radio group ("Pickup store") when the step points at its first option. */
+export function yourTurnStep(fp: Fingerprint, field: FieldKind, groupLabel = ""): Step {
+  return {
+    kind: "your-turn",
+    fingerprint: fp,
+    instruction: yourTurnInstruction(fp, field, groupLabel),
+  };
 }
 
 /**

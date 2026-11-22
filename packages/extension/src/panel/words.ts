@@ -25,6 +25,15 @@ export const WORDS = {
   copied: "Copied. You can paste it into a message to your helper.",
   copyFailed: "Couldn't copy. You can read the note to your helper instead.",
   problem: "Something went wrong. Nothing was changed.",
+  recording: "Do the task on the page as usual. Anchor writes down each step.",
+  recordEmpty: "No steps yet. Do the task on the page first.",
+  recordCancelled: "Recording stopped. Nothing was saved.",
+  taskName: "What is this task called?",
+  taskSaved: "Task saved.",
+  stepLost: "This step changed. Let's ask your helper.",
+  stepWait: "Waiting for you.",
+  taskDone: "All done. You finished the task.",
+  taskStopped: "The task is stopped. You can start it again any time.",
 } as const;
 
 export function messageFor(r: FindReply): string {

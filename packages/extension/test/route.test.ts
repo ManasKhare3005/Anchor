@@ -5,6 +5,7 @@ import {
   clickStep,
   labelOf,
   routeHelpNote,
+  withoutNeighborText,
   yourTurnStep,
   type Route,
 } from "../src/route.ts";
@@ -68,6 +69,17 @@ describe("steps and instructions", () => {
     expect(RouteSchema.safeParse(bad).success).toBe(false);
     const nav = { ...route("r"), steps: [{ kind: "navigate", instruction: "Go to Bill Pay." }] };
     expect(RouteSchema.safeParse(nav).success).toBe(true);
+  });
+});
+
+describe("after the person typed", () => {
+  it("steps keep no neighbor text, which could repeat what was typed", () => {
+    const f = fp("Pay now");
+    f.signals.neighborText = { before: "Memo Zebrafinch", after: "Change details" };
+    const safe = withoutNeighborText(f);
+    expect(safe.signals.neighborText).toEqual({ before: "", after: "" });
+    expect(JSON.stringify(safe)).not.toContain("Zebrafinch");
+    expect(f.signals.neighborText.before).toBe("Memo Zebrafinch");
   });
 });
 
