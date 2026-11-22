@@ -42,3 +42,34 @@ export function isShelfRequest(message: unknown): boolean {
     (message as { type: string }).type.startsWith("anchor:shelf-")
   );
 }
+
+// ---- Side panel → content script (tabs.sendMessage) ----
+
+export const ContentRequestSchema = z.discriminatedUnion("type", [
+  z.object({ type: z.literal("anchor:where") }),
+  z.object({ type: z.literal("anchor:pick-start") }),
+  z.object({ type: z.literal("anchor:pick-stop") }),
+  z.object({
+    type: z.literal("anchor:find"),
+    fingerprint: FingerprintSchema,
+    /** All of this site's buttons, to tell "signed out" from "website changed". */
+    siteButtons: z.array(FingerprintSchema),
+  }),
+  z.object({ type: z.literal("anchor:show-original") }),
+]);
+
+export type ContentRequest = z.infer<typeof ContentRequestSchema>;
+
+export interface WhereReply {
+  site: string;
+  pagePattern: string;
+}
+
+// ---- Content script → side panel (runtime.sendMessage) ----
+
+export const PickEventSchema = z.discriminatedUnion("type", [
+  z.object({ type: z.literal("anchor:picked"), fingerprint: FingerprintSchema }),
+  z.object({ type: z.literal("anchor:pick-cancelled") }),
+]);
+
+export type PickEvent = z.infer<typeof PickEventSchema>;

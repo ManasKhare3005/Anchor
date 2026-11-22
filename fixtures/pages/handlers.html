@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Event handlers (pick-mode fixture)</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a id="statements" href="/statements">Statements</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Your account</h1>
+      <button id="pay" type="button" onmousedown="hit('pay:mousedown')" onclick="hit('pay:click')">
+        Pay a bill
+      </button>
+      <form id="f" onsubmit="hit('form:submit'); return false;">
+        <label>Note <input id="note" name="note" /></label>
+        <button id="send">Send</button>
+      </form>
+      <div id="tile" role="button" tabindex="0" onpointerdown="hit('tile:pointerdown')">
+        <span>Transfer <b>money</b></span>
+      </div>
+    </main>
+    <script>
+      // Every event the site would see is logged here; pick mode must leave this empty.
+      window.hits = [];
+      function hit(name) {
+        window.hits.push(name);
+      }
+      for (const type of ["pointerdown", "mousedown", "mouseup", "click", "keydown", "submit"]) {
+        document.addEventListener(type, () => hit("document:" + type), true);
+      }
+      document.getElementById("statements").addEventListener("click", (e) => {
+        hit("statements:click");
+        e.preventDefault();
+      });
+    </script>
+  </body>
+</html>
