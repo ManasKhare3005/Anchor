@@ -8,6 +8,7 @@ import {
 } from "../src/messages.ts";
 import { removeOverlay } from "../src/content/overlay.ts";
 import { startPicking, stopPicking } from "../src/content/pick.ts";
+import { guide, stopGuiding } from "../src/content/guide.ts";
 import { point, stopPointing } from "../src/content/point.ts";
 import { startRecording, stopRecording } from "../src/content/record.ts";
 
@@ -38,6 +39,7 @@ export default defineContentScript({
         }
         case "anchor:pick-start":
           stopPointing();
+          stopGuiding();
           startPicking(document, {
             onPicked: (fingerprint) => send({ type: "anchor:picked", fingerprint }),
             onCancelled: () => send({ type: "anchor:pick-cancelled" }),
@@ -48,10 +50,21 @@ export default defineContentScript({
           return Promise.resolve({ ok: true });
         case "anchor:find":
           stopPicking();
+          stopGuiding();
           return Promise.resolve(point(document, r.fingerprint, r.siteButtons));
+        case "anchor:guide-step":
+          stopPicking();
+          stopPointing();
+          stopRecording();
+          return Promise.resolve(guide(document, r, send));
+        case "anchor:guide-stop":
+          stopGuiding();
+          removeOverlay();
+          return Promise.resolve({ ok: true });
         case "anchor:record-start":
           stopPicking();
           stopPointing();
+          stopGuiding();
           startRecording(document, r.afterInput, (step) => send({ type: "anchor:recorded", step }));
           return Promise.resolve({ ok: true });
         case "anchor:record-stop":
@@ -61,6 +74,7 @@ export default defineContentScript({
           stopPicking();
           stopPointing();
           stopRecording();
+          stopGuiding();
           removeOverlay();
           return Promise.resolve({ ok: true });
         default:

@@ -48,7 +48,10 @@ export async function act(site: Page, step: TaskStep, selector = step.selector):
       await el.fill(step.value ?? "");
       break;
     case "select":
-      await el.selectOption({ label: step.value ?? "" });
+      // With the keyboard, as a person would: Playwright's selectOption sends scripted events,
+      // which the guide rightly ignores.
+      await el.focus();
+      await site.keyboard.type(step.value ?? "");
       break;
     case "check":
       await el.check();

@@ -4,13 +4,14 @@ import {
   PageEventSchema,
   type ContentRequest,
   type FindReply,
+  type GuideReply,
   type ShelfReply,
   type ShelfRequest,
   type WhereReply,
 } from "../../src/messages.ts";
 import { readNameField } from "../../src/panel/name-field.ts";
 import { WORDS, detailsFor, helpNote, messageFor } from "../../src/panel/words.ts";
-import type { Route, Step } from "../../src/route.ts";
+import { labelOf, routeHelpNote, type Route, type Step } from "../../src/route.ts";
 import { STORE_KEY, buttonsFor, displayName, parseStore, routesFor } from "../../src/store.ts";
 
 /**
@@ -35,6 +36,11 @@ const taskForm = $<HTMLFormElement>("task-form");
 const taskName = $<HTMLInputElement>("task-name");
 const taskList = $<HTMLUListElement>("tasks");
 const manageTasks = $<HTMLUListElement>("manage-tasks");
+const guideBox = $<HTMLElement>("guide");
+const guideTitle = $<HTMLHeadingElement>("guide-title");
+const guideProgress = $<HTMLParagraphElement>("guide-progress");
+const guideText = $<HTMLParagraphElement>("guide-text");
+const guideNext = $<HTMLButtonElement>("guide-next");
 
 /** Which tab the shelf is for. `?tab=<id>` pins one (e2e opens the panel as a normal page). */
 const pinned = Number(new URLSearchParams(location.search).get("tab"));
@@ -48,6 +54,13 @@ let pending: Fingerprint | null = null;
 let recording: { site: string; steps: Step[] } | null = null;
 /** A recorded task waiting for its name. */
 let unnamed: { site: string; steps: Step[] } | null = null;
+
+/** The task being guided and the step the person is on. Lives here because pages reload. */
+let guiding: { route: Route; index: number } | null = null;
+/** After a step is done: wait briefly for the page to start loading before showing the next. */
+let advance: ReturnType<typeof setTimeout> | undefined;
+/** The last thing said should survive the page load that follows it ("All done"). */
+let keepMessage: string | null = null;
 
 function say(message: string): void {
   status.textContent = message;
@@ -162,6 +175,11 @@ async function refresh(): Promise<void> {
     return;
   }
   if (await resumeGuide()) return;
+  if (keepMessage) {
+    say(keepMessage);
+    keepMessage = null;
+    return;
+  }
   if (!where) say(WORDS.unsupported);
   else say(buttons.length || routes.length ? WORDS.ready : WORDS.empty);
 }
@@ -311,21 +329,112 @@ async function removeTask(r: Route): Promise<void> {
   say(reply.ok ? WORDS.removed : WORDS.problem);
 }
 
-// ---- Guiding a task (M3 task 4) ----
+// ---- Guiding a task ----
+
+function guideMessage(step: Step, reply: GuideReply): string {
+  if (reply.detour) return reply.detour;
+  if (reply.tier === "unsure")
+    return reply.state === "logged-out" ? WORDS.signedOut : WORDS.stepLost;
+  if (reply.inMenu) return WORDS.inMenu;
+  return reply.tier === "fairly" ? `${step.instruction} ${WORDS.fairly}` : step.instruction;
+}
+
+function renderGuideReply(reply: GuideReply): void {
+  if (!guiding) return;
+  const { route, index } = guiding;
+  const step = route.steps[index];
+  if (!step) return;
+  say(guideMessage(step, reply));
+  const label = step.fingerprint ? labelOf(step.fingerprint) : step.instruction;
+  details.textContent = detailsFor(`Step ${index + 1}, ${label}`, reply);
+  const lost = reply.tier === "unsure" && reply.state !== "logged-out" && !reply.detour;
+  showNote(lost && where ? routeHelpNote(where.site, route.name, index, step, new Date()) : null);
+}
+
+async function sendStep(): Promise<void> {
+  if (!guiding) return;
+  const { route, index } = guiding;
+  const step = route.steps[index];
+  if (!step) {
+    finishGuide();
+    return;
+  }
+  guideBox.hidden = false;
+  guideTitle.textContent = route.name;
+  guideProgress.textContent = `Step ${index + 1} of ${route.steps.length}`;
+  guideText.textContent = step.instruction;
+  guideNext.hidden = step.kind === "click";
+  showNote(null);
+  const next = route.steps[index + 1];
+  const reply = await toPage<GuideReply>({
+    type: "anchor:guide-step",
+    index,
+    step,
+    ...(next ? { next } : {}),
+    siteButtons: buttons,
+  });
+  // The person may have moved on while this step was being found.
+  if (guiding?.index !== index) return;
+  if (reply) renderGuideReply(reply);
+}
+
+function finishGuide(): void {
+  guiding = null;
+  guideBox.hidden = true;
+  showNote(null);
+  keepMessage = WORDS.taskDone;
+  say(WORDS.taskDone);
+}
 
 async function startGuide(r: Route): Promise<void> {
-  void r;
-  await Promise.resolve();
+  if (recording) return;
+  if (advance) clearTimeout(advance);
+  guiding = { route: r, index: 0 };
+  keepMessage = null;
+  await sendStep();
 }
 
 async function stopGuide(announce: boolean): Promise<void> {
-  void announce;
-  await Promise.resolve();
+  if (advance) clearTimeout(advance);
+  const was = guiding !== null;
+  guiding = null;
+  guideBox.hidden = true;
+  if (was) await toPage({ type: "anchor:guide-stop" });
+  if (was && announce) {
+    showNote(null);
+    say(WORDS.taskStopped);
+  }
 }
 
+/** After a page load, show the current step again on the new page. */
 async function resumeGuide(): Promise<boolean> {
-  return Promise.resolve(false);
+  if (!guiding || !where || where.site !== guiding.route.site) return false;
+  if (advance) clearTimeout(advance);
+  await sendStep();
+  return true;
 }
+
+/** The person did a step. Move on; if the page is about to load, the load shows the next step. */
+function stepDone(through: number): void {
+  if (!guiding || through < guiding.index) return;
+  guiding.index = through + 1;
+  if (guiding.index >= guiding.route.steps.length) {
+    finishGuide();
+    return;
+  }
+  if (advance) clearTimeout(advance);
+  advance = setTimeout(() => {
+    advance = undefined;
+    void sendStep();
+  }, 400);
+}
+
+guideNext.addEventListener("click", () => {
+  if (!guiding) return;
+  stepDone(guiding.index);
+});
+
+$<HTMLButtonElement>("guide-stop").addEventListener("click", () => void stopGuide(true));
 
 // ---- Always there ----
 
@@ -359,6 +468,12 @@ browser.runtime.onMessage.addListener((message: unknown, sender) => {
         renderRecorded();
       }
       break;
+    case "anchor:step-done":
+      stepDone(e.through);
+      break;
+    case "anchor:guide-update":
+      if (guiding?.index === e.index) renderGuideReply(e.reply);
+      break;
     case "anchor:pick-cancelled":
       say(WORDS.pickCancelled);
       break;
@@ -371,8 +486,6 @@ browser.runtime.onMessage.addListener((message: unknown, sender) => {
       nameInput.focus();
       nameInput.select();
       say("What should this button be called?");
-      break;
-    default:
       break;
   }
   return undefined;
@@ -387,7 +500,13 @@ browser.tabs.onActivated.addListener(() => {
 });
 
 browser.tabs.onUpdated.addListener((id, info) => {
-  if (id === tabId && info.status === "complete") void refresh();
+  if (id !== tabId) return;
+  // A page is loading after a step: its load will show the next step, not the timer.
+  if (info.status === "loading" && advance) {
+    clearTimeout(advance);
+    advance = undefined;
+  }
+  if (info.status === "complete") void refresh();
 });
 
 void refresh();

@@ -43,6 +43,9 @@ const CSS = `
 .banner { bottom: 12px; right: 12px; pointer-events: none; }
 .banner.top { bottom: auto; top: 12px; }
 .banner button { pointer-events: auto; }
+/* The pointing note never blocks the page: only its own button takes clicks. */
+.note { pointer-events: none; }
+.note button { pointer-events: auto; }
 .card p { margin: 0 0 8px; }
 .card button {
   min-height: 44px;
