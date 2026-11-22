@@ -76,6 +76,8 @@ export const ContentRequestSchema = z.discriminatedUnion("type", [
      */
     next: StepSchema.optional(),
     siteButtons: z.array(FingerprintSchema),
+    /** The other steps recorded on the same page as `step` (see `onItsPage` in guide.ts). */
+    pageMates: z.array(FingerprintSchema),
   }),
   z.object({ type: z.literal("anchor:guide-stop") }),
 ]);

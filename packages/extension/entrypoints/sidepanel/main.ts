@@ -349,6 +349,8 @@ function renderGuideReply(reply: GuideReply): void {
   details.textContent = detailsFor(`Step ${index + 1}, ${label}`, reply);
   const lost = reply.tier === "unsure" && reply.state !== "logged-out" && !reply.detour;
   showNote(lost && where ? routeHelpNote(where.site, route.name, index, step, new Date()) : null);
+  // A lost step: once the helper has helped, the person can carry on with Next.
+  guideNext.hidden = step.kind === "click" && reply.tier !== "unsure";
 }
 
 async function sendStep(): Promise<void> {
@@ -365,13 +367,19 @@ async function sendStep(): Promise<void> {
   guideText.textContent = step.instruction;
   guideNext.hidden = step.kind === "click";
   showNote(null);
+  say(WORDS.looking);
   const next = route.steps[index + 1];
+  const page = step.fingerprint?.pagePattern;
+  const pageMates = route.steps.flatMap((st, i) =>
+    i !== index && st.fingerprint && st.fingerprint.pagePattern === page ? [st.fingerprint] : [],
+  );
   const reply = await toPage<GuideReply>({
     type: "anchor:guide-step",
     index,
     step,
     ...(next ? { next } : {}),
     siteButtons: buttons,
+    pageMates,
   });
   // The person may have moved on while this step was being found.
   if (guiding?.index !== index) return;

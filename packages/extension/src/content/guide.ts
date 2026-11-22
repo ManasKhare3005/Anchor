@@ -1,4 +1,4 @@
-import type { Fingerprint, MatchResult, SiteState } from "@anchor/matcher";
+import { match, type Fingerprint, type MatchResult, type SiteState } from "@anchor/matcher";
 import type { GuideReply, PageEvent } from "../messages.ts";
 import type { Step } from "../route.ts";
 import { targetOf } from "./candidate.ts";
@@ -24,7 +24,21 @@ export interface GuideRequest {
   step: Step;
   next?: Step | undefined;
   siteButtons: Fingerprint[];
+  pageMates: Fingerprint[];
 }
+
+/**
+ * Judge the page as a group (CLAUDE.md § Matching approach). A step recorded together with other
+ * steps on one page is only looked for when at least one of those is on the current page too.
+ * Without this, a step left behind on an earlier page ("Review payment") can match a look-alike on
+ * the next page ("Confirm and pay"), which is a wrong element that can send money.
+ */
+export function onItsPage(doc: Document, pageMates: Fingerprint[]): boolean {
+  if (pageMates.length === 0) return true;
+  return pageMates.some((m) => match(doc, m).tier !== "unsure");
+}
+
+const NOT_HERE = "Its page isn't showing: none of the steps recorded with it are here.";
 
 const FAIRLY = "I think it's this one now. Please check before you click it.";
 const IN_MENU = "It's inside this menu. Open it, and I'll show you.";
@@ -86,16 +100,26 @@ export function guide(doc: Document, req: GuideRequest, emit: (e: PageEvent) => 
         ? `${req.step.instruction} ${FAIRLY}`
         : req.step.instruction;
 
-  function show(target: Element, tier: "sure" | "fairly") {
+  /** What the panel was last told, so it hears when the person opens the menu. */
+  let told: GuideReply | null = null;
+
+  function show(target: Element, tier: "sure" | "fairly", reply: GuideReply) {
     ring?.stop();
+    told = reply;
     ring = drawRing(doc, target, {
       tier,
-      noteFor: (inMenu) => noteFor(inMenu, tier),
+      noteFor: (inMenu) => {
+        if (told && told.inMenu !== inMenu) {
+          told = { ...told, inMenu };
+          emit({ type: "anchor:guide-update", index: req.index, reply: told });
+        }
+        return noteFor(inMenu, tier);
+      },
       onShowOriginal: () => {
         stopGuiding();
         removeOverlay();
       },
-      rematch: () => (fp ? rematchOf(doc, fp) : null),
+      rematch: () => (fp && onItsPage(doc, req.pageMates) ? rematchOf(doc, fp) : null),
       onLost: () => {
         ring = null;
         emit({
@@ -116,18 +140,28 @@ export function guide(doc: Document, req: GuideRequest, emit: (e: PageEvent) => 
       waiting = setTimeout(() => {
         waiting = undefined;
         if (!fp || ring) return;
-        const { result, state } = resultFor(doc, fp, req.siteButtons);
+        const { result, state } = find(fp);
         if (!result.element || result.tier === "unsure") return;
         watchForStep?.disconnect();
-        show(result.element, result.tier);
-        emit({
-          type: "anchor:guide-update",
-          index: req.index,
-          reply: replyOf(result, state, !shown(result.element)),
-        });
+        const reply = replyOf(result, state, !shown(result.element));
+        show(result.element, result.tier, reply);
+        emit({ type: "anchor:guide-update", index: req.index, reply });
       }, 300);
     });
     watchForStep.observe(doc.documentElement, { childList: true, subtree: true, attributes: true });
+  }
+
+  function find(f: Fingerprint) {
+    const found = resultFor(doc, f, req.siteButtons);
+    if (!found.result.element || found.result.tier === "unsure") return found;
+    if (onItsPage(doc, req.pageMates)) return found;
+    const result: MatchResult = {
+      ...found.result,
+      element: null,
+      tier: "unsure",
+      reasons: [NOT_HERE, ...found.result.reasons],
+    };
+    return { result, state: found.state };
   }
 
   const inside = (e: Event, el: Element | null) => el !== null && e.composedPath().includes(el);
@@ -170,7 +204,7 @@ export function guide(doc: Document, req: GuideRequest, emit: (e: PageEvent) => 
     },
   };
 
-  const { result, state } = resultFor(doc, fp, req.siteButtons);
+  const { result, state } = find(fp);
   if (nextFp?.fingerprint) nextEl = rematchOf(doc, nextFp.fingerprint);
   if (!result.element || result.tier === "unsure") {
     // Nothing of Anchor's stays on the page when nothing is shown.
@@ -178,6 +212,7 @@ export function guide(doc: Document, req: GuideRequest, emit: (e: PageEvent) => 
     waitForStep();
     return replyOf(result, state, false);
   }
-  show(result.element, result.tier);
-  return replyOf(result, state, !shown(result.element));
+  const reply = replyOf(result, state, !shown(result.element));
+  show(result.element, result.tier, reply);
+  return reply;
 }
