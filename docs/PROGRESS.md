@@ -15,20 +15,16 @@ decision records are in `docs/decisions.md`.
   - known gaps: the toolbar click is only checked through `getPanelBehavior` (needs one manual
     click); a dev-only npm audit advisory (D-004)
 
+- **M1: Matcher and benchmark** (2026-11-21). Plan: `docs/plan-M1.md`. Report: `docs/benchmark-report.md`.
+  - matcher: capture, match, tiers (score + gap), duplicate-link merging, site state + two-visit rule, menu hints
+  - 3 fixture sites (v1, v2, 6 states each), 6 Maple Market pairs, 21 archived real sites (12 shopping, 3 pharmacy, 4 government, 3 bank; CVS skipped)
+  - thresholds: sure >= 0.60 / gap >= 0.25, fairly >= 0.35 / gap >= 0.20, tuned for zero wrong matches
+  - results: fixtures 0 wrong (leave-one-site-out 0 wrong); 90 pre-checked real labels 74 correct, 16 not found, 0 wrong; sure 178 / 0 wrong (95% upper bound 2.1%)
+  - **open:** real-site labels are still "proposed" (Manas has not confirmed `docs/benchmark-labels-review.md`), so thresholds come from fixtures only. Confirming labels and rerunning `npm run benchmark` recalibrates; the drift-guard test fails until `DEFAULT_THRESHOLDS` is updated to match.
+
 ## In progress
 
-- **M1: Matcher and benchmark.** Plan: `docs/plan-M1.md`.
-  - [x] 1.1 Types + candidates + capture
-  - [x] 1.2 Signals + lexicon
-  - [x] 1.3 `match()` + tiers
-  - [x] 1.4 Fixture sites (bank, pharmacy, utility)
-  - [x] 1.5 Site state + two-visit rule
-  - [x] 1.6 Elsewhere search (`menuHint`)
-  - [x] 1.7 Runner + report over fixtures
-  - [~] 1.8 Real-site pipeline. 21 sites (12 shopping, 3 pharmacy, 4 government, 3 bank; CVS skipped). **Waiting for Manas to confirm labels** (`docs/benchmark-labels-review.md`).
-  - [~] 1.9 Calibrate (interim thresholds set from fixtures; final once labels are confirmed), then sensitive categories (done: 9 of 10 fetched; CVS has no usable 2023 copy)
-  - [x] 1.10 Matcher runs in real Chromium
-  - [ ] 1.11 Wrap-up
+- **M2: My buttons shelf and pointing.** Plan: `docs/plan-M2.md`.
 
 ## Decisions made
 
@@ -73,9 +69,11 @@ decision records are in `docs/decisions.md`.
 
 ## Questions for Manas
 
-1. Are the wrong-match targets (1% sure, 5% fairly sure) right? (after the first M1 report)
-2. License and public name for the repository.
-3. Should the helper page sit behind a simple PIN? (M5)
+1. Please confirm the real-site labels (`docs/benchmark-labels-review.md`): reply "agree" or name rows to change. Final thresholds wait on this.
+2. Commit `6187602` carries a `Claude-Session:` line by mistake. Rewrite history to remove it (force push), or leave it?
+3. Are the wrong-match targets (1% sure, 5% fairly sure) right? (after the first M1 report)
+4. License and public name for the repository.
+5. Should the helper page sit behind a simple PIN? (M5)
 
 ## M1 notes so far (untuned placeholder thresholds)
 
