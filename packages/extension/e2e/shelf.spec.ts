@@ -186,3 +186,30 @@ test("Show original removes every Anchor change (Hard Rule 4)", async ({
   await site.getByRole("button", { name: "Show original" }).click();
   expect(await anchorNodeCount(site)).toBe(0);
 });
+
+test("the page re-renders (single-page apps): the ring follows the new element", async ({
+  context,
+  serviceWorker: sw,
+  extensionId,
+  fixtureOrigin,
+}) => {
+  const site = await context.newPage();
+  await site.goto(`${fixtureOrigin}/pages/handlers.html`);
+  const s = await openShelf(context, sw, extensionId, site);
+  await remember(s, "#pay", "Pay");
+  expect(await tap(s, "Pay")).toBe("Here it is. It's circled on the page.");
+
+  // Replace the button with a fresh copy somewhere else, as a framework re-render would.
+  await site.evaluate(() => {
+    const old = document.getElementById("pay");
+    const fresh = old?.cloneNode(true) as HTMLElement;
+    fresh.id = "pay-new";
+    old?.remove();
+    document.querySelector("main")?.prepend(fresh);
+  });
+  await expect.poll(() => ringIsOn(site, ["#pay-new"])).toBe(true);
+
+  // Removed for good: the ring goes away rather than pointing at something else.
+  await site.evaluate(() => document.getElementById("pay-new")?.remove());
+  await expect.poll(() => ring(site)).toBeNull();
+});

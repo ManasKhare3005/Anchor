@@ -22,9 +22,20 @@ decision records are in `docs/decisions.md`.
   - results: fixtures 0 wrong (leave-one-site-out 0 wrong); 90 pre-checked real labels 74 correct, 16 not found, 0 wrong; sure 178 / 0 wrong (95% upper bound 2.1%)
   - **open:** real-site labels are still "proposed" (Manas has not confirmed `docs/benchmark-labels-review.md`), so thresholds come from fixtures only. Confirming labels and rerunning `npm run benchmark` recalibrates; the drift-guard test fails until `DEFAULT_THRESHOLDS` is updated to match.
 
+- **M2: My buttons shelf and pointing** (2026-11-21). Plan: `docs/plan-M2.md`.
+  - shelf in the side panel: this site's buttons in remembered order; helper section to remember (pick on the page + name) and remove
+  - storage: versioned schema, single writer in the service worker, only Anchor's own pages may write
+  - pick mode swallows the whole pointer sequence; keyboard picking (Enter / Esc)
+  - pointing: scroll + ring + note; dashed ring for "fairly sure"; closed menus get a ring on the menu; follows re-renders; nothing drawn when unsure
+  - ask: "This website changed. Let's ask your helper." + help note (site, name, date) with Copy; signed-out pages get "You may need to sign in first."
+  - Show original in the panel and in the on-page note; page DOM identical afterwards
+  - fixture sweep (all 3 sites, v1, v2, moved page, 6 states, through the real panel): **0 wrong**; every state and v1 feature found; v2 8 found, 6 asked (safe), 5 correctly absent
+  - results: unit 61 + 138 + 74; e2e 26/26 in Chromium and Edge
+  - untested / gaps: the real toolbar-opened panel following tab switches (e2e pins the tab); Copy button (clipboard) not automated; picking inside iframes; content script still runs only on localhost fixtures. In Chromium, "Pay a bill" on riverbank v2 is asked rather than found (jsdom finds it at the "fairly" edge: gap exactly 0.20).
+
 ## In progress
 
-- **M2: My buttons shelf and pointing.** Plan: `docs/plan-M2.md`.
+- Nothing. M3 (Routes) waits for the go-ahead.
 
 ## Decisions made
 
