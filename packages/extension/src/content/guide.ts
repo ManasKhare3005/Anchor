@@ -2,6 +2,7 @@ import { match, type Fingerprint, type MatchResult, type SiteState } from "@anch
 import type { GuideReply, PageEvent } from "../messages.ts";
 import type { Step } from "../route.ts";
 import { targetOf } from "./candidate.ts";
+import { describeDetour, findDetour } from "./detour.ts";
 import { removeOverlay } from "./overlay.ts";
 import { rematchOf, resultFor } from "./point.ts";
 import { drawRing, shown, type RingHandle } from "./ring.ts";
@@ -100,21 +101,45 @@ export function guide(doc: Document, req: GuideRequest, emit: (e: PageEvent) => 
         ? `${req.step.instruction} ${FAIRLY}`
         : req.step.instruction;
 
-  /** What the panel was last told, so it hears when the person opens the menu. */
+  /** What the panel was last told, so it hears when the person opens a menu or a detour comes. */
   let told: GuideReply | null = null;
+  /** Plain words for the site dialog in the person's way, or null. */
+  let detour: string | null = null;
+
+  /** Tell the panel, with the current detour, when something it shows has changed. */
+  function update(reply: GuideReply) {
+    told = { ...reply, detour };
+    emit({ type: "anchor:guide-update", index: req.index, reply: told });
+  }
+
+  function checkDetour() {
+    const el = findDetour(doc, ring?.target() ?? null);
+    const words = el ? describeDetour(el) : null;
+    if (words === detour) return;
+    detour = words;
+    if (told) update(told);
+  }
+
+  let detourCheck: ReturnType<typeof setTimeout> | undefined;
+  const watchDetours = new MutationObserver(() => {
+    if (detourCheck) return;
+    detourCheck = setTimeout(() => {
+      detourCheck = undefined;
+      checkDetour();
+    }, 100);
+  });
 
   function show(target: Element, tier: "sure" | "fairly", reply: GuideReply) {
     ring?.stop();
-    told = reply;
+    told = { ...reply, detour };
     ring = drawRing(doc, target, {
       tier,
       noteFor: (inMenu) => {
-        if (told && told.inMenu !== inMenu) {
-          told = { ...told, inMenu };
-          emit({ type: "anchor:guide-update", index: req.index, reply: told });
-        }
+        if (told && told.inMenu !== inMenu) update({ ...told, inMenu });
         return noteFor(inMenu, tier);
       },
+      // While a detour is open the ring steps aside; the person deals with the dialog first.
+      pause: () => detour !== null,
       onShowOriginal: () => {
         stopGuiding();
         removeOverlay();
@@ -122,11 +147,7 @@ export function guide(doc: Document, req: GuideRequest, emit: (e: PageEvent) => 
       rematch: () => (fp && onItsPage(doc, req.pageMates) ? rematchOf(doc, fp) : null),
       onLost: () => {
         ring = null;
-        emit({
-          type: "anchor:guide-update",
-          index: req.index,
-          reply: replyOf(UNSURE, "unknown", false),
-        });
+        update(replyOf(UNSURE, "unknown", false));
         waitForStep();
       },
     });
@@ -145,7 +166,7 @@ export function guide(doc: Document, req: GuideRequest, emit: (e: PageEvent) => 
         watchForStep?.disconnect();
         const reply = replyOf(result, state, !shown(result.element));
         show(result.element, result.tier, reply);
-        emit({ type: "anchor:guide-update", index: req.index, reply });
+        update(reply);
       }, 300);
     });
     watchForStep.observe(doc.documentElement, { childList: true, subtree: true, attributes: true });
@@ -198,21 +219,34 @@ export function guide(doc: Document, req: GuideRequest, emit: (e: PageEvent) => 
       ring?.stop();
       ring = null;
       watchForStep?.disconnect();
+      watchDetours.disconnect();
       if (waiting) clearTimeout(waiting);
+      if (detourCheck) clearTimeout(detourCheck);
       win.removeEventListener("click", onClick, opts);
       win.removeEventListener("change", onChange, opts);
     },
   };
 
+  watchDetours.observe(doc.documentElement, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["open", "hidden", "style", "class", "aria-hidden", "aria-modal", "role"],
+  });
+
   const { result, state } = find(fp);
   if (nextFp?.fingerprint) nextEl = rematchOf(doc, nextFp.fingerprint);
-  if (!result.element || result.tier === "unsure") {
+  const target = result.element && result.tier !== "unsure" ? result.element : null;
+  const el = findDetour(doc, target);
+  detour = el ? describeDetour(el) : null;
+  if (!target || result.tier === "unsure") {
     // Nothing of Anchor's stays on the page when nothing is shown.
     removeOverlay();
     waitForStep();
-    return replyOf(result, state, false);
+    told = { ...replyOf(result, state, false), detour };
+    return told;
   }
-  const reply = replyOf(result, state, !shown(result.element));
-  show(result.element, result.tier, reply);
+  const reply = { ...replyOf(result, state, !shown(target)), detour };
+  show(target, result.tier, reply);
   return reply;
 }
