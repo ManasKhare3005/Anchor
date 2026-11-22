@@ -33,11 +33,31 @@ decision records are in `docs/decisions.md`.
   - results: unit 61 + 138 + 74; e2e 26/26 in Chromium and Edge
   - untested / gaps: the real toolbar-opened panel following tab switches (e2e pins the tab); Copy button (clipboard) not automated; picking inside iframes; content script still runs only on localhost fixtures. In Chromium, "Pay a bill" on riverbank v2 is asked rather than found (jsdom finds it at the "fairly" edge: gap exactly 0.20).
 
+- **M3: Routes** (2026-11-22). Plan: `docs/plan-M3.md`.
+  - store schema v2 (buttons + routes); v1 data migrates on read
+  - record: the task really happens; clicks become click steps, fields become "your turn" steps (event type only, never the value); a chosen radio is stored as its group
+  - guide: one step at a time in the panel, ring on the page; moves on only on the person's own (trusted) click or choice, or Next after typing; typing then pressing the button straight away moves on two steps
+  - self-repair: every step is re-found by the matcher; a lost step pauses with "This step changed. Let's ask your helper." and a help note naming task, step number and label
+  - detours: cookie, survey, session warning and "update your details" dialogs are named in plain words; the ring steps aside; the dialog is never touched; the guide resumes when the person answers it
+  - task-flow fixtures for all three sites (v1 and v2, several pages, review pages that repeat what was typed); the M1 pages are untouched
+  - v2 results (recorded on v1, guided on v2): riverbank 5 found / 1 asked; carewell 3 found / 2 asked / 1 correctly gone; brightline 3 found / 2 asked. **0 wrong.**
+  - results: unit 74 + 138 + 81; e2e 43/43 in Chromium and 43/43 in Edge
+  - untested / gaps: a recording or guide in progress lives in the side panel, so closing the panel loses it; contenteditable fields aren't recorded; `navigate` steps aren't recorded; detours are found by dialog role only (an overlay without a dialog role isn't named); routes across tabs or sites; M2 button picks can still keep text a page repeats next to the button (scrubbed for money, long numbers, emails and greeting names only)
+
 ## In progress
 
-- Nothing. M3 (Routes) waits for the go-ahead.
+- Nothing. M4 (Adapt) waits for the go-ahead.
 
 ## Decisions made
+
+- 2026-11-22: Once a field has been filled in during a recording, later steps keep no neighbor text. Review pages repeat what was typed right next to the button (found by the e2e marker test). The matcher skips an empty neighbor signal, so only that weak signal is lost.
+- 2026-11-22: A chosen radio button is stored as its group (first option + the legend as the label). Which option the person picked is their answer, not a step.
+- 2026-11-22: A step is only looked for when its page is showing, judged from the other steps recorded on the same page. Found in e2e: a lost "Review payment" step matched "Confirm and pay" on the next page.
+- 2026-11-22: Typing doesn't move the guide on by itself (Anchor can't tell when the person is finished); the person taps Next, or presses the next button straight away. Scripted (untrusted) events never move it on.
+- 2026-11-22: A lost step still offers Next, so the person can carry on once the helper has helped.
+- 2026-11-22: Show original also stops recording and guiding.
+- 2026-11-22: The on-page note sits beside the element and lets clicks through, so it never covers the next control.
+- 2026-11-22: Task-flow fixtures live in `fixtures/tasks/`. The M1 home pages are unchanged, so the benchmark and drift guard don't move.
 
 - 2026-11-21: The side panel's own name field is read through one audited helper (`readNameField`). Hard Rule 7 covers what the person types into websites; this field is where the helper names a shelf button for Anchor.
 - 2026-11-21: Only Anchor's own pages may write the shelf: the service worker checks the sender's URL is the extension origin (content scripts share the extension id but report the page URL).
