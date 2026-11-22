@@ -1,5 +1,6 @@
 import { FingerprintSchema, type SiteState, type Tier } from "@anchor/matcher";
 import { z } from "zod";
+import { RouteSchema } from "./route.ts";
 
 /**
  * Messages between extension parts. Every receiver validates with these schemas, so no part
@@ -28,6 +29,8 @@ export const ShelfRequestSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("anchor:shelf-add"), fingerprint: FingerprintSchema }),
   z.object({ type: z.literal("anchor:shelf-rename"), id: z.string().min(1), name: z.string() }),
   z.object({ type: z.literal("anchor:shelf-remove"), id: z.string().min(1) }),
+  z.object({ type: z.literal("anchor:shelf-route-add"), route: RouteSchema }),
+  z.object({ type: z.literal("anchor:shelf-route-remove"), id: z.string().min(1) }),
 ]);
 
 export type ShelfRequest = z.infer<typeof ShelfRequestSchema>;

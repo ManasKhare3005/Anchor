@@ -3,8 +3,10 @@ import {
   STORE_KEY,
   StoreError,
   addButton,
+  addRoute,
   parseStore,
   removeButton,
+  removeRoute,
   renameButton,
   type Store,
 } from "./store.ts";
@@ -39,7 +41,7 @@ export function createWriter(area: StorageArea, extensionId: string, extensionOr
       next = change(parsed.store);
     } catch (e) {
       if (e instanceof StoreError) return { ok: false, error: e.message };
-      return { ok: false, error: "invalid button" };
+      return { ok: false, error: "invalid data" };
     }
     await area.set({ [STORE_KEY]: next });
     return { ok: true };
@@ -61,6 +63,10 @@ export function createWriter(area: StorageArea, extensionId: string, extensionOr
             return renameButton(s, r.id, r.name);
           case "anchor:shelf-remove":
             return removeButton(s, r.id);
+          case "anchor:shelf-route-add":
+            return addRoute(s, r.route);
+          case "anchor:shelf-route-remove":
+            return removeRoute(s, r.id);
         }
       });
     const result = queue.then(run, run);

@@ -78,7 +78,25 @@ describe("store reducers", () => {
   it("parses missing data as empty and reports invalid data", () => {
     expect(parseStore(undefined)).toEqual({ ok: true, store: emptyStore() });
     expect(parseStore({ schemaVersion: 2, buttons: [] }).ok).toBe(false);
+    expect(parseStore({ schemaVersion: 3, buttons: [], routes: [] }).ok).toBe(false);
     expect(parseStore({ schemaVersion: 1, buttons: [{ id: 1 }] }).ok).toBe(false);
+  });
+});
+
+describe("schema migration", () => {
+  it("reads version 1 (buttons only) as version 2 with no routes", () => {
+    const v1 = { schemaVersion: 1, buttons: [fp("a")] };
+    const r = parseStore(v1);
+    expect(r.ok && r.store).toEqual({ schemaVersion: 2, buttons: [fp("a")], routes: [] });
+  });
+
+  it("the next write stores version 2 and keeps the buttons", async () => {
+    const area = fakeArea({ schemaVersion: 1, buttons: [fp("a")] });
+    const write = createWriter(area, "ext", ORIGIN);
+    expect((await write({ type: "anchor:shelf-add", fingerprint: fp("b") }, PANEL)).ok).toBe(true);
+    const stored = area.data[STORE_KEY] as { schemaVersion: number; buttons: { id: string }[] };
+    expect(stored.schemaVersion).toBe(2);
+    expect(stored.buttons.map((b) => b.id)).toEqual(["a", "b"]);
   });
 });
 
