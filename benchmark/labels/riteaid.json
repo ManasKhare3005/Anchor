@@ -22,7 +22,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -41,7 +41,7 @@
         "href": "/faq",
         "region": "footer"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "search",
@@ -60,7 +60,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "rejected"
     },
     {
       "id": "refill",
@@ -79,7 +79,7 @@
         "href": "/pharmacy/refill-prescriptions.html",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "find-pharmacy",
@@ -98,7 +98,7 @@
         "href": "/",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "rejected"
     },
     {
       "id": "vaccines",
@@ -121,7 +121,7 @@
         "href": "/pharmacy/scheduler",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     }
   ]
 }

@@ -22,7 +22,7 @@
         "href": "/account/login",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -41,7 +41,7 @@
         "href": "/talk-to-someone",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "search",
@@ -60,21 +60,23 @@
         "href": "",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "apply",
       "label": "Apply for benefits",
       "before": null,
       "after": null,
-      "status": "proposed"
+      "status": "rejected",
+      "note": "Not on the before page; nothing to find."
     },
     {
       "id": "find-office",
       "label": "Find an office / location",
       "before": null,
       "after": null,
-      "status": "proposed"
+      "status": "rejected",
+      "note": "Not on the before page; nothing to find."
     }
   ]
 }

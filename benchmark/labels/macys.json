@@ -25,7 +25,7 @@
         "href": "/account/signin",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "cart",
@@ -44,14 +44,15 @@
         "href": "/my/bag",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "orders",
       "label": "Orders / track order",
       "before": null,
       "after": null,
-      "status": "proposed"
+      "status": "rejected",
+      "note": "Not on the before page; nothing to find."
     },
     {
       "id": "help",
@@ -70,7 +71,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "deals",
@@ -89,7 +90,7 @@
         "href": "/shop/coupons-deals",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "search",
@@ -102,7 +103,7 @@
         "region": "header/nav"
       },
       "after": null,
-      "status": "proposed"
+      "status": "rejected"
     }
   ]
 }

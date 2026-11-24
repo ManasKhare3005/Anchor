@@ -26,7 +26,7 @@
         "href": "/account",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "cart",
@@ -45,7 +45,7 @@
         "href": "/cart",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "orders",
@@ -64,7 +64,7 @@
         "href": "/orders",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -83,7 +83,7 @@
         "href": "/help",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "deals",
@@ -102,7 +102,7 @@
         "href": "/c/weekly-deals/-/N-4xw74",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "search",
@@ -121,7 +121,7 @@
         "href": "",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     }
   ]
 }

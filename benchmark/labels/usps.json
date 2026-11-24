@@ -26,7 +26,7 @@
         "href": "/entreg/LoginAction_input",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -45,7 +45,7 @@
         "href": "/",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "rejected"
     },
     {
       "id": "search",
@@ -64,14 +64,15 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "apply",
       "label": "Apply for benefits",
       "before": null,
       "after": null,
-      "status": "proposed"
+      "status": "rejected",
+      "note": "Not on the before page; nothing to find."
     },
     {
       "id": "find-office",
@@ -96,7 +97,7 @@
         "href": "/locations",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     }
   ]
 }

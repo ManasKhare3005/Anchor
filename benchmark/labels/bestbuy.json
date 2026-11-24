@@ -22,7 +22,7 @@
         "href": "/identity/global/signin",
         "region": "footer"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "cart",
@@ -41,7 +41,7 @@
         "href": "/cart",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "orders",
@@ -64,7 +64,7 @@
         "href": "/profile/ss/orderlookup",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -88,7 +88,7 @@
         "href": "/support",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "deals",
@@ -117,7 +117,7 @@
         "href": "/top-deals",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "search",
@@ -130,7 +130,7 @@
         "region": "header/nav"
       },
       "after": null,
-      "status": "proposed"
+      "status": "rejected"
     }
   ]
 }

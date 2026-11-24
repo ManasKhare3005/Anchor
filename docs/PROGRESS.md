@@ -18,9 +18,10 @@ decision records are in `docs/decisions.md`.
 - **M1: Matcher and benchmark** (2026-11-21). Plan: `docs/plan-M1.md`. Report: `docs/benchmark-report.md`.
   - matcher: capture, match, tiers (score + gap), duplicate-link merging, site state + two-visit rule, menu hints
   - 3 fixture sites (v1, v2, 6 states each), 6 Maple Market pairs, 21 archived real sites (12 shopping, 3 pharmacy, 4 government, 3 bank; CVS skipped)
-  - thresholds: sure >= 0.60 / gap >= 0.25, fairly >= 0.35 / gap >= 0.20, tuned for zero wrong matches
+  - thresholds (final, 2026-11-24, fixtures + 90 confirmed labels): sure >= 0.60 / gap >= 0.15, fairly >= 0.40 / gap >= 0.12, tuned for zero wrong matches
   - results: fixtures 0 wrong (leave-one-site-out 0 wrong); 90 pre-checked real labels 74 correct, 16 not found, 0 wrong; sure 178 / 0 wrong (95% upper bound 2.1%)
-  - **open:** real-site labels are still "proposed" (Manas has not confirmed `docs/benchmark-labels-review.md`), so thresholds come from fixtures only. Confirming labels and rerunning `npm run benchmark` recalibrates; the drift-guard test fails until `DEFAULT_THRESHOLDS` is updated to match.
+  - labels confirmed by Manas 2026-11-24 (90 confirmed, 29 rejected: 15 pre-check excludes + 14 not on the before page). Final: sure 188 / 0 wrong (95% upper bound 2.0%), fairly 10 / 0; leave-one-site-out sure 188 / 1 wrong (0.5%, under the 1% target)
+  - **watch (Manas: "keep an eye on it"):** the sure gap rests on one row, costco "Deals" (wrong element at gap 0.078). Without costco, calibration drops the gap to 0.05 and that row becomes the one held-out wrong. Recheck whenever labels or sites are added.
 
 - **M2: My buttons shelf and pointing** (2026-11-21). Plan: `docs/plan-M2.md`.
   - shelf in the side panel: this site's buttons in remembered order; helper section to remember (pick on the page + name) and remove
@@ -50,6 +51,8 @@ decision records are in `docs/decisions.md`.
 
 ## Decisions made
 
+- 2026-11-24: Site state counts a feature as "still on the page" from score 0.35 (`PRESENCE_FLOOR`), separate from the fairly-sure bar (now 0.40). Raising the pointing bar had turned the riverbank redesign into "unknown"; site state never points at anything, so the lower floor carries no wrong-match risk.
+- 2026-11-24: Labels with no feature on the before page are marked rejected (nothing to find), so the report no longer counts them as unreviewed.
 - 2026-11-22: Once a field has been filled in during a recording, later steps keep no neighbor text. Review pages repeat what was typed right next to the button (found by the e2e marker test). The matcher skips an empty neighbor signal, so only that weak signal is lost.
 - 2026-11-22: A chosen radio button is stored as its group (first option + the legend as the label). Which option the person picked is their answer, not a step.
 - 2026-11-22: A step is only looked for when its page is showing, judged from the other steps recorded on the same page. Found in e2e: a lost "Review payment" step matched "Confirm and pay" on the next page.
@@ -67,7 +70,7 @@ decision records are in `docs/decisions.md`.
 - 2026-11-20: Copies of the same link (same address + same label) are one feature, not rivals. Buttons without a link are never merged.
 - 2026-11-20: The accessible name only counts as a separate signal when it differs from the visible text (it was double-counting the label).
 - 2026-11-20: Lexicon change after freeze: "pharmacy" removed from the prescriptions group (it caused a misleading hint on fixtures).
-- 2026-11-20: No `Claude-Session:` or other AI lines in commits (Manas's rule). One pushed commit (`6187602`) carries one by mistake; it is left as is unless Manas wants history rewritten.
+- 2026-11-20: No `Claude-Session:` or other AI lines in commits (Manas's rule). 2026-11-24: the one commit that had one (`6187602`) was rewritten and force-pushed at Manas's request; old history kept locally on branch `backup/pre-trailer-rewrite`.
 
 - 2026-11-20: The matcher may read the `value` attribute of `<input type=submit|button|reset>` only. That attribute is a caption the site wrote, which nobody can type into. It goes through one audited helper (`buttonInputLabel`) with an eslint exception and tests proving no other input type is read (Manas).
 - 2026-11-20: eBay and Kohl's: retry with other archive dates **and** add two more shopping sites (Manas: "it only makes our case more accurate").
@@ -104,11 +107,9 @@ decision records are in `docs/decisions.md`.
 
 ## Questions for Manas
 
-1. Please confirm the real-site labels (`docs/benchmark-labels-review.md`): reply "agree" or name rows to change. Final thresholds wait on this.
-2. Commit `6187602` carries a `Claude-Session:` line by mistake. Rewrite history to remove it (force push), or leave it?
-3. Are the wrong-match targets (1% sure, 5% fairly sure) right? (after the first M1 report)
-4. License and public name for the repository.
-5. Should the helper page sit behind a simple PIN? (M5)
+1. Are the wrong-match targets (1% sure, 5% fairly sure) right? (after the first M1 report)
+2. License and public name for the repository.
+3. Should the helper page sit behind a simple PIN? (M5)
 
 ## M1 notes so far (untuned placeholder thresholds)
 

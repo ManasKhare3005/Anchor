@@ -10,7 +10,8 @@
       "label": "Sign in",
       "before": null,
       "after": null,
-      "status": "proposed"
+      "status": "rejected",
+      "note": "Not on the before page; nothing to find."
     },
     {
       "id": "cart",
@@ -29,7 +30,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "orders",
@@ -48,7 +49,7 @@
         "href": "/mylowes/orders",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -63,7 +64,7 @@
         "region": "body"
       },
       "after": null,
-      "status": "proposed"
+      "status": "rejected"
     },
     {
       "id": "deals",
@@ -82,7 +83,7 @@
         "href": "/weekly-ad",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "search",
@@ -101,7 +102,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     }
   ]
 }

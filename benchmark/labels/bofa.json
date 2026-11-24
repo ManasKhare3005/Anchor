@@ -28,7 +28,7 @@
         "href": "/cavmwebbactouch/common/index.html",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -55,14 +55,15 @@
         "href": "/customer-service/contact-us",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "search",
       "label": "Search button",
       "before": null,
       "after": null,
-      "status": "proposed"
+      "status": "rejected",
+      "note": "Not on the before page; nothing to find."
     },
     {
       "id": "open-account",
@@ -87,7 +88,7 @@
         "href": "/deposits/checking/checking-accounts",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "atm-branch",
@@ -112,7 +113,7 @@
         "href": "/",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     }
   ]
 }

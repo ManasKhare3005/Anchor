@@ -24,7 +24,7 @@
         "href": "/myaccount/signin.jsp",
         "region": "footer"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "cart",
@@ -43,7 +43,7 @@
         "href": "/checkout/shopping_cart.jsp",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "orders",
@@ -69,7 +69,7 @@
         "href": "/upgrade/myaccount/order_status_login.jsp",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -90,7 +90,7 @@
         "href": "/",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "deals",
@@ -112,7 +112,7 @@
         "href": "/catalog/clearance.jsp",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "rejected"
     },
     {
       "id": "search",
@@ -131,7 +131,7 @@
         "href": "",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     }
   ]
 }

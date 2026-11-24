@@ -32,10 +32,19 @@ export interface SiteObservation {
   loginFormPresent: boolean;
 }
 
+/**
+ * How similar the best candidate must be for a feature to count as still on the page when judging
+ * the site's state. Separate from the "fairly sure" bar: this never points at anything, it only
+ * tells a redesign (features still there, changed) from a different state (features gone). Kept
+ * at the pre-calibration fairly score so raising the pointing bar doesn't turn redesigns into
+ * "unknown" (2026-11-24).
+ */
+export const PRESENCE_FLOOR = 0.35;
+
 function statusOf(r: MatchResult, opts: MatchOptions): FeatureStatus {
   if (r.element) return "found";
   const t = opts.thresholds ?? DEFAULT_THRESHOLDS;
-  return r.score >= t.fairly.score ? "ambiguous" : "missing";
+  return r.score >= Math.min(t.fairly.score, PRESENCE_FLOOR) ? "ambiguous" : "missing";
 }
 
 /** Found, but its label, kind of control, tag or page region is not what was remembered. */

@@ -22,7 +22,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "cart",
@@ -41,7 +41,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "orders",
@@ -60,7 +60,7 @@
         "href": "/orders",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -79,7 +79,7 @@
         "href": "/help",
         "region": "footer"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "deals",
@@ -106,7 +106,7 @@
         "href": "/shop/deals/pets",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "rejected"
     },
     {
       "id": "search",
@@ -125,7 +125,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     }
   ]
 }

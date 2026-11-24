@@ -27,7 +27,7 @@
         "href": "/web/auth/dashboard",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "rejected"
     },
     {
       "id": "help",
@@ -50,14 +50,15 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "search",
       "label": "Search button",
       "before": null,
       "after": null,
-      "status": "proposed"
+      "status": "rejected",
+      "note": "Not on the before page; nothing to find."
     },
     {
       "id": "open-account",
@@ -82,7 +83,7 @@
         "href": "/personal/checking",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "atm-branch",
@@ -106,7 +107,7 @@
         "href": "/",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     }
   ]
 }

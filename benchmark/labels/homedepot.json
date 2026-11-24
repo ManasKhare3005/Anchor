@@ -28,7 +28,7 @@
         "href": "",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "cart",
@@ -49,7 +49,7 @@
         "href": "/cart",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "orders",
@@ -73,7 +73,7 @@
         "href": "/myaccount/guest-order-tracking",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -98,7 +98,7 @@
         "href": "/c/customer_service",
         "region": "body"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "deals",
@@ -111,14 +111,15 @@
         "region": "body"
       },
       "after": null,
-      "status": "proposed"
+      "status": "rejected"
     },
     {
       "id": "search",
       "label": "Search button",
       "before": null,
       "after": null,
-      "status": "proposed"
+      "status": "rejected",
+      "note": "Not on the before page; nothing to find."
     }
   ]
 }

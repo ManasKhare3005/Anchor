@@ -26,7 +26,7 @@
         "href": "/RIL/SiView.action",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -45,7 +45,7 @@
         "href": "/medicare/part-d-extra-help",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "rejected"
     },
     {
       "id": "search",
@@ -64,7 +64,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "apply",
@@ -87,7 +87,7 @@
         "href": "/menu",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "find-office",
@@ -106,7 +106,7 @@
         "href": "/locator",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     }
   ]
 }

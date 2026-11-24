@@ -25,7 +25,7 @@
         "href": "/your-account",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -53,7 +53,7 @@
         "href": "/help/let-us-help-you",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "search",
@@ -76,7 +76,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "apply",
@@ -102,7 +102,7 @@
         "href": "/businesses/small-businesses-self-employed/get-an-employer-identification-number",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "find-office",
@@ -121,7 +121,7 @@
         "href": "/help/contact-your-local-irs-office",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     }
   ]
 }

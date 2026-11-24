@@ -20,13 +20,15 @@ export interface Thresholds {
  * the most features with ZERO wrong matches on the calibration set, ties going to the stricter
  * setting. A tier needs a high score AND a clear gap to the runner-up (CLAUDE.md § Matching).
  *
- * Calibration set: fixtures + real-site labels confirmed by Manas. Interim (2026-11-20): no real
- * labels confirmed yet, so these come from fixtures only. A benchmark test fails if they drift
- * from what calibration produces.
+ * Calibration set: fixtures + the 90 real-site labels Manas confirmed (2026-11-24). A benchmark
+ * test fails if they drift from what calibration produces.
+ *
+ * Watch: the sure gap is held up by one real row (costco "Deals": wrong element at gap 0.078).
+ * Leave-one-site-out without costco picks gap 0.05 and makes that one sure-wrong (188/1 held out).
  */
 export const DEFAULT_THRESHOLDS: Thresholds = {
-  sure: { score: 0.6, gap: 0.25 },
-  fairly: { score: 0.35, gap: 0.2 },
+  sure: { score: 0.6, gap: 0.15 },
+  fairly: { score: 0.4, gap: 0.12 },
 };
 
 export interface MatchOptions {

@@ -26,7 +26,7 @@
         "href": "/LogonForm",
         "region": "footer"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "cart",
@@ -52,7 +52,7 @@
         "href": "/CheckoutCartView",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "orders",
@@ -73,7 +73,7 @@
         "href": "/myaccount",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -102,7 +102,7 @@
         "href": "/",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "deals",
@@ -124,7 +124,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "search",
@@ -137,7 +137,7 @@
         "region": "header/nav"
       },
       "after": null,
-      "status": "proposed"
+      "status": "rejected"
     }
   ]
 }

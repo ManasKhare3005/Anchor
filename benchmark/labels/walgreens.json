@@ -24,7 +24,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "help",
@@ -46,7 +46,7 @@
         "href": "/topic/help/customerservicehelp/customer_service_help_main.jsp",
         "region": "footer"
       },
-      "status": "proposed"
+      "status": "rejected"
     },
     {
       "id": "search",
@@ -65,7 +65,7 @@
         "href": "",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "refill",
@@ -84,7 +84,7 @@
         "href": "/rx-checkout/guest-express-refill",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "find-pharmacy",
@@ -109,7 +109,7 @@
         "href": "/storelocator/find.jsp",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     },
     {
       "id": "vaccines",
@@ -130,7 +130,7 @@
         "href": "/topic/pharmacy/immunization-services-appointments.jsp",
         "region": "header/nav"
       },
-      "status": "proposed"
+      "status": "confirmed"
     }
   ]
 }

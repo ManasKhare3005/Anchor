@@ -18,12 +18,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615002158/https://www.amaz
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| amazon-1 | Sign in | **Hello, sign in Account & Lists**<br>`/ap/signin`<br>header/nav | **Hello, sign in Account & Lists**<br>`/ap/signin`<br>header/nav | ok | proposed |
-| amazon-2 | Cart | **0 Cart 0 items in cart**<br>`/gp/cart/view.html`<br>header/nav | **Cart shift + alt + C Cart, shift, alt, c**<br>`/gp/cart/view.html`<br>header/nav | ok: After shows the keyboard-shortcut copy of the cart link first; the visible cart link counts too (same address). | proposed |
-| amazon-3 | Orders / track order | **Returns & Orders**<br>`/gp/css/order-history`<br>header/nav | **Orders shift + alt + O Your orders, shift, alt, o**<br>`/gp/css/order-history`<br>header/nav | ok: Same as cart: shortcut copy listed, visible 'Returns & Orders' link counts too. | proposed |
-| amazon-4 | Help / customer service | **Customer Service**<br>`/gp/help/customer/display.html`<br>header/nav | **Customer Service**<br>`/gp/help/customer/display.html`<br>header/nav | ok | proposed |
-| amazon-5 | Deals | **Today's Deals**<br>`/deals`<br>header/nav | **Today's Deals**<br>`/deals`<br>header/nav | ok | proposed |
-| amazon-6 | Search button | **Go**<br>`-`<br>header/nav | **Go**<br>`-`<br>header/nav | ok | proposed |
+| amazon-1 | Sign in | **Hello, sign in Account & Lists**<br>`/ap/signin`<br>header/nav | **Hello, sign in Account & Lists**<br>`/ap/signin`<br>header/nav | ok | confirmed |
+| amazon-2 | Cart | **0 Cart 0 items in cart**<br>`/gp/cart/view.html`<br>header/nav | **Cart shift + alt + C Cart, shift, alt, c**<br>`/gp/cart/view.html`<br>header/nav | ok: After shows the keyboard-shortcut copy of the cart link first; the visible cart link counts too (same address). | confirmed |
+| amazon-3 | Orders / track order | **Returns & Orders**<br>`/gp/css/order-history`<br>header/nav | **Orders shift + alt + O Your orders, shift, alt, o**<br>`/gp/css/order-history`<br>header/nav | ok: Same as cart: shortcut copy listed, visible 'Returns & Orders' link counts too. | confirmed |
+| amazon-4 | Help / customer service | **Customer Service**<br>`/gp/help/customer/display.html`<br>header/nav | **Customer Service**<br>`/gp/help/customer/display.html`<br>header/nav | ok | confirmed |
+| amazon-5 | Deals | **Today's Deals**<br>`/deals`<br>header/nav | **Today's Deals**<br>`/deals`<br>header/nav | ok | confirmed |
+| amazon-6 | Search button | **Go**<br>`-`<br>header/nav | **Go**<br>`-`<br>header/nav | ok | confirmed |
 
 ## bestbuy — https://www.bestbuy.com/
 
@@ -31,12 +31,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615001002/https://www.best
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| bestbuy-1 | Sign in | **Sign in or Create Account**<br>`/identity/global/signin`<br>footer | **Sign in or Create Account**<br>`/identity/global/signin`<br>footer | ok: Newly found after the sign-in rule fix. | proposed |
-| bestbuy-2 | Cart | **Cart Cart, 0 item Cart**<br>`/cart`<br>header/nav | **Cart Cart, 0 item Cart**<br>`/cart`<br>header/nav | ok | proposed |
-| bestbuy-3 | Orders / track order | **Order Status**<br>`-`<br>header/nav | **Order Status**<br>`/profile/ss/orderlookup`<br>header/nav | ok | proposed |
-| bestbuy-4 | Help / customer service | **Visit our Support Center**<br>`/support`<br>footer | **Visit our Support Center**<br>`/support`<br>header/nav | ok: Moved from footer to header. | proposed |
-| bestbuy-5 | Deals | **Top Deals**<br>`/site/electronics/top-deals/pcmcat1563299784494.c`<br>header/nav | **Top Deals**<br>`/top-deals`<br>header/nav | ok | proposed |
-| bestbuy-6 | Search button | **submit search submit search**<br>`-`<br>header/nav | _not found_ | exclude: After 'not found' is probably the search box being drawn by scripts, not a real removal. | proposed |
+| bestbuy-1 | Sign in | **Sign in or Create Account**<br>`/identity/global/signin`<br>footer | **Sign in or Create Account**<br>`/identity/global/signin`<br>footer | ok: Newly found after the sign-in rule fix. | confirmed |
+| bestbuy-2 | Cart | **Cart Cart, 0 item Cart**<br>`/cart`<br>header/nav | **Cart Cart, 0 item Cart**<br>`/cart`<br>header/nav | ok | confirmed |
+| bestbuy-3 | Orders / track order | **Order Status**<br>`-`<br>header/nav | **Order Status**<br>`/profile/ss/orderlookup`<br>header/nav | ok | confirmed |
+| bestbuy-4 | Help / customer service | **Visit our Support Center**<br>`/support`<br>footer | **Visit our Support Center**<br>`/support`<br>header/nav | ok: Moved from footer to header. | confirmed |
+| bestbuy-5 | Deals | **Top Deals**<br>`/site/electronics/top-deals/pcmcat1563299784494.c`<br>header/nav | **Top Deals**<br>`/top-deals`<br>header/nav | ok | confirmed |
+| bestbuy-6 | Search button | **submit search submit search**<br>`-`<br>header/nav | _not found_ | exclude: After 'not found' is probably the search box being drawn by scripts, not a real removal. | rejected |
 
 ## bofa — https://www.bankofamerica.com/
 
@@ -44,11 +44,11 @@ Before: [2023-06-15](https://web.archive.org/web/20230615040404/https://www.bank
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| bofa-1 | Sign in | **Login**<br>`/cavmwebbactouch/common/index.html`<br>body | **Login**<br>`/cavmwebbactouch/common/index.html`<br>body | ok | proposed |
-| bofa-2 | Help / customer service | **Contact Us**<br>`/customer-service/contact-us`<br>header/nav | **Contact us**<br>`/customer-service/contact-us`<br>header/nav | ok | proposed |
-| bofa-3 | Search button | _not found_ | _not found_ | skipped (not on before page) | proposed |
-| bofa-4 | Open an account | **Open Checking Menu Collapsed**<br>`/deposits/checking/checking-accounts`<br>header/nav | **Open Checking Menu**<br>`/deposits/checking/checking-accounts`<br>header/nav | ok | proposed |
-| bofa-5 | Find an ATM / branch | **Find a Location**<br>`/`<br>header/nav | **Find a Location**<br>`/`<br>header/nav | ok | proposed |
+| bofa-1 | Sign in | **Login**<br>`/cavmwebbactouch/common/index.html`<br>body | **Login**<br>`/cavmwebbactouch/common/index.html`<br>body | ok | confirmed |
+| bofa-2 | Help / customer service | **Contact Us**<br>`/customer-service/contact-us`<br>header/nav | **Contact us**<br>`/customer-service/contact-us`<br>header/nav | ok | confirmed |
+| bofa-3 | Search button | _not found_ | _not found_ | skipped (not on before page) | rejected |
+| bofa-4 | Open an account | **Open Checking Menu Collapsed**<br>`/deposits/checking/checking-accounts`<br>header/nav | **Open Checking Menu**<br>`/deposits/checking/checking-accounts`<br>header/nav | ok | confirmed |
+| bofa-5 | Find an ATM / branch | **Find a Location**<br>`/`<br>header/nav | **Find a Location**<br>`/`<br>header/nav | ok | confirmed |
 
 ## chase — https://www.chase.com/
 
@@ -56,11 +56,11 @@ Before: [2023-06-15](https://web.archive.org/web/20230615000129/https://www.chas
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| chase-1 | Sign in | **Sign in for offers**<br>`/personal/offers/secureshopping`<br>header/nav | **Sign In**<br>`/web/auth/dashboard`<br>header/nav | exclude: Before picked 'Sign in for offers', not the main sign-in. | proposed |
-| chase-2 | Help / customer service | **Customer service**<br>`-`<br>header/nav | **Customer service**<br>`-`<br>header/nav | ok | proposed |
-| chase-3 | Search button | _not found_ | _not found_ | skipped (not on before page) | proposed |
-| chase-4 | Open an account | **Choose a checking account**<br>`/personal/checking`<br>header/nav | **Choose a checking account**<br>`/personal/checking`<br>header/nav | ok | proposed |
-| chase-5 | Find an ATM / branch | **Find ATM or branch**<br>`/`<br>header/nav | **Find ATM or branch**<br>`/`<br>header/nav | ok | proposed |
+| chase-1 | Sign in | **Sign in for offers**<br>`/personal/offers/secureshopping`<br>header/nav | **Sign In**<br>`/web/auth/dashboard`<br>header/nav | exclude: Before picked 'Sign in for offers', not the main sign-in. | rejected |
+| chase-2 | Help / customer service | **Customer service**<br>`-`<br>header/nav | **Customer service**<br>`-`<br>header/nav | ok | confirmed |
+| chase-3 | Search button | _not found_ | _not found_ | skipped (not on before page) | rejected |
+| chase-4 | Open an account | **Choose a checking account**<br>`/personal/checking`<br>header/nav | **Choose a checking account**<br>`/personal/checking`<br>header/nav | ok | confirmed |
+| chase-5 | Find an ATM / branch | **Find ATM or branch**<br>`/`<br>header/nav | **Find ATM or branch**<br>`/`<br>header/nav | ok | confirmed |
 
 ## costco — https://www.costco.com/
 
@@ -68,12 +68,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615032845/https://www.cost
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| costco-1 | Sign in | **Sign In / Register**<br>`/LogonForm`<br>header/nav | **Sign In or Register**<br>`/LogonForm`<br>footer | ok: 'Sign In / Register' → 'Sign In or Register' (after copy listed is in the footer). | proposed |
-| costco-2 | Cart | **Cart**<br>`/CheckoutCartView`<br>header/nav | **Cart Cart**<br>`/CheckoutCartView`<br>header/nav | ok | proposed |
-| costco-3 | Orders / track order | **Orders & Returns**<br>`/myaccount`<br>header/nav | **Orders & Returns Orders & Returns**<br>`/myaccount`<br>header/nav | ok | proposed |
-| costco-4 | Help / customer service | **Customer Service**<br>`/`<br>header/nav | **Customer Service Customer Service**<br>`/`<br>header/nav | ok | proposed |
-| costco-5 | Deals | **Deals**<br>`/CatalogSearch`<br>header/nav | **Deals**<br>`-`<br>header/nav | ok: 'Deals' link → 'Deals' menu button, same header slot. | proposed |
-| costco-6 | Search button | **Submit**<br>`-`<br>header/nav | _not found_ | exclude: After 'not found' is probably script-drawn, not a real removal. | proposed |
+| costco-1 | Sign in | **Sign In / Register**<br>`/LogonForm`<br>header/nav | **Sign In or Register**<br>`/LogonForm`<br>footer | ok: 'Sign In / Register' → 'Sign In or Register' (after copy listed is in the footer). | confirmed |
+| costco-2 | Cart | **Cart**<br>`/CheckoutCartView`<br>header/nav | **Cart Cart**<br>`/CheckoutCartView`<br>header/nav | ok | confirmed |
+| costco-3 | Orders / track order | **Orders & Returns**<br>`/myaccount`<br>header/nav | **Orders & Returns Orders & Returns**<br>`/myaccount`<br>header/nav | ok | confirmed |
+| costco-4 | Help / customer service | **Customer Service**<br>`/`<br>header/nav | **Customer Service Customer Service**<br>`/`<br>header/nav | ok | confirmed |
+| costco-5 | Deals | **Deals**<br>`/CatalogSearch`<br>header/nav | **Deals**<br>`-`<br>header/nav | ok: 'Deals' link → 'Deals' menu button, same header slot. | confirmed |
+| costco-6 | Search button | **Submit**<br>`-`<br>header/nav | _not found_ | exclude: After 'not found' is probably script-drawn, not a real removal. | rejected |
 
 ## ebay — https://www.ebay.com/
 
@@ -81,12 +81,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615001035/https://www.ebay
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| ebay-1 | Sign in | **Sign in**<br>`/ws/eBayISAPI.dll`<br>header/nav | **Sign in**<br>`/ws/eBayISAPI.dll`<br>header/nav | ok | proposed |
-| ebay-2 | Cart | **Your shopping cart**<br>`/`<br>header/nav | **Expand Cart**<br>`-`<br>header/nav | exclude: Before is a cart link, after is an 'Expand Cart' menu button; unclear they are the same control. | proposed |
-| ebay-3 | Orders / track order | **Purchase History**<br>`/mye/myebay/purchase`<br>header/nav | **Purchase History**<br>`/mye/myebay/purchase`<br>header/nav | ok | proposed |
-| ebay-4 | Help / customer service | **Help & Contact**<br>`/ocs/home`<br>header/nav | **Help & Contact Help & Contact**<br>`/help/home`<br>header/nav | ok | proposed |
-| ebay-5 | Deals | **Daily Deals**<br>`/deals`<br>header/nav | **Daily Deals Daily Deals**<br>`/deals`<br>header/nav | ok | proposed |
-| ebay-6 | Search button | **Search**<br>`-`<br>header/nav | **Search Search**<br>`-`<br>header/nav | ok | proposed |
+| ebay-1 | Sign in | **Sign in**<br>`/ws/eBayISAPI.dll`<br>header/nav | **Sign in**<br>`/ws/eBayISAPI.dll`<br>header/nav | ok | confirmed |
+| ebay-2 | Cart | **Your shopping cart**<br>`/`<br>header/nav | **Expand Cart**<br>`-`<br>header/nav | exclude: Before is a cart link, after is an 'Expand Cart' menu button; unclear they are the same control. | rejected |
+| ebay-3 | Orders / track order | **Purchase History**<br>`/mye/myebay/purchase`<br>header/nav | **Purchase History**<br>`/mye/myebay/purchase`<br>header/nav | ok | confirmed |
+| ebay-4 | Help / customer service | **Help & Contact**<br>`/ocs/home`<br>header/nav | **Help & Contact Help & Contact**<br>`/help/home`<br>header/nav | ok | confirmed |
+| ebay-5 | Deals | **Daily Deals**<br>`/deals`<br>header/nav | **Daily Deals Daily Deals**<br>`/deals`<br>header/nav | ok | confirmed |
+| ebay-6 | Search button | **Search**<br>`-`<br>header/nav | **Search Search**<br>`-`<br>header/nav | ok | confirmed |
 
 ## etsy — https://www.etsy.com/
 
@@ -94,12 +94,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615032144/https://www.etsy
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| etsy-1 | Sign in | **Sign in**<br>`-`<br>header/nav | **Sign in**<br>`-`<br>header/nav | ok | proposed |
-| etsy-2 | Cart | **0 Cart**<br>`/cart`<br>header/nav | **0 Cart**<br>`/cart`<br>header/nav | ok | proposed |
-| etsy-3 | Orders / track order | _not found_ | _not found_ | skipped (not on before page) | proposed |
-| etsy-4 | Help / customer service | **Help**<br>`-`<br>header/nav | **Help**<br>`-`<br>header/nav | ok | proposed |
-| etsy-5 | Deals | _not found_ | _not found_ | skipped (not on before page) | proposed |
-| etsy-6 | Search button | **Search Search**<br>`-`<br>header/nav | **Search Search**<br>`-`<br>header/nav | ok | proposed |
+| etsy-1 | Sign in | **Sign in**<br>`-`<br>header/nav | **Sign in**<br>`-`<br>header/nav | ok | confirmed |
+| etsy-2 | Cart | **0 Cart**<br>`/cart`<br>header/nav | **0 Cart**<br>`/cart`<br>header/nav | ok | confirmed |
+| etsy-3 | Orders / track order | _not found_ | _not found_ | skipped (not on before page) | rejected |
+| etsy-4 | Help / customer service | **Help**<br>`-`<br>header/nav | **Help**<br>`-`<br>header/nav | ok | confirmed |
+| etsy-5 | Deals | _not found_ | _not found_ | skipped (not on before page) | rejected |
+| etsy-6 | Search button | **Search Search**<br>`-`<br>header/nav | **Search Search**<br>`-`<br>header/nav | ok | confirmed |
 
 ## homedepot — https://www.homedepot.com/
 
@@ -107,12 +107,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615030829/https://www.home
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| homedepot-1 | Sign in | **Sign in Sign in to your account**<br>`/auth/view/signin`<br>body | **Log In open drawer to view Account**<br>`-`<br>body | ok: 'Sign in' → 'Log In', same purpose. | proposed |
-| homedepot-2 | Cart | **Cart 0 items**<br>`/mycart/home`<br>body | **Cart Click to redirect to view my cart page**<br>`/cart`<br>body | ok | proposed |
-| homedepot-3 | Orders / track order | **Check Order Status**<br>`/order/view/tracking`<br>header/nav | **Check Order Status Check Order Status**<br>`/myaccount/guest-order-tracking`<br>body | ok | proposed |
-| homedepot-4 | Help / customer service | **Help & FAQs**<br>`/c/customer_service`<br>header/nav | **Customer Service Center Customer Service Center**<br>`/c/customer_service`<br>body | ok: 'Help & FAQs' → 'Customer Service Center', same link target. | proposed |
-| homedepot-5 | Deals | **Browse Weekly Ad**<br>`/c/localad`<br>body | _not found_ | exclude: Can't tell if the weekly ad really left the home page or is script-drawn. | proposed |
-| homedepot-6 | Search button | _not found_ | _not found_ | skipped (not on before page) | proposed |
+| homedepot-1 | Sign in | **Sign in Sign in to your account**<br>`/auth/view/signin`<br>body | **Log In open drawer to view Account**<br>`-`<br>body | ok: 'Sign in' → 'Log In', same purpose. | confirmed |
+| homedepot-2 | Cart | **Cart 0 items**<br>`/mycart/home`<br>body | **Cart Click to redirect to view my cart page**<br>`/cart`<br>body | ok | confirmed |
+| homedepot-3 | Orders / track order | **Check Order Status**<br>`/order/view/tracking`<br>header/nav | **Check Order Status Check Order Status**<br>`/myaccount/guest-order-tracking`<br>body | ok | confirmed |
+| homedepot-4 | Help / customer service | **Help & FAQs**<br>`/c/customer_service`<br>header/nav | **Customer Service Center Customer Service Center**<br>`/c/customer_service`<br>body | ok: 'Help & FAQs' → 'Customer Service Center', same link target. | confirmed |
+| homedepot-5 | Deals | **Browse Weekly Ad**<br>`/c/localad`<br>body | _not found_ | exclude: Can't tell if the weekly ad really left the home page or is script-drawn. | rejected |
+| homedepot-6 | Search button | _not found_ | _not found_ | skipped (not on before page) | rejected |
 
 ## irs — https://www.irs.gov/
 
@@ -120,11 +120,11 @@ Before: [2023-06-15](https://web.archive.org/web/20230615002515/https://www.irs.
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| irs-1 | Sign in | **Sign in to Your Account**<br>`/payments/your-online-account`<br>body | **Sign in**<br>`/your-account`<br>header/nav | ok: Moved from page body to header. | proposed |
-| irs-2 | Help / customer service | **Help Help**<br>`/help/telephone-assistance`<br>header/nav | **Help Help**<br>`/help/let-us-help-you`<br>header/nav | ok | proposed |
-| irs-3 | Search button | **Search Search Search**<br>`-`<br>header/nav | **Search Search Search**<br>`-`<br>header/nav | ok | proposed |
-| irs-4 | Apply for benefits | **Apply for an Employer ID Number (EIN)**<br>`/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online`<br>header/nav | **Apply for an Employer ID Number (EIN)**<br>`/businesses/small-businesses-self-employed/get-an-employer-identification-number`<br>header/nav | ok: It is the EIN application link, the same in both. | proposed |
-| irs-5 | Find an office / location | **Find a Local Office**<br>`/help/contact-your-local-irs-office`<br>header/nav | **Find a Local Office**<br>`/help/contact-your-local-irs-office`<br>header/nav | ok | proposed |
+| irs-1 | Sign in | **Sign in to Your Account**<br>`/payments/your-online-account`<br>body | **Sign in**<br>`/your-account`<br>header/nav | ok: Moved from page body to header. | confirmed |
+| irs-2 | Help / customer service | **Help Help**<br>`/help/telephone-assistance`<br>header/nav | **Help Help**<br>`/help/let-us-help-you`<br>header/nav | ok | confirmed |
+| irs-3 | Search button | **Search Search Search**<br>`-`<br>header/nav | **Search Search Search**<br>`-`<br>header/nav | ok | confirmed |
+| irs-4 | Apply for benefits | **Apply for an Employer ID Number (EIN)**<br>`/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online`<br>header/nav | **Apply for an Employer ID Number (EIN)**<br>`/businesses/small-businesses-self-employed/get-an-employer-identification-number`<br>header/nav | ok: It is the EIN application link, the same in both. | confirmed |
+| irs-5 | Find an office / location | **Find a Local Office**<br>`/help/contact-your-local-irs-office`<br>header/nav | **Find a Local Office**<br>`/help/contact-your-local-irs-office`<br>header/nav | ok | confirmed |
 
 ## kohls — https://www.kohls.com/
 
@@ -132,12 +132,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615004347/https://www.kohl
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| kohls-1 | Sign in | **Sign In**<br>`/myaccount/kohls_login.jsp`<br>footer | **Sign In**<br>`/myaccount/signin.jsp`<br>footer | ok: Same label; link address changed. | proposed |
-| kohls-2 | Cart | **0 item(s), $0.00 Mini Shopping Cart**<br>`/checkout/shopping_cart.jsp`<br>body | **0 item(s), $0.00 Mini Shopping Cart**<br>`/checkout/shopping_cart.jsp`<br>body | ok | proposed |
-| kohls-3 | Orders / track order | **Order Status Order Status**<br>`/upgrade/myaccount/order_status_login.jsp`<br>body | **Order Status Order Status**<br>`/upgrade/myaccount/order_status_login.jsp`<br>body | ok | proposed |
-| kohls-4 | Help / customer service | **Help**<br>`/`<br>body | **Help**<br>`/`<br>body | ok | proposed |
-| kohls-5 | Deals | **Kohl’s Coupons**<br>`/sale-event/coupons-deals.jsp`<br>body | **clearance deals**<br>`/catalog/clearance.jsp`<br>body | exclude: Before is 'Kohl's Coupons', after is 'clearance deals': different pages. | proposed |
-| kohls-6 | Search button | **(no text)**<br>`-`<br>body | **(no text)**<br>`-`<br>body | ok: Icon-only search button in both. | proposed |
+| kohls-1 | Sign in | **Sign In**<br>`/myaccount/kohls_login.jsp`<br>footer | **Sign In**<br>`/myaccount/signin.jsp`<br>footer | ok: Same label; link address changed. | confirmed |
+| kohls-2 | Cart | **0 item(s), $0.00 Mini Shopping Cart**<br>`/checkout/shopping_cart.jsp`<br>body | **0 item(s), $0.00 Mini Shopping Cart**<br>`/checkout/shopping_cart.jsp`<br>body | ok | confirmed |
+| kohls-3 | Orders / track order | **Order Status Order Status**<br>`/upgrade/myaccount/order_status_login.jsp`<br>body | **Order Status Order Status**<br>`/upgrade/myaccount/order_status_login.jsp`<br>body | ok | confirmed |
+| kohls-4 | Help / customer service | **Help**<br>`/`<br>body | **Help**<br>`/`<br>body | ok | confirmed |
+| kohls-5 | Deals | **Kohl’s Coupons**<br>`/sale-event/coupons-deals.jsp`<br>body | **clearance deals**<br>`/catalog/clearance.jsp`<br>body | exclude: Before is 'Kohl's Coupons', after is 'clearance deals': different pages. | rejected |
+| kohls-6 | Search button | **(no text)**<br>`-`<br>body | **(no text)**<br>`-`<br>body | ok: Icon-only search button in both. | confirmed |
 
 ## lowes — https://www.lowes.com/
 
@@ -145,12 +145,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615061649/https://www.lowe
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| lowes-1 | Sign in | _not found_ | _not found_ | skipped (not on before page) | proposed |
-| lowes-2 | Cart | **Cart with 0 itemsCart Cart Count**<br>`-`<br>header/nav | **Cart with 0 itemsCart Cart Count**<br>`-`<br>header/nav | ok | proposed |
-| lowes-3 | Orders / track order | **Order Status**<br>`/mylowes/orders`<br>header/nav | **Order Status**<br>`/mylowes/orders`<br>header/nav | ok | proposed |
-| lowes-4 | Help / customer service | **Buy online or through our mobile app and pick up at your local Lowe’s.**<br>`/l/help/store-pickup`<br>body | _not found_ | exclude: Proposer picked a store-pickup promo, not a help link. | proposed |
-| lowes-5 | Deals | **Weekly Ad**<br>`/weekly-ad`<br>header/nav | **Weekly Ad**<br>`/weekly-ad`<br>header/nav | ok | proposed |
-| lowes-6 | Search button | **Search**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | proposed |
+| lowes-1 | Sign in | _not found_ | _not found_ | skipped (not on before page) | rejected |
+| lowes-2 | Cart | **Cart with 0 itemsCart Cart Count**<br>`-`<br>header/nav | **Cart with 0 itemsCart Cart Count**<br>`-`<br>header/nav | ok | confirmed |
+| lowes-3 | Orders / track order | **Order Status**<br>`/mylowes/orders`<br>header/nav | **Order Status**<br>`/mylowes/orders`<br>header/nav | ok | confirmed |
+| lowes-4 | Help / customer service | **Buy online or through our mobile app and pick up at your local Lowe’s.**<br>`/l/help/store-pickup`<br>body | _not found_ | exclude: Proposer picked a store-pickup promo, not a help link. | rejected |
+| lowes-5 | Deals | **Weekly Ad**<br>`/weekly-ad`<br>header/nav | **Weekly Ad**<br>`/weekly-ad`<br>header/nav | ok | confirmed |
+| lowes-6 | Search button | **Search**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | confirmed |
 
 ## macys — https://www.macys.com/
 
@@ -158,12 +158,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615022933/https://www.macy
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| macys-1 | Sign in | **Sign In**<br>`/account/signin`<br>body | **Sign in**<br>`/account/signin`<br>header/nav | ok | proposed |
-| macys-2 | Cart | **0 Shopping bag has 0 items shopping bag**<br>`/my-bag`<br>header/nav | **0 item in bag Shopping bag**<br>`/my/bag`<br>header/nav | ok: 'Shopping bag' in both. | proposed |
-| macys-3 | Orders / track order | _not found_ | _not found_ | skipped (not on before page) | proposed |
-| macys-4 | Help / customer service | **Open Customer Service flyout**<br>`-`<br>footer | **Expand section: Customer Service**<br>`-`<br>header/nav | ok: Both open the Customer Service menu; moved from footer to header. | proposed |
-| macys-5 | Deals | **Deals**<br>`/shop/coupons-deals`<br>header/nav | **Deals**<br>`/shop/coupons-deals`<br>header/nav | ok | proposed |
-| macys-6 | Search button | **Submit product search GO**<br>`-`<br>header/nav | _not found_ | exclude: After 'not found' is probably script-drawn, not a real removal. | proposed |
+| macys-1 | Sign in | **Sign In**<br>`/account/signin`<br>body | **Sign in**<br>`/account/signin`<br>header/nav | ok | confirmed |
+| macys-2 | Cart | **0 Shopping bag has 0 items shopping bag**<br>`/my-bag`<br>header/nav | **0 item in bag Shopping bag**<br>`/my/bag`<br>header/nav | ok: 'Shopping bag' in both. | confirmed |
+| macys-3 | Orders / track order | _not found_ | _not found_ | skipped (not on before page) | rejected |
+| macys-4 | Help / customer service | **Open Customer Service flyout**<br>`-`<br>footer | **Expand section: Customer Service**<br>`-`<br>header/nav | ok: Both open the Customer Service menu; moved from footer to header. | confirmed |
+| macys-5 | Deals | **Deals**<br>`/shop/coupons-deals`<br>header/nav | **Deals**<br>`/shop/coupons-deals`<br>header/nav | ok | confirmed |
+| macys-6 | Search button | **Submit product search GO**<br>`-`<br>header/nav | _not found_ | exclude: After 'not found' is probably script-drawn, not a real removal. | rejected |
 
 ## medicare — https://www.medicare.gov/
 
@@ -171,11 +171,11 @@ Before: [2023-06-15](https://web.archive.org/web/20230615040055/https://www.medi
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| medicare-1 | Sign in | **Log in/Create Account**<br>`/account/login`<br>body | **Log in/Create Account**<br>`/account/login`<br>body | ok | proposed |
-| medicare-2 | Help / customer service | **Get Help**<br>`/talk-to-someone`<br>body | **Get Help**<br>`/talk-to-someone`<br>body | ok | proposed |
-| medicare-3 | Search button | **Search**<br>`-`<br>body | **Submit Search Search**<br>`-`<br>body | ok | proposed |
-| medicare-4 | Apply for benefits | _not found_ | _not found_ | skipped (not on before page) | proposed |
-| medicare-5 | Find an office / location | _not found_ | _not found_ | skipped (not on before page) | proposed |
+| medicare-1 | Sign in | **Log in/Create Account**<br>`/account/login`<br>body | **Log in/Create Account**<br>`/account/login`<br>body | ok | confirmed |
+| medicare-2 | Help / customer service | **Get Help**<br>`/talk-to-someone`<br>body | **Get Help**<br>`/talk-to-someone`<br>body | ok | confirmed |
+| medicare-3 | Search button | **Search**<br>`-`<br>body | **Submit Search Search**<br>`-`<br>body | ok | confirmed |
+| medicare-4 | Apply for benefits | _not found_ | _not found_ | skipped (not on before page) | rejected |
+| medicare-5 | Find an office / location | _not found_ | _not found_ | skipped (not on before page) | rejected |
 
 ## riteaid — https://www.riteaid.com/
 
@@ -183,12 +183,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615091711/https://www.rite
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| riteaid-1 | Sign in | **Hi, Log In Account**<br>`-`<br>header/nav | **Hi, Log In Account**<br>`-`<br>header/nav | ok | proposed |
-| riteaid-2 | Help / customer service | **Help**<br>`/faq`<br>footer | **Help**<br>`/faq`<br>footer | ok | proposed |
-| riteaid-3 | Search button | **Find Stores**<br>`-`<br>header/nav | **Find Stores**<br>`-`<br>header/nav | exclude: Proposer picked 'Find Stores', not the search button. | proposed |
-| riteaid-4 | Refill prescriptions | **REFILL YOUR RX**<br>`/pharmacy/services/prescription-refills/online-prescription-refills`<br>body | **REFILL YOUR RX**<br>`/pharmacy/refill-prescriptions.html`<br>body | ok | proposed |
-| riteaid-5 | Find a pharmacy / store | **Current Location**<br>`/`<br>header/nav | **Current Location**<br>`/`<br>header/nav | exclude: Picked 'Current Location', not the store finder. | proposed |
-| riteaid-6 | Vaccines / appointments | **Schedule a Vaccination Schedule a Vaccination**<br>`/pharmacy/scheduler`<br>header/nav | **Schedule a Vaccination Schedule a Vaccination**<br>`/pharmacy/scheduler`<br>header/nav | ok | proposed |
+| riteaid-1 | Sign in | **Hi, Log In Account**<br>`-`<br>header/nav | **Hi, Log In Account**<br>`-`<br>header/nav | ok | confirmed |
+| riteaid-2 | Help / customer service | **Help**<br>`/faq`<br>footer | **Help**<br>`/faq`<br>footer | ok | confirmed |
+| riteaid-3 | Search button | **Find Stores**<br>`-`<br>header/nav | **Find Stores**<br>`-`<br>header/nav | exclude: Proposer picked 'Find Stores', not the search button. | rejected |
+| riteaid-4 | Refill prescriptions | **REFILL YOUR RX**<br>`/pharmacy/services/prescription-refills/online-prescription-refills`<br>body | **REFILL YOUR RX**<br>`/pharmacy/refill-prescriptions.html`<br>body | ok | confirmed |
+| riteaid-5 | Find a pharmacy / store | **Current Location**<br>`/`<br>header/nav | **Current Location**<br>`/`<br>header/nav | exclude: Picked 'Current Location', not the store finder. | rejected |
+| riteaid-6 | Vaccines / appointments | **Schedule a Vaccination Schedule a Vaccination**<br>`/pharmacy/scheduler`<br>header/nav | **Schedule a Vaccination Schedule a Vaccination**<br>`/pharmacy/scheduler`<br>header/nav | ok | confirmed |
 
 ## ssa — https://www.ssa.gov/
 
@@ -196,11 +196,11 @@ Before: [2023-06-15](https://web.archive.org/web/20230615085519/https://www.ssa.
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| ssa-1 | Sign in | **Sign in**<br>`/RIL/SiView.action`<br>header/nav | **Sign in**<br>`/RIL/SiView.action`<br>header/nav | ok | proposed |
-| ssa-2 | Help / customer service | **Apply for Part D Extra Help**<br>`/medicare/part-d-extra-help`<br>header/nav | **Apply for Part D Extra Help**<br>`/medicare/part-d-extra-help`<br>header/nav | exclude: Picked 'Apply for Part D Extra Help' (a benefit), not help/contact. | proposed |
-| ssa-3 | Search button | **Search**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | proposed |
-| ssa-4 | Apply for benefits | **Benefits**<br>`/menu`<br>header/nav | **Benefits**<br>`/menu`<br>header/nav | ok: The 'Benefits' menu. | proposed |
-| ssa-5 | Find an office / location | **Find an office**<br>`/locator`<br>header/nav | **Find an office**<br>`/locator`<br>header/nav | ok | proposed |
+| ssa-1 | Sign in | **Sign in**<br>`/RIL/SiView.action`<br>header/nav | **Sign in**<br>`/RIL/SiView.action`<br>header/nav | ok | confirmed |
+| ssa-2 | Help / customer service | **Apply for Part D Extra Help**<br>`/medicare/part-d-extra-help`<br>header/nav | **Apply for Part D Extra Help**<br>`/medicare/part-d-extra-help`<br>header/nav | exclude: Picked 'Apply for Part D Extra Help' (a benefit), not help/contact. | rejected |
+| ssa-3 | Search button | **Search**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | confirmed |
+| ssa-4 | Apply for benefits | **Benefits**<br>`/menu`<br>header/nav | **Benefits**<br>`/menu`<br>header/nav | ok: The 'Benefits' menu. | confirmed |
+| ssa-5 | Find an office / location | **Find an office**<br>`/locator`<br>header/nav | **Find an office**<br>`/locator`<br>header/nav | ok | confirmed |
 
 ## target — https://www.target.com/
 
@@ -208,12 +208,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615023129/https://www.targ
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| target-1 | Sign in | **Sign in Account, sign in**<br>`/account`<br>header/nav | **Account Account, sign in**<br>`/account`<br>body | ok | proposed |
-| target-2 | Cart | **cart 0 items**<br>`/cart`<br>header/nav | **cart 0 items**<br>`/cart`<br>body | ok | proposed |
-| target-3 | Orders / track order | **Track Orders**<br>`/orders`<br>body | **Track Orders**<br>`/orders`<br>body | ok | proposed |
-| target-4 | Help / customer service | **Target Help**<br>`/help`<br>body | **Target Help**<br>`/help`<br>body | ok | proposed |
-| target-5 | Deals | **Deals Deals**<br>`/c/weekly-deals/-/N-4xw74`<br>header/nav | **Deals Deals**<br>`/c/weekly-deals/-/N-4xw74`<br>body | ok: 'Deals' → 'Top Deals', same category id in the link. | proposed |
-| target-6 | Search button | **search search**<br>`-`<br>header/nav | **search search**<br>`-`<br>body | ok | proposed |
+| target-1 | Sign in | **Sign in Account, sign in**<br>`/account`<br>header/nav | **Account Account, sign in**<br>`/account`<br>body | ok | confirmed |
+| target-2 | Cart | **cart 0 items**<br>`/cart`<br>header/nav | **cart 0 items**<br>`/cart`<br>body | ok | confirmed |
+| target-3 | Orders / track order | **Track Orders**<br>`/orders`<br>body | **Track Orders**<br>`/orders`<br>body | ok | confirmed |
+| target-4 | Help / customer service | **Target Help**<br>`/help`<br>body | **Target Help**<br>`/help`<br>body | ok | confirmed |
+| target-5 | Deals | **Deals Deals**<br>`/c/weekly-deals/-/N-4xw74`<br>header/nav | **Deals Deals**<br>`/c/weekly-deals/-/N-4xw74`<br>body | ok: 'Deals' → 'Top Deals', same category id in the link. | confirmed |
+| target-6 | Search button | **search search**<br>`-`<br>header/nav | **search search**<br>`-`<br>body | ok | confirmed |
 
 ## usps — https://www.usps.com/
 
@@ -221,11 +221,11 @@ Before: [2023-06-15](https://web.archive.org/web/20230615000651/https://www.usps
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| usps-1 | Sign in | **Sign In**<br>`/entreg/LoginAction_input`<br>header/nav | **Sign In**<br>`/entreg/LoginAction_input`<br>header/nav | ok | proposed |
-| usps-2 | Help / customer service | **Skip Help Links**<br>`/`<br>header/nav | **Skip Help Links**<br>`/`<br>header/nav | exclude: Picked a 'Skip Help Links' accessibility link. | proposed |
-| usps-3 | Search button | **Search**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | proposed |
-| usps-4 | Apply for benefits | _not found_ | _not found_ | skipped (not on before page) | proposed |
-| usps-5 | Find an office / location | **Find USPS Locations**<br>`/find-location.htm`<br>header/nav | **Find USPS Locations**<br>`/locations`<br>header/nav | ok | proposed |
+| usps-1 | Sign in | **Sign In**<br>`/entreg/LoginAction_input`<br>header/nav | **Sign In**<br>`/entreg/LoginAction_input`<br>header/nav | ok | confirmed |
+| usps-2 | Help / customer service | **Skip Help Links**<br>`/`<br>header/nav | **Skip Help Links**<br>`/`<br>header/nav | exclude: Picked a 'Skip Help Links' accessibility link. | rejected |
+| usps-3 | Search button | **Search**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | confirmed |
+| usps-4 | Apply for benefits | _not found_ | _not found_ | skipped (not on before page) | rejected |
+| usps-5 | Find an office / location | **Find USPS Locations**<br>`/find-location.htm`<br>header/nav | **Find USPS Locations**<br>`/locations`<br>header/nav | ok | confirmed |
 
 ## walgreens — https://www.walgreens.com/
 
@@ -233,12 +233,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615065341/https://www.walg
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| walgreens-1 | Sign in | **Sign in**<br>`-`<br>header/nav | **Sign in**<br>`-`<br>header/nav | ok | proposed |
-| walgreens-2 | Help / customer service | **Support Wraps**<br>`/store/c/support-wraps/ID=361173-tier3`<br>header/nav | **Customer Service**<br>`/topic/help/customerservicehelp/customer_service_help_main.jsp`<br>footer | exclude: Before picked a product ('Support Wraps'), not customer service. | proposed |
-| walgreens-3 | Search button | **Search**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | proposed |
-| walgreens-4 | Refill prescriptions | **Refill with Rx Number**<br>`/rx-checkout/guest-express-refill`<br>header/nav | **Refill with Rx Number**<br>`/rx-checkout/guest-express-refill`<br>header/nav | ok | proposed |
-| walgreens-5 | Find a pharmacy / store | **Find a Store**<br>`/storelocator/find.jsp`<br>header/nav | **Find a Store**<br>`/storelocator/find.jsp`<br>header/nav | ok | proposed |
-| walgreens-6 | Vaccines / appointments | **Vaccines**<br>`void(0);`<br>header/nav | **Vaccinations**<br>`/topic/pharmacy/immunization-services-appointments.jsp`<br>header/nav | ok: Menu button 'Vaccines' → link 'Vaccinations'. | proposed |
+| walgreens-1 | Sign in | **Sign in**<br>`-`<br>header/nav | **Sign in**<br>`-`<br>header/nav | ok | confirmed |
+| walgreens-2 | Help / customer service | **Support Wraps**<br>`/store/c/support-wraps/ID=361173-tier3`<br>header/nav | **Customer Service**<br>`/topic/help/customerservicehelp/customer_service_help_main.jsp`<br>footer | exclude: Before picked a product ('Support Wraps'), not customer service. | rejected |
+| walgreens-3 | Search button | **Search**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | confirmed |
+| walgreens-4 | Refill prescriptions | **Refill with Rx Number**<br>`/rx-checkout/guest-express-refill`<br>header/nav | **Refill with Rx Number**<br>`/rx-checkout/guest-express-refill`<br>header/nav | ok | confirmed |
+| walgreens-5 | Find a pharmacy / store | **Find a Store**<br>`/storelocator/find.jsp`<br>header/nav | **Find a Store**<br>`/storelocator/find.jsp`<br>header/nav | ok | confirmed |
+| walgreens-6 | Vaccines / appointments | **Vaccines**<br>`void(0);`<br>header/nav | **Vaccinations**<br>`/topic/pharmacy/immunization-services-appointments.jsp`<br>header/nav | ok: Menu button 'Vaccines' → link 'Vaccinations'. | confirmed |
 
 ## walmart — https://www.walmart.com/
 
@@ -246,12 +246,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615004236/https://www.walm
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| walmart-1 | Sign in | **Sign In**<br>`-`<br>header/nav | **Sign in or create account**<br>`-`<br>header/nav | ok: 'Sign In' → 'Sign in or create account'. | proposed |
-| walmart-2 | Cart | **$0.00 Cart contains 0 items**<br>`-`<br>header/nav | **$0.00 Cart contains 0 items Total Amount $0.00**<br>`-`<br>header/nav | ok | proposed |
-| walmart-3 | Orders / track order | **Purchase History**<br>`/orders`<br>header/nav | **Purchase History**<br>`/orders`<br>header/nav | ok | proposed |
-| walmart-4 | Help / customer service | **Help**<br>`/help`<br>footer | **Help**<br>`/help`<br>footer | ok | proposed |
-| walmart-5 | Deals | **Shop now Shop now**<br>`/shop/deals/flash-picks`<br>body | **Shop now Shop now**<br>`/shop/deals/pets`<br>body | exclude: Proposer picked a 'Shop now' promo button, not the Deals link. | proposed |
-| walmart-6 | Search button | **Search icon**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | proposed |
+| walmart-1 | Sign in | **Sign In**<br>`-`<br>header/nav | **Sign in or create account**<br>`-`<br>header/nav | ok: 'Sign In' → 'Sign in or create account'. | confirmed |
+| walmart-2 | Cart | **$0.00 Cart contains 0 items**<br>`-`<br>header/nav | **$0.00 Cart contains 0 items Total Amount $0.00**<br>`-`<br>header/nav | ok | confirmed |
+| walmart-3 | Orders / track order | **Purchase History**<br>`/orders`<br>header/nav | **Purchase History**<br>`/orders`<br>header/nav | ok | confirmed |
+| walmart-4 | Help / customer service | **Help**<br>`/help`<br>footer | **Help**<br>`/help`<br>footer | ok | confirmed |
+| walmart-5 | Deals | **Shop now Shop now**<br>`/shop/deals/flash-picks`<br>body | **Shop now Shop now**<br>`/shop/deals/pets`<br>body | exclude: Proposer picked a 'Shop now' promo button, not the Deals link. | rejected |
+| walmart-6 | Search button | **Search icon**<br>`-`<br>header/nav | **Search**<br>`-`<br>header/nav | ok | confirmed |
 
 ## wayfair — https://www.wayfair.com/
 
@@ -259,12 +259,12 @@ Before: [2023-06-15](https://web.archive.org/web/20230615114051/https://www.wayf
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| wayfair-1 | Sign in | **My AccountSign In**<br>`/v/account/authentication/login`<br>header/nav | **Sign In**<br>`/v/account/authentication/login`<br>header/nav | ok | proposed |
-| wayfair-2 | Cart | **Cart**<br>`/v/checkout/basket/show`<br>header/nav | **Cart**<br>`/v/checkout/basket/show`<br>header/nav | ok | proposed |
-| wayfair-3 | Orders / track order | _not found_ | _not found_ | skipped (not on before page) | proposed |
-| wayfair-4 | Help / customer service | _not found_ | _not found_ | skipped (not on before page) | proposed |
-| wayfair-5 | Deals | _not found_ | _not found_ | skipped (not on before page) | proposed |
-| wayfair-6 | Search button | _not found_ | **Search**<br>`-`<br>header/nav | skipped (not on before page) | proposed |
+| wayfair-1 | Sign in | **My AccountSign In**<br>`/v/account/authentication/login`<br>header/nav | **Sign In**<br>`/v/account/authentication/login`<br>header/nav | ok | confirmed |
+| wayfair-2 | Cart | **Cart**<br>`/v/checkout/basket/show`<br>header/nav | **Cart**<br>`/v/checkout/basket/show`<br>header/nav | ok | confirmed |
+| wayfair-3 | Orders / track order | _not found_ | _not found_ | skipped (not on before page) | rejected |
+| wayfair-4 | Help / customer service | _not found_ | _not found_ | skipped (not on before page) | rejected |
+| wayfair-5 | Deals | _not found_ | _not found_ | skipped (not on before page) | rejected |
+| wayfair-6 | Search button | _not found_ | **Search**<br>`-`<br>header/nav | skipped (not on before page) | rejected |
 
 ## wellsfargo — https://www.wellsfargo.com/
 
@@ -272,8 +272,8 @@ Before: [2023-06-15](https://web.archive.org/web/20230615000418/https://www.well
 
 | # | Feature | Before | After | Claude's check | Status |
 | --- | --- | --- | --- | --- | --- |
-| wellsfargo-1 | Sign in | **Sign On**<br>`/auth/login/present`<br>header/nav | **Sign On**<br>`/auth/login/present`<br>header/nav | ok | proposed |
-| wellsfargo-2 | Help / customer service | **Help**<br>`/`<br>header/nav | **Help**<br>`/`<br>header/nav | ok | proposed |
-| wellsfargo-3 | Search button | **Go**<br>`-`<br>body | **Go**<br>`-`<br>body | ok | proposed |
-| wellsfargo-4 | Open an account | **Buy a home Get started on your homeownership journey**<br>`/mortgage/buying-a-house`<br>body | **Buy a home Get started on your homeownership journey**<br>`/mortgage/buying-a-house`<br>body | exclude: Picked a mortgage 'Get started' promo, not opening an account. | proposed |
-| wellsfargo-5 | Find an ATM / branch | **ATMs/Locations**<br>`/locator`<br>header/nav | **ATMs/Locations**<br>`/locator`<br>header/nav | ok | proposed |
+| wellsfargo-1 | Sign in | **Sign On**<br>`/auth/login/present`<br>header/nav | **Sign On**<br>`/auth/login/present`<br>header/nav | ok | confirmed |
+| wellsfargo-2 | Help / customer service | **Help**<br>`/`<br>header/nav | **Help**<br>`/`<br>header/nav | ok | confirmed |
+| wellsfargo-3 | Search button | **Go**<br>`-`<br>body | **Go**<br>`-`<br>body | ok | confirmed |
+| wellsfargo-4 | Open an account | **Buy a home Get started on your homeownership journey**<br>`/mortgage/buying-a-house`<br>body | **Buy a home Get started on your homeownership journey**<br>`/mortgage/buying-a-house`<br>body | exclude: Picked a mortgage 'Get started' promo, not opening an account. | rejected |
+| wellsfargo-5 | Find an ATM / branch | **ATMs/Locations**<br>`/locator`<br>header/nav | **ATMs/Locations**<br>`/locator`<br>header/nav | ok | confirmed |
