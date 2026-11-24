@@ -3,6 +3,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Page } from "@playwright/test";
 import { expect, test } from "./fixtures.ts";
+import { ALL_ON, adaptStyled, setAdapt } from "./adapt.ts";
 import { goto, openShelf, remember, tap, type Shelf } from "./panel.ts";
 
 /**
@@ -15,6 +16,10 @@ import { goto, openShelf, remember, tap, type Shelf } from "./panel.ts";
  * - wrong: the ring is on anything else, or on anything when the feature is gone. Must be 0.
  * - not found: Anchor asked although the feature exists. Safe (Hard Rule 5), counted.
  * - absent: Anchor asked and the feature really is gone.
+ *
+ * M4: the same sweep again with Adapt at its largest (page zoom, spacing, bigger targets, calm,
+ * clutter hidden), with the buttons remembered before Adapt was on. Every outcome must be the
+ * same, and the ring must really sit on the element: the point at its centre hits it.
  */
 
 const SITES = resolve(dirname(fileURLToPath(import.meta.url)), "../../../fixtures/sites");
@@ -54,8 +59,12 @@ async function judge(site: Page, selectors: string[]) {
   return site.evaluate((selectors) => {
     const root = document.querySelector("[data-anchor='']")?.shadowRoot;
     const ring = root?.querySelector<HTMLElement>(".ring:not(.pick)");
-    if (!ring || ring.hidden) return { ring: false, on: false, dashed: false };
+    if (!ring || ring.hidden) return { ring: false, on: false, dashed: false, hit: false };
     const box = ring.getBoundingClientRect();
+    const centre = document.elementFromPoint(
+      (box.left + box.right) / 2,
+      (box.top + box.bottom) / 2,
+    );
     const surrounds = (el: Element) => {
       const r = el.getBoundingClientRect();
       const cx = (r.left + r.right) / 2;
@@ -70,15 +79,23 @@ async function judge(site: Page, selectors: string[]) {
         box.height <= r.height + 20
       );
     };
+    let hit = false;
     const on = selectors.some((sel) =>
       [...document.querySelectorAll(sel)].some((el) => {
-        if (surrounds(el)) return true;
+        if (surrounds(el)) {
+          hit ||= centre !== null && (el === centre || el.contains(centre));
+          return true;
+        }
         // Hidden in a closed menu: the ring is on the menu's summary.
         const summary = el.closest("details:not([open])")?.querySelector(":scope > summary");
-        return summary ? surrounds(summary) : false;
+        if (summary && surrounds(summary)) {
+          hit ||= centre !== null && (summary === centre || summary.contains(centre));
+          return true;
+        }
+        return false;
       }),
     );
-    return { ring: true, on, dashed: ring.classList.contains("check") };
+    return { ring: true, on, dashed: ring.classList.contains("check"), hit };
   }, selectors);
 }
 
@@ -99,6 +116,8 @@ async function check(s: Shelf, page: string, f: Feature, expected: string[], sig
     expect([SURE, FAIRLY, IN_MENU], `${page} ${f.id}`).toContain(message);
     if (message === SURE) expect(j.dashed, `${page} ${f.id}`).toBe(false);
     if (message === FAIRLY) expect(j.dashed, `${page} ${f.id}`).toBe(true);
+    // On pages without pop-ups, nothing covers the element: the ring's centre is on it.
+    if (j.on && (page === "v1" || page === "v2")) expect(j.hit, `${page} ${f.id} hit`).toBe(true);
   } else {
     outcome = expected.length ? "not-found" : "absent";
     expect(message, `${page} ${f.id}`).toBe(signedOut ? SIGNED_OUT : CHANGED);
@@ -106,44 +125,49 @@ async function check(s: Shelf, page: string, f: Feature, expected: string[], sig
   return { page, feature: f.id, outcome, message };
 }
 
+async function sweep(s: Shelf, site: Site, base: string): Promise<Row[]> {
+  const rows: Row[] = [];
+  // v1 itself: everything is found where it was remembered.
+  for (const f of site.features) rows.push(await check(s, "v1", f, [f.v1], false));
+
+  // v2: redesigned.
+  await goto(s, `${base}/${site.features[0]?.v2.page ?? "v2/home.html"}`);
+  for (const f of site.features) rows.push(await check(s, "v2", f, f.v2.selectors, false));
+
+  // Moved to another page: found there.
+  for (const f of site.features) {
+    if (!f.v2.elsewhere) continue;
+    await goto(s, `${base}/${f.v2.elsewhere.page}`);
+    rows.push(await check(s, "v2-elsewhere", f, f.v2.elsewhere.selectors, false));
+  }
+
+  // State variants are not redesigns.
+  for (const st of site.states) {
+    await goto(s, `${base}/${st.page}`);
+    for (const f of site.features) {
+      const expected = st.features?.[f.id] ?? (st.expect === "normal" ? [f.v1] : []);
+      rows.push(await check(s, st.kind, f, expected, st.expect === "logged-out"));
+    }
+  }
+  return rows;
+}
+
 for (const site of sites) {
-  test(`fixture sweep: ${site.id}`, async ({
+  test(`fixture sweep: ${site.id}, then again with Adapt at its largest`, async ({
     context,
     serviceWorker: sw,
     extensionId,
     fixtureOrigin,
   }) => {
-    test.setTimeout(240_000);
+    test.setTimeout(400_000);
     const base = `${fixtureOrigin}/sites/${site.id}`;
     const tab = await context.newPage();
     await tab.goto(`${base}/v1/home.html`);
     const s = await openShelf(context, sw, extensionId, tab);
     for (const f of site.features) await remember(s, f.v1, f.label);
+    await goto(s, `${base}/v1/home.html`);
 
-    const rows: Row[] = [];
-    // v1 itself: everything is found where it was remembered.
-    for (const f of site.features) rows.push(await check(s, "v1", f, [f.v1], false));
-
-    // v2: redesigned.
-    await goto(s, `${base}/${site.features[0]?.v2.page ?? "v2/home.html"}`);
-    for (const f of site.features) rows.push(await check(s, "v2", f, f.v2.selectors, false));
-
-    // Moved to another page: found there.
-    for (const f of site.features) {
-      if (!f.v2.elsewhere) continue;
-      await goto(s, `${base}/${f.v2.elsewhere.page}`);
-      rows.push(await check(s, "v2-elsewhere", f, f.v2.elsewhere.selectors, false));
-    }
-
-    // State variants are not redesigns.
-    for (const st of site.states) {
-      await goto(s, `${base}/${st.page}`);
-      for (const f of site.features) {
-        const expected = st.features?.[f.id] ?? (st.expect === "normal" ? [f.v1] : []);
-        rows.push(await check(s, st.kind, f, expected, st.expect === "logged-out"));
-      }
-    }
-
+    const rows = await sweep(s, site, base);
     const summary = rows.reduce<Record<string, Record<Outcome, number>>>((acc, r) => {
       const counts = (acc[r.page] ??= { correct: 0, wrong: 0, "not-found": 0, absent: 0 });
       counts[r.outcome]++;
@@ -161,5 +185,15 @@ for (const site of sites) {
       (r) => r.page !== "v2" && r.page !== "v2-elsewhere" && r.outcome === "not-found",
     );
     expect(mustFind).toEqual([]);
+
+    // Adapt at its largest, on the same buttons.
+    await setAdapt(sw, ALL_ON);
+    await goto(s, `${base}/v1/home.html`);
+    await adaptStyled(tab);
+    const adapted = await sweep(s, site, base);
+    expect(adapted.filter((r) => r.outcome === "wrong")).toEqual([]);
+    expect(adapted.map((r) => `${r.page} ${r.feature} ${r.outcome}`)).toEqual(
+      rows.map((r) => `${r.page} ${r.feature} ${r.outcome}`),
+    );
   });
 }
