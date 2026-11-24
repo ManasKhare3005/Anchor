@@ -45,12 +45,41 @@ decision records are in `docs/decisions.md`.
   - results: unit 74 + 138 + 81; e2e 43/43 in Chromium and 43/43 in Edge
   - untested / gaps: a recording or guide in progress lives in the side panel, so closing the panel loses it; contenteditable fields aren't recorded; `navigate` steps aren't recorded; detours are found by dialog role only (an overlay without a dialog role isn't named); routes across tabs or sites; M2 button picks can still keep text a page repeats next to the button (scrubbed for money, long numbers, emails and greeting names only)
 
+- **M4: Adapt (no AI)** (2026-11-24). Plan: `docs/plan-M4.md`.
+  - store schema v3: the setup answers (`adapt`, null until answered); v1 and v2 migrate on read
+  - first-run setup in the panel: three plain questions, one at a time (text hard to read: No / A little / A lot; small buttons; moving or busy pages). The answers show on the page straight away; See it before / See it after; Keep, Not now, Start over. The helper can ask the questions again. No settings page.
+  - comfort: page size 125% / 150% (CSS zoom on body), text spacing, contrast raised to 4.5:1 (keeping the hue), 44px targets, calm motion, clutter hiding (blocks the site names as ads / sponsors / promos / newsletters, and ad-sized third-party frames)
+  - never-hide list (Hard Rule 2): digits, money, dates, legal words, alerts, dialogs, live regions, consent and session wording, form fields, the person's own buttons and task steps
+  - the person's own names beside the site's buttons, only on sure matches, in their own overlay; the site's label is unchanged
+  - Show original (panel or on-page note) takes off everything; "Show my changes again" brings it back; the next page is adapted again by itself
+  - content script at `document_start`, so the stylesheet lands before the first paint
+  - results:
+    - on all 62 fixture pages with everything on, every fact keeps its text and stays visible, and Show original restores the page DOM exactly
+    - the M2 sweep with Adapt at its largest gives the same outcomes, 0 wrong, and the ring's centre hits the element
+    - unit 107 + 138 + 81; e2e 54/54 in Chromium and Edge
+  - **two bugs the tests caught:**
+    - the on-page note's Show original left Adapt and names on the page (Hard Rule 4)
+    - Chrome left `style=""` after restoring inline styles. Fixed by writing the attribute, then removing it.
+  - untested / gaps:
+    - videos, GIFs and script-driven carousels keep moving: CSS can't stop them, and pausing them from script changes the page
+    - contrast skips text over images or gradients, and text inside dialogs and alerts
+    - the contrast pass reads every text element's style, which may be slow on very large pages
+    - name tags aren't linked to their button for screen readers (they're in Anchor's overlay, with a label naming the button)
+    - clutter only covers what the site names as clutter
+    - text size uses CSS zoom, which works in Chrome and Edge (other browsers aren't targeted yet)
+
 ## In progress
 
-- Nothing. M4 (Adapt) waits for the go-ahead.
+- Nothing. M5 (Helper tools) waits for the go-ahead.
 
 ## Decisions made
 
+- 2026-11-24: Text size is CSS `zoom` on `body`, not root font size (most sites size text in px, so it would do nothing) and not browser zoom (that's the person's own tool, Hard Rule 9). Anchor's overlays sit outside `body`, and Chrome 128+ reports zoom-scaled rects, so the ring stays on target (checked in e2e).
+- 2026-11-24: The contrast fix may recolour a fact (e.g. a faint price), keeping its hue. Its text and visibility never change. A fact you can't read isn't "shown"; Hard Rule 2 is checked on text and visibility.
+- 2026-11-24: Clutter is only what the site itself names as clutter, and never anything holding a fact. Hiding too little is clutter; hiding too much could hide a fact.
+- 2026-11-24: Calm motion uses 0.01ms (not 0s) animations and transitions, so sites waiting for `transitionend` keep working.
+- 2026-11-24: Names show regardless of the setup answers (they're the person's own words), and only for sure matches (Hard Rule 5).
+- 2026-11-24: E2E tests of the shelf and tasks start with setup answered "No" to everything; setup tests start as a fresh install (`firstRun` fixture option).
 - 2026-11-24: Site state counts a feature as "still on the page" from score 0.35 (`PRESENCE_FLOOR`), separate from the fairly-sure bar (now 0.40). Raising the pointing bar had turned the riverbank redesign into "unknown"; site state never points at anything, so the lower floor carries no wrong-match risk.
 - 2026-11-24: Labels with no feature on the before page are marked rejected (nothing to find), so the report no longer counts them as unreviewed.
 - 2026-11-22: Once a field has been filled in during a recording, later steps keep no neighbor text. Review pages repeat what was typed right next to the button (found by the e2e marker test). The matcher skips an empty neighbor signal, so only that weak signal is lost.

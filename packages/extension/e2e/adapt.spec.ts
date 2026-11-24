@@ -182,7 +182,8 @@ test("Show original stays until the changes are asked for again", async ({
   // "Show my changes again".
   await sendToTab(sw, tabId, { type: "anchor:adapt-show", settings: null });
   await adaptStyled(site);
-  expect(await site.evaluate(() => getComputedStyle(document.body).zoom)).toBe("1.25");
+  // Polled: under load the storage change can reach the page after the tap.
+  await expect.poll(() => site.evaluate(() => getComputedStyle(document.body).zoom)).toBe("1.25");
 });
 
 test("high-contrast mode: Anchor leaves the colours to the person's own setting", async ({
