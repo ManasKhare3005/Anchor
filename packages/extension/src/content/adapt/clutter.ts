@@ -60,13 +60,13 @@ function namedClutter(el: Element): boolean {
 function adFrame(el: Element): boolean {
   if (el.tagName !== "IFRAME") return false;
   const src = el.getAttribute("src") ?? "";
-  let thirdParty = false;
+  let origin: string;
   try {
-    thirdParty = new URL(src, el.ownerDocument.baseURI).origin !== el.ownerDocument.location.origin;
+    origin = new URL(src, el.ownerDocument.baseURI).origin;
   } catch {
     return false;
   }
-  if (!thirdParty) return false;
+  if (origin === el.ownerDocument.location.origin) return false;
   const r = el.getBoundingClientRect();
   const w = Number(el.getAttribute("width")) || Math.round(r.width);
   const h = Number(el.getAttribute("height")) || Math.round(r.height);
