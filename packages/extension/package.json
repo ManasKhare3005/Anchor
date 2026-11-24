@@ -12,10 +12,12 @@
     "test:e2e:edge": "wxt build && node e2e/run-edge.mjs"
   },
   "devDependencies": {
+    "@anchor/matcher": "0.0.0",
     "@playwright/test": "1.65.1",
+    "@types/jsdom": "^30.0.0",
+    "jsdom": "^31.0.1",
     "vitest": "5.1.0",
-    "wxt": "0.21.5",
-    "@anchor/matcher": "0.0.0"
+    "wxt": "0.21.5"
   },
   "dependencies": {
     "zod": "4.6.7"
