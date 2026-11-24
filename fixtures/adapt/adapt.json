@@ -1,0 +1,31 @@
+{
+  "$comment": "Test ground truth for the M4 Adapt fixture (not read by Anchor).",
+  "page": "adapt/index.html",
+  "facts": [
+    "#asof",
+    "#amount-1",
+    "#amount-2",
+    "#amount-total",
+    "#alert",
+    "#legal",
+    "#session-warning",
+    "#cookie-notice",
+    "#promo-price"
+  ],
+  "clutter": ["#ad-1", "#ad-2", "#ad-frame"],
+  "stays": [
+    "#newsletter",
+    "#promo-price",
+    "#cookie-notice",
+    "#session-warning",
+    "header",
+    "main",
+    "h1"
+  ],
+  "lowContrast": ["#faint", "#faint-dark"],
+  "unknownBackground": "#hero",
+  "smallTargets": ["#tiny-btn", "#tiny-link", "#nav-bill"],
+  "checkbox": "#check",
+  "animated": "#spinner",
+  "transition": "#fade"
+}

@@ -82,6 +82,11 @@ export const ContentRequestSchema = z.discriminatedUnion("type", [
     pageMates: z.array(FingerprintSchema),
   }),
   z.object({ type: z.literal("anchor:guide-stop") }),
+  /**
+   * Show these Adapt settings on this page now, without saving (setup's before-and-after, "Show
+   * my changes again"). null: the saved settings.
+   */
+  z.object({ type: z.literal("anchor:adapt-show"), settings: AdaptSettingsSchema.nullable() }),
 ]);
 
 export type ContentRequest = z.infer<typeof ContentRequestSchema>;

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Northgate Utilities (fictional) — My account</title>
+    <style>
+      body { font: 15px/1.3 Arial, sans-serif; margin: 0; color: #222; background: #fff; }
+      header { display: flex; gap: 12px; padding: 8px 16px; background: #0d3b66; }
+      header a { color: #fff; display: block; padding: 2px 4px; font-size: 13px; }
+      main { padding: 16px; max-width: 900px; }
+      .faint { color: #b8b8b8; }
+      .faint-dark { background: #1b2a41; color: #3b4d6b; padding: 8px; }
+      .hero { background: linear-gradient(#ffeb99, #fff); color: #c8c8c8; padding: 8px; }
+      .tiny { font-size: 11px; padding: 0 2px; }
+      .spinner { width: 20px; height: 20px; border: 3px solid #0d3b66; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
+      .fade { transition: opacity 2s ease; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      .ad-slot, .sponsored, .promo, .newsletter, .promo-banner { border: 1px dashed #999; margin: 8px 0; padding: 8px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="#bill" id="nav-bill">Bill</a>
+      <a href="#usage" id="nav-usage">Usage</a>
+      <a href="#help" id="nav-help">Help</a>
+    </header>
+    <main>
+      <h1>My account</h1>
+      <div class="promo-banner" id="session-warning">You will be signed out soon unless you stay active.</div>
+      <div class="promo" id="cookie-notice">We use cookies to keep you signed in. <button type="button" class="tiny">OK</button></div>
+      <p class="asof" id="asof">Bill dated November 3, 2026</p>
+      <table id="bill">
+        <tr><td>Electricity</td><td class="amount" id="amount-1">$84.20</td></tr>
+        <tr><td>Gas</td><td class="amount" id="amount-2">$31.07</td></tr>
+        <tr><td>Total due</td><td class="amount" id="amount-total">$115.27</td></tr>
+      </table>
+      <div role="alert" id="alert">A payment reminder: your bill is due soon.</div>
+      <p class="faint" id="faint">Our phone lines are quieter in the afternoon.</p>
+      <p class="faint-dark" id="faint-dark">Paperless billing saves paper.</p>
+      <p class="hero" id="hero">Ways to save energy this winter.</p>
+      <div class="ad-slot" id="ad-1"><a href="#shop">Shop smart thermostats and more</a></div>
+      <aside class="sponsored" id="ad-2">Sponsored: try the Northgate app</aside>
+      <div class="promo" id="promo-price">Save $5 a month with autopay</div>
+      <div class="newsletter" id="newsletter"><label>Get energy tips <input type="email" aria-label="Email" /></label></div>
+      <iframe id="ad-frame" src="about:blank" width="300" height="250" title="Advertisement"></iframe>
+      <p>
+        <button type="button" class="tiny" id="tiny-btn">Print</button>
+        <a href="#usage" class="tiny" id="tiny-link" style="display: inline-block">Usage</a>
+        <label><input type="checkbox" id="check" /> Email me my bill</label>
+      </p>
+      <div class="spinner" id="spinner"></div>
+      <p class="fade" id="fade">Thanks for being a customer.</p>
+      <p class="legal" id="legal">Northgate Utilities is a fictional company used for testing. Rates are subject to change; see the terms of service and privacy policy.</p>
+    </main>
+  </body>
+</html>
