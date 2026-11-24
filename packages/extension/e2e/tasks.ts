@@ -66,7 +66,7 @@ export async function recorderArmed(site: Page): Promise<void> {
       site.evaluate(
         () =>
           document
-            .querySelector("[data-anchor]")
+            .querySelector("[data-anchor='']")
             ?.shadowRoot?.querySelector(".banner")
             ?.textContent?.includes("writing down") ?? false,
       ),

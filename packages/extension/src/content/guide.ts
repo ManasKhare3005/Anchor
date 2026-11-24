@@ -3,6 +3,7 @@ import type { GuideReply, PageEvent } from "../messages.ts";
 import type { Step } from "../route.ts";
 import { targetOf } from "./candidate.ts";
 import { describeDetour, findDetour } from "./detour.ts";
+import { adaptPause } from "./adapt/run.ts";
 import { removeOverlay } from "./overlay.ts";
 import { rematchOf, resultFor } from "./point.ts";
 import { drawRing, shown, type RingHandle } from "./ring.ts";
@@ -143,6 +144,7 @@ export function guide(doc: Document, req: GuideRequest, emit: (e: PageEvent) => 
       onShowOriginal: () => {
         stopGuiding();
         removeOverlay();
+        adaptPause();
       },
       rematch: () => (fp && onItsPage(doc, req.pageMates) ? rematchOf(doc, fp) : null),
       onLost: () => {

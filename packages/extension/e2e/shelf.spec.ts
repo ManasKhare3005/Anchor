@@ -1,5 +1,5 @@
 import { expect, test } from "./fixtures.ts";
-import { anchorNodeCount } from "./helpers.ts";
+import { anchorNodeCount, uiHostCount } from "./helpers.ts";
 import {
   goto,
   openHelper,
@@ -41,8 +41,9 @@ test("remember buttons, same order every time, survives reload, remove", async (
   await openHelper(s);
   await s.panel.getByRole("button", { name: "Remove View statements" }).click();
   await expect.poll(() => shelfNames(s)).toEqual(["Pay the light bill", "Cash machine"]);
-  // Picking left nothing on the page and the site saw no click.
-  expect(await anchorNodeCount(site)).toBe(0);
+  // Picking left nothing on the page and the site saw no click. (The name tag for "Pay the light
+  // bill" beside the site's button is meant to be there.)
+  expect(await uiHostCount(site)).toBe(0);
   expect(site.url()).toBe(`${fixtureOrigin}${RB}/v1/home.html`);
 });
 
@@ -170,7 +171,7 @@ test("Show original removes every Anchor change (Hard Rule 4)", async ({
   const s = await openShelf(context, sw, extensionId, site);
   await remember(s, ".tile--pay", "Pay a bill");
   await tap(s, "Pay a bill");
-  expect(await anchorNodeCount(site)).toBe(1);
+  expect(await uiHostCount(site)).toBe(1);
 
   await s.panel.getByRole("button", { name: "Show original" }).click();
   await expect(status(s)).toHaveText("The page is back to how the website shows it.");

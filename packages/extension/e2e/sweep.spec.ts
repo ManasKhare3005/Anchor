@@ -52,7 +52,7 @@ type Outcome = "correct" | "wrong" | "not-found" | "absent";
 /** Where the ring is, relative to the expected elements. Runs in the site page. */
 async function judge(site: Page, selectors: string[]) {
   return site.evaluate((selectors) => {
-    const root = document.querySelector("[data-anchor]")?.shadowRoot;
+    const root = document.querySelector("[data-anchor='']")?.shadowRoot;
     const ring = root?.querySelector<HTMLElement>(".ring:not(.pick)");
     if (!ring || ring.hidden) return { ring: false, on: false, dashed: false };
     const box = ring.getBoundingClientRect();

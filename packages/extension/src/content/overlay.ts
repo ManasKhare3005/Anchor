@@ -72,17 +72,25 @@ export interface Overlay {
 
 let current: Overlay | null = null;
 
-export function getOverlay(doc: Document): Overlay {
-  if (current && current.host.isConnected) return current;
+/**
+ * A new Shadow DOM host marked `data-anchor` (value `kind`), fixed over the viewport, letting
+ * clicks through. Appended to <html>, outside <body>, so Adapt's page zoom doesn't scale it.
+ */
+export function createHost(doc: Document, kind: string, css: string): Overlay {
   const host = doc.createElement("div");
-  host.setAttribute(ANCHOR_HOST_ATTR, "");
+  host.setAttribute(ANCHOR_HOST_ATTR, kind);
   host.setAttribute("style", HOST_STYLE);
   const root = host.attachShadow({ mode: "open" });
   const style = doc.createElement("style");
-  style.textContent = CSS;
+  style.textContent = css;
   root.append(style);
   doc.documentElement.append(host);
-  current = { host, root };
+  return { host, root };
+}
+
+export function getOverlay(doc: Document): Overlay {
+  if (current && current.host.isConnected) return current;
+  current = createHost(doc, "", CSS);
   return current;
 }
 

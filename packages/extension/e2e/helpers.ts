@@ -65,6 +65,12 @@ export async function siteHits(page: Page): Promise<string[]> {
   return page.evaluate(() => (window as unknown as { hits: string[] }).hits);
 }
 
+/** Every node Anchor added to the page (UI overlay, name tags, Adapt's stylesheet). */
 export async function anchorNodeCount(page: Page): Promise<number> {
   return page.evaluate(() => document.querySelectorAll("[data-anchor]").length);
+}
+
+/** Anchor's UI overlay (ring, notes, banners), without the person's name tags. */
+export async function uiHostCount(page: Page): Promise<number> {
+  return page.evaluate(() => document.querySelectorAll("[data-anchor='']").length);
 }

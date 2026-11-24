@@ -1,5 +1,6 @@
 import { classifySite, match, type Fingerprint, type MatchResult } from "@anchor/matcher";
 import type { FindReply } from "../messages.ts";
+import { adaptPause } from "./adapt/run.ts";
 import { removeOverlay } from "./overlay.ts";
 import { drawRing, shown, type RingHandle } from "./ring.ts";
 
@@ -63,7 +64,11 @@ export function point(doc: Document, fp: Fingerprint, siteButtons: Fingerprint[]
   active = drawRing(doc, target, {
     tier,
     noteFor: (inMenu) => (inMenu ? NOTE.inMenu : NOTE[tier]),
-    onShowOriginal: clear,
+    // Hard Rule 4: every Anchor change goes, Adapt and the person's names too.
+    onShowOriginal: () => {
+      clear();
+      adaptPause();
+    },
     rematch: () => rematchOf(doc, fp),
     onLost: clear,
   });

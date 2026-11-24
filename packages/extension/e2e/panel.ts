@@ -64,7 +64,7 @@ export async function tap(s: Shelf, name: string): Promise<string> {
 /** Ring drawn by Anchor on the site page, or null. Reads the open shadow root. */
 export async function ring(site: Page) {
   return site.evaluate(() => {
-    const root = document.querySelector("[data-anchor]")?.shadowRoot;
+    const root = document.querySelector("[data-anchor='']")?.shadowRoot;
     const el = root?.querySelector<HTMLElement>(".ring:not(.pick)");
     if (!el || el.hidden) return null;
     const r = el.getBoundingClientRect();
