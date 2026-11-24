@@ -38,7 +38,7 @@ for (const t of taskSites) {
     for (const v of typedValues) expect(raw, `stored "${v}"`).not.toContain(v);
 
     const store = JSON.parse(raw) as { anchor: { schemaVersion: number; routes: StoredRoute[] } };
-    expect(store.anchor.schemaVersion).toBe(2);
+    expect(store.anchor.schemaVersion).toBe(3);
     const [route] = store.anchor.routes;
     expect(route?.name).toBe(t.task);
     expect(route?.site).toBe("localhost");

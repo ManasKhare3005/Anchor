@@ -8,6 +8,7 @@ import {
   removeButton,
   removeRoute,
   renameButton,
+  setAdapt,
   type Store,
 } from "./store.ts";
 
@@ -67,6 +68,8 @@ export function createWriter(area: StorageArea, extensionId: string, extensionOr
             return addRoute(s, r.route);
           case "anchor:shelf-route-remove":
             return removeRoute(s, r.id);
+          case "anchor:shelf-adapt-set":
+            return setAdapt(s, r.settings);
         }
       });
     const result = queue.then(run, run);

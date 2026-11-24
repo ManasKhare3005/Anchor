@@ -1,5 +1,6 @@
 import { FingerprintSchema, type Fingerprint } from "@anchor/matcher";
 import { z } from "zod";
+import { AdaptSettingsSchema, type AdaptSettings } from "./adapt.ts";
 import { RouteSchema, type Route } from "./route.ts";
 
 /**
@@ -11,15 +12,24 @@ import { RouteSchema, type Route } from "./route.ts";
  */
 
 export const STORE_KEY = "anchor";
-export const STORE_VERSION = 2;
+export const STORE_VERSION = 3;
 
 export const StoreSchema = z.object({
   schemaVersion: z.literal(STORE_VERSION),
   buttons: z.array(FingerprintSchema),
   routes: z.array(RouteSchema),
+  /** The person's setup answers (M4). null: setup not answered yet. */
+  adapt: AdaptSettingsSchema.nullable(),
 });
 
-/** Version 1 (M2): buttons only. Migrated on read; the next write stores version 2. */
+/** Version 2 (M3): buttons and routes. Migrated on read; the next write stores version 3. */
+const StoreV2Schema = z.object({
+  schemaVersion: z.literal(2),
+  buttons: z.array(FingerprintSchema),
+  routes: z.array(RouteSchema),
+});
+
+/** Version 1 (M2): buttons only. Migrated on read; the next write stores version 3. */
 const StoreV1Schema = z.object({
   schemaVersion: z.literal(1),
   buttons: z.array(FingerprintSchema),
@@ -30,7 +40,7 @@ export type Store = z.infer<typeof StoreSchema>;
 export const MAX_NAME_LENGTH = 60;
 
 export function emptyStore(): Store {
-  return { schemaVersion: STORE_VERSION, buttons: [], routes: [] };
+  return { schemaVersion: STORE_VERSION, buttons: [], routes: [], adapt: null };
 }
 
 export type Parsed = { ok: true; store: Store } | { ok: false; error: string };
@@ -43,6 +53,8 @@ export function parseStore(raw: unknown): Parsed {
   if (raw === undefined) return { ok: true, store: emptyStore() };
   const r = StoreSchema.safeParse(raw);
   if (r.success) return { ok: true, store: r.data };
+  const v2 = StoreV2Schema.safeParse(raw);
+  if (v2.success) return { ok: true, store: { ...emptyStore(), ...v2.data, schemaVersion: 3 } };
   const v1 = StoreV1Schema.safeParse(raw);
   if (v1.success) return { ok: true, store: { ...emptyStore(), buttons: v1.data.buttons } };
   return { ok: false, error: "stored data is invalid" };
@@ -112,4 +124,10 @@ export function addRoute(store: Store, route: Route): Store {
 export function removeRoute(store: Store, id: string): Store {
   if (!store.routes.some((r) => r.id === id)) throw new StoreError("no such task");
   return { ...store, routes: store.routes.filter((r) => r.id !== id) };
+}
+
+// ---- Adapt ----
+
+export function setAdapt(store: Store, settings: AdaptSettings): Store {
+  return { ...store, adapt: AdaptSettingsSchema.parse(settings) };
 }

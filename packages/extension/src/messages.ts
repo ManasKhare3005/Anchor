@@ -1,5 +1,6 @@
 import { FingerprintSchema, type SiteState, type Tier } from "@anchor/matcher";
 import { z } from "zod";
+import { AdaptSettingsSchema } from "./adapt.ts";
 import { RouteSchema, StepSchema } from "./route.ts";
 
 /**
@@ -31,6 +32,7 @@ export const ShelfRequestSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("anchor:shelf-remove"), id: z.string().min(1) }),
   z.object({ type: z.literal("anchor:shelf-route-add"), route: RouteSchema }),
   z.object({ type: z.literal("anchor:shelf-route-remove"), id: z.string().min(1) }),
+  z.object({ type: z.literal("anchor:shelf-adapt-set"), settings: AdaptSettingsSchema }),
 ]);
 
 export type ShelfRequest = z.infer<typeof ShelfRequestSchema>;

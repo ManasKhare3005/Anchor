@@ -79,23 +79,43 @@ describe("store reducers", () => {
     expect(parseStore(undefined)).toEqual({ ok: true, store: emptyStore() });
     expect(parseStore({ schemaVersion: 2, buttons: [] }).ok).toBe(false);
     expect(parseStore({ schemaVersion: 3, buttons: [], routes: [] }).ok).toBe(false);
+    expect(parseStore({ ...emptyStore(), adapt: { text: "huge", targets: 1, calm: 0 } }).ok).toBe(
+      false,
+    );
+    expect(parseStore({ schemaVersion: 4, buttons: [], routes: [], adapt: null }).ok).toBe(false);
     expect(parseStore({ schemaVersion: 1, buttons: [{ id: 1 }] }).ok).toBe(false);
   });
 });
 
 describe("schema migration", () => {
-  it("reads version 1 (buttons only) as version 2 with no routes", () => {
+  it("reads version 1 (buttons only) as version 3 with no routes and setup not answered", () => {
     const v1 = { schemaVersion: 1, buttons: [fp("a")] };
     const r = parseStore(v1);
-    expect(r.ok && r.store).toEqual({ schemaVersion: 2, buttons: [fp("a")], routes: [] });
+    expect(r.ok && r.store).toEqual({
+      schemaVersion: 3,
+      buttons: [fp("a")],
+      routes: [],
+      adapt: null,
+    });
   });
 
-  it("the next write stores version 2 and keeps the buttons", async () => {
+  it("reads version 2 (buttons and routes) as version 3 with setup not answered", () => {
+    const v2 = { schemaVersion: 2, buttons: [fp("a")], routes: [] };
+    const r = parseStore(v2);
+    expect(r.ok && r.store).toEqual({
+      schemaVersion: 3,
+      buttons: [fp("a")],
+      routes: [],
+      adapt: null,
+    });
+  });
+
+  it("the next write stores version 3 and keeps the buttons", async () => {
     const area = fakeArea({ schemaVersion: 1, buttons: [fp("a")] });
     const write = createWriter(area, "ext", ORIGIN);
     expect((await write({ type: "anchor:shelf-add", fingerprint: fp("b") }, PANEL)).ok).toBe(true);
     const stored = area.data[STORE_KEY] as { schemaVersion: number; buttons: { id: string }[] };
-    expect(stored.schemaVersion).toBe(2);
+    expect(stored.schemaVersion).toBe(3);
     expect(stored.buttons.map((b) => b.id)).toEqual(["a", "b"]);
   });
 });
@@ -168,5 +188,29 @@ describe("writer (single writer in the service worker)", () => {
     const write = createWriter(area, "ext", ORIGIN);
     expect((await write({ type: "anchor:shelf-remove", id: "nope" }, PANEL)).ok).toBe(false);
     expect((await write({ type: "anchor:shelf-add", fingerprint: fp("a") }, PANEL)).ok).toBe(true);
+  });
+});
+
+describe("adapt settings", () => {
+  it("are saved through the writer and validated", async () => {
+    const area = fakeArea();
+    const write = createWriter(area, "ext", ORIGIN);
+    const settings = { text: "larger", targets: true, calm: false };
+    expect((await write({ type: "anchor:shelf-adapt-set", settings }, PANEL)).ok).toBe(true);
+    const r = parseStore(area.data[STORE_KEY]);
+    expect(r.ok && r.store.adapt).toEqual(settings);
+    const bad = { type: "anchor:shelf-adapt-set", settings: { text: "huge", targets: true } };
+    expect((await write(bad, PANEL)).ok).toBe(false);
+    const after = parseStore(area.data[STORE_KEY]);
+    expect(after.ok && after.store.adapt).toEqual(settings);
+  });
+
+  it("answering setup keeps buttons and tasks", async () => {
+    const area = fakeArea({ schemaVersion: 2, buttons: [fp("a")], routes: [] });
+    const write = createWriter(area, "ext", ORIGIN);
+    const settings = { text: "normal", targets: false, calm: true };
+    expect((await write({ type: "anchor:shelf-adapt-set", settings }, PANEL)).ok).toBe(true);
+    const r = parseStore(area.data[STORE_KEY]);
+    expect(r.ok && r.store.buttons.map((b) => b.id)).toEqual(["a"]);
   });
 });
