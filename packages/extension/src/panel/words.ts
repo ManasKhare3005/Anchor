@@ -34,6 +34,16 @@ export const WORDS = {
   stepWait: "Waiting for you.",
   taskDone: "All done. You finished the task.",
   taskStopped: "The task is stopped. You can start it again any time.",
+  askText: "Let's make websites easier for you. Is the text on websites hard to read?",
+  askTargets: "Do small buttons give you trouble?",
+  askCalm: "Do moving or busy pages bother you?",
+  tryAfter: 'This is the page with your changes. Tap "See it before" to compare.',
+  tryBefore: 'This is the page as the website shows it. Tap "See it after" to compare.',
+  tryNoPage: "Open a website, and I'll show you the difference.",
+  tryNothing: "Nothing on websites will change.",
+  setupSaved: "Saved. Websites will look like this from now on.",
+  setupLater: "That's fine. I'll ask again next time.",
+  changesBack: "Your changes are back.",
 } as const;
 
 export function messageFor(r: FindReply): string {

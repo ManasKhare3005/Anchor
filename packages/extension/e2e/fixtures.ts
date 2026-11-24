@@ -41,6 +41,11 @@ function serveFixtures(): Promise<{ server: Server; origin: string }> {
 }
 
 interface Fixtures {
+  /**
+   * Start as a fresh install, with the setup questions not answered yet. Off by default: tests of
+   * the shelf and tasks start as if setup was answered "No" to everything.
+   */
+  firstRun: boolean;
   context: BrowserContext;
   serviceWorker: Worker;
   extensionId: string;
@@ -48,6 +53,7 @@ interface Fixtures {
 }
 
 export const test = base.extend<Fixtures>({
+  firstRun: [false, { option: true }],
   // eslint-disable-next-line no-empty-pattern
   context: async ({}, use) => {
     const context = await chromium.launchPersistentContext("", {
@@ -58,8 +64,25 @@ export const test = base.extend<Fixtures>({
     await use(context);
     await context.close();
   },
-  serviceWorker: async ({ context }, use) => {
+  serviceWorker: async ({ context, firstRun }, use) => {
     const sw = context.serviceWorkers()[0] ?? (await context.waitForEvent("serviceworker"));
+    if (!firstRun) {
+      await sw.evaluate(async () => {
+        const c = (
+          globalThis as unknown as {
+            chrome: { storage: { local: { set(items: object): Promise<void> } } };
+          }
+        ).chrome;
+        await c.storage.local.set({
+          anchor: {
+            schemaVersion: 3,
+            buttons: [],
+            routes: [],
+            adapt: { text: "normal", targets: false, calm: false },
+          },
+        });
+      });
+    }
     await use(sw);
   },
   extensionId: async ({ serviceWorker }, use) => {

@@ -9,6 +9,7 @@ import {
   type ShelfRequest,
   type WhereReply,
 } from "../../src/messages.ts";
+import { ADAPT_OFF, isIdle, planFor, type AdaptSettings } from "../../src/adapt.ts";
 import { readNameField } from "../../src/panel/name-field.ts";
 import { WORDS, detailsFor, helpNote, messageFor } from "../../src/panel/words.ts";
 import { labelOf, routeHelpNote, type Route, type Step } from "../../src/route.ts";
@@ -41,6 +42,13 @@ const guideTitle = $<HTMLHeadingElement>("guide-title");
 const guideProgress = $<HTMLParagraphElement>("guide-progress");
 const guideText = $<HTMLParagraphElement>("guide-text");
 const guideNext = $<HTMLButtonElement>("guide-next");
+const everyday = $<HTMLDivElement>("everyday");
+const helperBox = $<HTMLDetailsElement>("helper");
+const setupBox = $<HTMLElement>("setup");
+const setupAnswers = $<HTMLDivElement>("setup-answers");
+const setupTry = $<HTMLDivElement>("setup-try");
+const setupToggle = $<HTMLButtonElement>("setup-toggle");
+const showChanges = $<HTMLButtonElement>("show-changes");
 
 /** Which tab the shelf is for. `?tab=<id>` pins one (e2e opens the panel as a normal page). */
 const pinned = Number(new URLSearchParams(location.search).get("tab"));
@@ -61,6 +69,15 @@ let guiding: { route: Route; index: number } | null = null;
 let advance: ReturnType<typeof setTimeout> | undefined;
 /** The last thing said should survive the page load that follows it ("All done"). */
 let keepMessage: string | null = null;
+
+/** The saved setup answers (null: not answered yet). */
+let savedAdapt: AdaptSettings | null = null;
+/** The store could be read (never start setup over data that couldn't be read). */
+let storeOk = false;
+/** First-run setup in progress: which question, the answers so far, before or after view. */
+let setup: { step: number; answers: AdaptSettings; before: boolean } | null = null;
+/** "Not now": don't ask again until the panel is opened again. */
+let setupLater = false;
 
 function say(message: string): void {
   status.textContent = message;
@@ -155,6 +172,8 @@ function renderRecorded(): void {
 
 async function loadButtons(): Promise<void> {
   const parsed = parseStore((await browser.storage.local.get(STORE_KEY))[STORE_KEY]);
+  storeOk = parsed.ok;
+  savedAdapt = parsed.ok ? parsed.store.adapt : null;
   buttons = parsed.ok && where ? buttonsFor(parsed.store, where.site) : [];
   routes = parsed.ok && where ? routesFor(parsed.store, where.site) : [];
   renderShelf();
@@ -168,6 +187,16 @@ async function refresh(): Promise<void> {
   recordButton.disabled = where === null || recording !== null;
   await loadButtons();
   showNote(null);
+  // A new page is adapted with the saved answers by itself.
+  showChanges.hidden = true;
+  if (setup) {
+    await renderSetup();
+    return;
+  }
+  if (storeOk && savedAdapt === null && !setupLater && !recording && !guiding) {
+    await startSetup();
+    return;
+  }
   if (recording && where) {
     // Each page load starts a fresh content script: ask it to keep writing steps down.
     await toPage({ type: "anchor:record-start", afterInput: typedSoFar() });
@@ -444,6 +473,133 @@ guideNext.addEventListener("click", () => {
 
 $<HTMLButtonElement>("guide-stop").addEventListener("click", () => void stopGuide(true));
 
+// ---- First-run setup (M4): three plain questions, then before and after on the page ----
+
+type Answer = { label: string; set: Partial<AdaptSettings> };
+
+const QUESTIONS: { ask: string; answers: Answer[] }[] = [
+  {
+    ask: WORDS.askText,
+    answers: [
+      { label: "No", set: { text: "normal" } },
+      { label: "A little", set: { text: "larger" } },
+      { label: "A lot", set: { text: "largest" } },
+    ],
+  },
+  {
+    ask: WORDS.askTargets,
+    answers: [
+      { label: "No", set: { targets: false } },
+      { label: "Yes", set: { targets: true } },
+    ],
+  },
+  {
+    ask: WORDS.askCalm,
+    answers: [
+      { label: "No", set: { calm: false } },
+      { label: "Yes", set: { calm: true } },
+    ],
+  },
+];
+
+async function startSetup(): Promise<void> {
+  await stopGuide(false);
+  setup = { step: 0, answers: { ...ADAPT_OFF }, before: false };
+  await toPage({ type: "anchor:adapt-show", settings: null });
+  await renderSetup();
+}
+
+async function renderSetup(): Promise<void> {
+  if (!setup) return;
+  showNote(null);
+  everyday.hidden = true;
+  helperBox.hidden = true;
+  setupBox.hidden = false;
+  const q = QUESTIONS[setup.step];
+  setupTry.hidden = q !== undefined;
+  if (q) {
+    setupAnswers.hidden = false;
+    setupAnswers.replaceChildren(
+      ...q.answers.map((a) =>
+        button(a.label, () => {
+          if (!setup) return;
+          setup.answers = { ...setup.answers, ...a.set };
+          setup.step += 1;
+          void renderSetup();
+        }),
+      ),
+    );
+    say(q.ask);
+    return;
+  }
+  // All answered: show the page with the answers, straight away (not saved yet).
+  setupAnswers.hidden = true;
+  setupAnswers.replaceChildren();
+  const idle = isIdle(planFor(setup.answers));
+  setupToggle.hidden = idle;
+  setupToggle.textContent = setup.before ? "See it after" : "See it before";
+  if (idle) {
+    await toPage({ type: "anchor:adapt-show", settings: null });
+    say(WORDS.tryNothing);
+    return;
+  }
+  const shown = await toPage<{ ok: boolean }>({
+    type: "anchor:adapt-show",
+    settings: setup.before ? ADAPT_OFF : setup.answers,
+  });
+  if (!shown) say(WORDS.tryNoPage);
+  else say(setup.before ? WORDS.tryBefore : WORDS.tryAfter);
+}
+
+function endSetup(): void {
+  setup = null;
+  setupBox.hidden = true;
+  everyday.hidden = false;
+  helperBox.hidden = false;
+}
+
+setupToggle.addEventListener("click", () => {
+  if (!setup) return;
+  setup.before = !setup.before;
+  void renderSetup();
+});
+
+$<HTMLButtonElement>("setup-keep").addEventListener("click", () => {
+  const draft = setup;
+  if (!draft) return;
+  void (async () => {
+    const r = await toStore({ type: "anchor:shelf-adapt-set", settings: draft.answers });
+    if (!r.ok) {
+      say(WORDS.problem);
+      return;
+    }
+    endSetup();
+    // The saved answers take over from the preview (the same, now kept).
+    await toPage({ type: "anchor:adapt-show", settings: null });
+    say(WORDS.setupSaved);
+  })();
+});
+
+$<HTMLButtonElement>("setup-over").addEventListener("click", () => {
+  if (!setup) return;
+  setup = { step: 0, answers: { ...ADAPT_OFF }, before: false };
+  void (async () => {
+    await toPage({ type: "anchor:adapt-show", settings: null });
+    await renderSetup();
+  })();
+});
+
+$<HTMLButtonElement>("setup-later").addEventListener("click", () => {
+  setupLater = true;
+  endSetup();
+  void (async () => {
+    await toPage({ type: "anchor:adapt-show", settings: null });
+    say(WORDS.setupLater);
+  })();
+});
+
+$<HTMLButtonElement>("setup-ask").addEventListener("click", () => void startSetup());
+
 // ---- Always there ----
 
 $<HTMLButtonElement>("show-original").addEventListener("click", () => {
@@ -452,7 +608,21 @@ $<HTMLButtonElement>("show-original").addEventListener("click", () => {
     await toPage({ type: "anchor:show-original" });
     if (recording) stopRecordingUi();
     await stopGuide(false);
+    if (setup && setup.step >= QUESTIONS.length) {
+      // Trying out the answers: the page now shows "before".
+      setup.before = true;
+      setupToggle.textContent = "See it after";
+    }
+    showChanges.hidden = setup !== null;
     say(WORDS.original);
+  })();
+});
+
+showChanges.addEventListener("click", () => {
+  void (async () => {
+    await toPage({ type: "anchor:adapt-show", settings: null });
+    showChanges.hidden = true;
+    say(WORDS.changesBack);
   })();
 });
 

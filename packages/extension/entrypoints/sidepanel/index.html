@@ -9,28 +9,42 @@
     <main aria-labelledby="title">
       <h1 id="title">Anchor</h1>
       <p id="status" role="status">Anchor is getting ready.</p>
-      <div id="note" hidden>
-        <p id="note-text"></p>
-        <button type="button" id="copy-note">Copy the help note</button>
-      </div>
 
-      <h2 id="shelf-title">My buttons</h2>
-      <ul id="shelf" aria-labelledby="shelf-title"></ul>
-
-      <section id="guide" hidden aria-labelledby="guide-title">
-        <h2 id="guide-title"></h2>
-        <p id="guide-progress"></p>
-        <p id="guide-text"></p>
-        <div class="row">
-          <button type="button" id="guide-next" hidden>Next</button>
-          <button type="button" id="guide-stop">Stop the task</button>
+      <section id="setup" hidden aria-label="Make websites easier">
+        <div id="setup-answers" class="column"></div>
+        <div id="setup-try" class="column" hidden>
+          <button type="button" id="setup-toggle">See it before</button>
+          <button type="button" id="setup-keep">Keep these changes</button>
+          <button type="button" id="setup-over">Start over</button>
         </div>
+        <button type="button" id="setup-later">Not now</button>
       </section>
 
-      <h2 id="tasks-title">My tasks</h2>
-      <ul id="tasks" aria-labelledby="tasks-title"></ul>
+      <div id="everyday">
+        <div id="note" hidden>
+          <p id="note-text"></p>
+          <button type="button" id="copy-note">Copy the help note</button>
+        </div>
+
+        <h2 id="shelf-title">My buttons</h2>
+        <ul id="shelf" aria-labelledby="shelf-title"></ul>
+
+        <section id="guide" hidden aria-labelledby="guide-title">
+          <h2 id="guide-title"></h2>
+          <p id="guide-progress"></p>
+          <p id="guide-text"></p>
+          <div class="row">
+            <button type="button" id="guide-next" hidden>Next</button>
+            <button type="button" id="guide-stop">Stop the task</button>
+          </div>
+        </section>
+
+        <h2 id="tasks-title">My tasks</h2>
+        <ul id="tasks" aria-labelledby="tasks-title"></ul>
+      </div>
 
       <button type="button" id="show-original">Show original</button>
+      <button type="button" id="show-changes" hidden>Show my changes again</button>
 
       <details id="helper">
         <summary>For helpers</summary>
@@ -64,6 +78,8 @@
           </div>
         </form>
         <ul id="manage-tasks" aria-labelledby="manage-tasks-title"></ul>
+        <h3>Easier websites</h3>
+        <button type="button" id="setup-ask">Ask the setup questions again</button>
         <h3>Last check</h3>
         <p id="details">Nothing checked yet.</p>
       </details>

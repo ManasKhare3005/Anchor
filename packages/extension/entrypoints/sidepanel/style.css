@@ -157,3 +157,21 @@ input {
     border-color: CanvasText;
   }
 }
+
+/* Setup: one question at a time, big answers stacked. */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+
+.column button {
+  width: 100%;
+  text-align: start;
+}
+
+#setup-later,
+#show-changes {
+  margin-top: 8px;
+}
